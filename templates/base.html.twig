@@ -2,11 +2,63 @@
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
+        <title>{% block title %}RESA |{% endblock %}</title>
+        <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"/>
+        <link href="{{ asset('css/navbar.css') }}" rel="stylesheet"/>
+
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+
+    <nav class="nav">
+        <div class="container">
+            <div class="logo">
+                <a href="#"> <img src="{{ asset('assets/img/logo.png') }}" height="70px" width="70px"> </a>
+            </div>
+            <div id="mainListDiv" class="main_list">
+                <ul class="navlinks">
+                    <li><a href="#">About</a></li>
+                    <li><a href="#">Portfolio</a></li>
+                    <li><a href="#">Services</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+            <span class="navTrigger">
+                <i></i>
+                <i></i>
+                <i></i>
+            </span>
+        </div>
+    </nav>
+
+    <section class="home">
+    </section>
+    <p>
+        sgfsgw
+        SDFse
+        sdfd<br><br><br>
+        fddfs
+    </p>
+    <!-- Jquery needed -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="../public/js/scripts.js"></script>
+
+    <!-- Function used to shrink nav bar removing paddings and adding black background -->
+    <script>
+        $(window).scroll(function() {
+            if ($(document).scrollTop() > 100) {
+                $('.nav').addClass('affix');
+                console.log("OK");
+            } else {
+                $('.nav').removeClass('affix');
+            }
+        });
+    </script>
+
+    <div class="container">
         {% block body %}{% endblock %}
+    </div>
+
         {% block javascripts %}{% endblock %}
     </body>
 </html>
