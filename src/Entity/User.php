@@ -10,8 +10,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="type",type="string")
+ * @ORM\DiscriminatorMap({
+            "admin" = "Admin",
+ *          "customer" = "Customer"
+ *     })
  */
-class User implements UserInterface
+abstract class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -20,15 +26,11 @@ class User implements UserInterface
      */
     private $id;
 
+
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      */
     private $email;
-
-    /**
-     * @ORM\Column(type="json")
-     */
-    private $roles = [];
 
     /**
      * @var string The hashed password
@@ -56,31 +58,6 @@ class User implements UserInterface
      */
     private $deletedAt;
 
-    /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $phone;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $mobilePhone;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=UserType::class, inversedBy="users")
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $userType;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="user")
-     */
-    private $bookings;
-
-    public function __construct()
-    {
-        $this->bookings = new ArrayCollection();
-    }
 
     public function getId(): ?int
     {
@@ -204,42 +181,6 @@ class User implements UserInterface
     public function setDeletedAt(?\DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
-
-        return $this;
-    }
-
-    public function getPhone(): ?int
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(?int $phone): self
-    {
-        $this->phone = $phone;
-
-        return $this;
-    }
-
-    public function getMobilePhone(): ?int
-    {
-        return $this->mobilePhone;
-    }
-
-    public function setMobilePhone(int $mobilePhone): self
-    {
-        $this->mobilePhone = $mobilePhone;
-
-        return $this;
-    }
-
-    public function getUserType(): ?UserType
-    {
-        return $this->userType;
-    }
-
-    public function setUserType(?UserType $userType): self
-    {
-        $this->userType = $userType;
 
         return $this;
     }
