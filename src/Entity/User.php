@@ -7,6 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -16,6 +18,11 @@ use Symfony\Component\Security\Core\User\UserInterface;
             "admin" = "Admin",
  *          "customer" = "Customer"
  *     })
+ * @UniqueEntity(
+            fields = {"email"},
+ *          message = "l'email est déjà utilisé"
+ *     )
+ *
  */
 abstract class User implements UserInterface
 {
@@ -29,6 +36,7 @@ abstract class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email()
      */
     private $email;
 
@@ -37,6 +45,11 @@ abstract class User implements UserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @Assert\EqualTo(propertyPath="password", message="les deux mots de passe sont différents")
+     */
+    public $confirm_password;
 
     /**
      * @ORM\Column(type="string", length=255)

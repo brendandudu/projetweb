@@ -20,7 +20,7 @@ class UserTypeRepository extends ServiceEntityRepository
     }
 
     // /**
-    //  * @return UserType[] Returns an array of UserType objects
+    //  * @return RegistrationType[] Returns an array of RegistrationType objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class UserTypeRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?UserType
+    public function findOneBySomeField($value): ?RegistrationType
     {
         return $this->createQueryBuilder('u')
             ->andWhere('u.exampleField = :val')
