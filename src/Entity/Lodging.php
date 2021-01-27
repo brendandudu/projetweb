@@ -46,21 +46,6 @@ class Lodging
     private $internetAvailable;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
-     */
-    private $builtIn;
-
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $zone;
-
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
-    private $orientation;
-
-    /**
      * @ORM\Column(type="string", length=255)
      */
     private $currentCondition;
@@ -76,14 +61,15 @@ class Lodging
     private $weeklyPricing;
 
     /**
-     * @ORM\OneToMany(targetEntity=Availability::class, mappedBy="lodging")
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="id_lodging")
      */
-    private $availabilities;
+    private $bookings;
 
     public function __construct()
     {
-        $this->availabilities = new ArrayCollection();
+        $this->bookings = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
@@ -150,42 +136,6 @@ class Lodging
         return $this;
     }
 
-    public function getBuiltIn(): ?int
-    {
-        return $this->builtIn;
-    }
-
-    public function setBuiltIn(?int $builtIn): self
-    {
-        $this->builtIn = $builtIn;
-
-        return $this;
-    }
-
-    public function getZone(): ?string
-    {
-        return $this->zone;
-    }
-
-    public function setZone(string $zone): self
-    {
-        $this->zone = $zone;
-
-        return $this;
-    }
-
-    public function getOrientation(): ?string
-    {
-        return $this->orientation;
-    }
-
-    public function setOrientation(?string $orientation): self
-    {
-        $this->orientation = $orientation;
-
-        return $this;
-    }
-
     public function getCurrentCondition(): ?string
     {
         return $this->currentCondition;
@@ -223,29 +173,29 @@ class Lodging
     }
 
     /**
-     * @return Collection|Availability[]
+     * @return Collection|Booking[]
      */
-    public function getAvailabilities(): Collection
+    public function getBookings(): Collection
     {
-        return $this->availabilities;
+        return $this->bookings;
     }
 
-    public function addAvailability(Availability $availability): self
+    public function addBooking(Booking $booking): self
     {
-        if (!$this->availabilities->contains($availability)) {
-            $this->availabilities[] = $availability;
-            $availability->setLodging($this);
+        if (!$this->bookings->contains($booking)) {
+            $this->bookings[] = $booking;
+            $booking->setIdLodging($this);
         }
 
         return $this;
     }
 
-    public function removeAvailability(Availability $availability): self
+    public function removeBooking(Booking $booking): self
     {
-        if ($this->availabilities->removeElement($availability)) {
+        if ($this->bookings->removeElement($booking)) {
             // set the owning side to null (unless already changed)
-            if ($availability->getLodging() === $this) {
-                $availability->setLodging(null);
+            if ($booking->getIdLodging() === $this) {
+                $booking->setIdLodging(null);
             }
         }
 

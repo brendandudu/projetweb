@@ -23,10 +23,6 @@ class Booking
      */
     private $beginsAt;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $endsAt;
 
     /**
      * @ORM\Column(type="datetime")
@@ -48,22 +44,35 @@ class Booking
      */
     private $note;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="bookings")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $idUser;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Lodging::class, inversedBy="bookings")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $id_lodging;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Week::class, inversedBy="bookings")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $week;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=BookingState::class, inversedBy="bookings")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $bookingState;
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getUser(): ?User
-    {
-        return $this->user;
-    }
-
-    public function setUser(?User $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
 
     public function getBeginsAt(): ?\DateTimeInterface
     {
@@ -133,6 +142,54 @@ class Booking
     public function setNote(?string $note): self
     {
         $this->note = $note;
+
+        return $this;
+    }
+
+    public function getIdUser(): ?User
+    {
+        return $this->idUser;
+    }
+
+    public function setIdUser(?User $idUser): self
+    {
+        $this->idUser = $idUser;
+
+        return $this;
+    }
+
+    public function getIdLodging(): ?Lodging
+    {
+        return $this->id_lodging;
+    }
+
+    public function setIdLodging(?Lodging $id_lodging): self
+    {
+        $this->id_lodging = $id_lodging;
+
+        return $this;
+    }
+
+    public function getWeek(): ?Week
+    {
+        return $this->week;
+    }
+
+    public function setWeek(?Week $week): self
+    {
+        $this->week = $week;
+
+        return $this;
+    }
+
+    public function getBookingState(): ?BookingState
+    {
+        return $this->bookingState;
+    }
+
+    public function setBookingState(?BookingState $bookingState): self
+    {
+        $this->bookingState = $bookingState;
 
         return $this;
     }

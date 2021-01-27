@@ -71,6 +71,16 @@ abstract class User implements UserInterface
      */
     private $deletedAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="idUser")
+     */
+    private $bookings;
+
+    public function __construct()
+    {
+        $this->bookings = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
