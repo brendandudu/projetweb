@@ -6,6 +6,7 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -22,7 +23,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
             fields = {"email"},
  *          message = "l'email est déjà utilisé"
  *     )
- *
+ * @ORM\HasLifecycleCallbacks()
  */
 abstract class User implements UserInterface
 {
@@ -75,6 +76,15 @@ abstract class User implements UserInterface
      * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="idUser")
      */
     private $bookings;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTime();
+    }
+
 
     public function __construct()
     {
