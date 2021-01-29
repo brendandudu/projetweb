@@ -85,6 +85,10 @@ abstract class User implements UserInterface
         $this->createdAt = new \DateTime();
     }
 
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
 
     public function __construct()
     {
