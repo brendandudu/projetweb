@@ -76,6 +76,11 @@ abstract class User implements UserInterface
      */
     private $bookings;
 
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
+
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
