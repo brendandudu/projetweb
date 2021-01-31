@@ -6,9 +6,12 @@ use App\Repository\LodgingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=LodgingRepository::class)
+ * @Vich\Uploadable
  */
 class Lodging
 {
@@ -61,9 +64,40 @@ class Lodging
     private $weeklyPricing;
 
     /**
-     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="id_lodging")
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="lodging")
      */
     private $bookings;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $picture;
+
+    /**
+     * @Vich\UploadableField(mapping="lodgingPictures", fileNameProperty="picture")
+     * @var File
+     */
+    private $pictureFile;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
+    public function setPictureFile(?File $picture = null)
+    {
+        $this->pictureFile = $picture;
+
+        if ($picture) {
+            $this->updatedAt = new \DateTime();
+        }
+    }
+
+    public function getPictureFile()
+    {
+        return $this->pictureFile;
+    }
+
 
     public function __construct()
     {
@@ -200,5 +234,34 @@ class Lodging
         }
 
         return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture($picture): self
+    {
+        $this->picture = $picture;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 }

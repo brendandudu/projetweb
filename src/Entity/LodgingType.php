@@ -80,4 +80,9 @@ class LodgingType
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return $this->typeName;
+    }
 }

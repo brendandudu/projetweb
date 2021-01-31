@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=BookingRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Booking
 {
@@ -16,12 +17,6 @@ class Booking
      * @ORM\Column(type="integer")
      */
     private $id;
-
-
-    /**
-     * @ORM\Column(type="datetime")
-     */
-    private $beginsAt;
 
 
     /**
@@ -48,13 +43,13 @@ class Booking
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="bookings")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $idUser;
+    private $User;
 
     /**
      * @ORM\ManyToOne(targetEntity=Lodging::class, inversedBy="bookings")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $id_lodging;
+    private $lodging;
 
     /**
      * @ORM\ManyToOne(targetEntity=Week::class, inversedBy="bookings")
@@ -67,6 +62,14 @@ class Booking
      * @ORM\JoinColumn(nullable=false)
      */
     private $bookingState;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setBookedAtValue(): void
+    {
+        $this->bookedAt = new \DateTime();
+    }
 
     public function getId(): ?int
     {
@@ -103,11 +106,9 @@ class Booking
         return $this->bookedAt;
     }
 
-    public function setBookedAt(\DateTimeInterface $bookedAt): self
+    public function setBookedAt($date): self
     {
-        $this->bookedAt = $bookedAt;
-
-        return $this;
+        $this->bookedAt = $date;
     }
 
     public function getTotalPricing(): ?float
@@ -146,26 +147,26 @@ class Booking
         return $this;
     }
 
-    public function getIdUser(): ?User
+    public function getUser(): ?User
     {
-        return $this->idUser;
+        return $this->User;
     }
 
-    public function setIdUser(?User $idUser): self
+    public function setUser(?User $idUser): self
     {
-        $this->idUser = $idUser;
+        $this->User = $idUser;
 
         return $this;
     }
 
-    public function getIdLodging(): ?Lodging
+    public function getLodging(): ?Lodging
     {
-        return $this->id_lodging;
+        return $this->lodging;
     }
 
-    public function setIdLodging(?Lodging $id_lodging): self
+    public function setLodging(?Lodging $id_lodging): self
     {
-        $this->id_lodging = $id_lodging;
+        $this->lodging = $id_lodging;
 
         return $this;
     }
