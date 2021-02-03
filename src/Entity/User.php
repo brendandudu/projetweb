@@ -13,19 +13,13 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="type",type="string")
- * @ORM\DiscriminatorMap({
-            "admin" = "Admin",
- *          "customer" = "Customer"
- *     })
  * @UniqueEntity(
             fields = {"email"},
  *          message = "l'email est déjà utilisé"
  *     )
  * @ORM\HasLifecycleCallbacks()
  */
-abstract class User implements UserInterface
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -73,7 +67,7 @@ abstract class User implements UserInterface
     private $deletedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="idUser")
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="User")
      */
     private $bookings;
 
@@ -250,5 +244,10 @@ abstract class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->email;
     }
 }
