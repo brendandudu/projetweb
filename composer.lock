@@ -6,7 +6,6 @@
     ],
 
     "content-hash": "de189355b5b869b01c7b148433da682d",
-
     "packages": [
         {
             "name": "composer/package-versions-deprecated",
@@ -7970,7 +7969,6 @@
             "time": "2021-01-19T11:35:18+00:00"
         },
         {
-<<<<<<< HEAD
             "name": "doctrine/data-fixtures",
             "version": "1.5.0",
             "source": {
@@ -8129,12 +8127,8 @@
             "time": "2020-11-14T09:36:49+00:00"
         },
         {
-            "name": "nikic/php-parser",
-            "version": "v4.10.4",
-=======
             "name": "webmozart/assert",
             "version": "1.9.1",
->>>>>>> develop
             "source": {
                 "type": "git",
                 "url": "https://github.com/webmozart/assert.git",
