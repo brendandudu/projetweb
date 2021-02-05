@@ -36,7 +36,7 @@ class BookingCrudController extends AbstractCrudController
             AssociationField::new('lodging')->setLabel('Lodging'),
             AssociationField::new('User')->autocomplete(),
             DateField::new('bookedAt')->onlyOnIndex(),
-            MoneyField::new('totalPricing')->setCurrency('EUR')->setLabel('Price'),
+            IntegerField::new('totalPricing')->setLabel('Price'),
             IntegerField::new('totalOccupiers')->setTextAlign('center')->setLabel('Occupiers'),
             IntegerField::new('note')->onlyOnIndex(),
             AssociationField::new('week')->setLabel('Week'),

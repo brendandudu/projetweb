@@ -2,29 +2,35 @@
 
 namespace App\DataFixtures;
 
-use App\DataFixtures\LodgingTypeFixtures;
 use App\Entity\Lodging;
 use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
+Use Faker;
 
-class LodgingFixtures extends Fixture
+class LodgingFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
+        $faker = Faker\Factory::create('fr_FR');
 
-        for ($count = 0; $count < 5; $count++) {
+        for ($i = 1; $i <= 20; $i++) {
             $lodging = new Lodging();
 
-            $lodging->setName('Lodging'.$count);
-            $lodging->setDescription('Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.');
-            $lodging->setCapacity(rand (1, 8));
-            $lodging->setCurrentCondition('sud');
-            $lodging->setInternetAvailable(true);
-            $lodging->setSpace(rand (10, 30));
-            $lodging->setWeeklyPricing(rand (300, 750));
-            $lodging->setLodgingType($this->getReference(LodgingTypeFixtures::TYPE_.$count));
+            $lodging->setLodgingType($this->getReference('type_'. $faker->numberBetween(1,5)));
+            $lodging->setWeeklyPricing($faker->numberBetween(150, 899));
+            $lodging->setSpace($faker->numberBetween(10, 30));
+            $lodging->setInternetAvailable($faker->numberBetween(0, 1));
+            $lodging->setCurrentCondition($faker->realText(25));
+            $lodging->setCapacity($faker->numberBetween(1, 8));
+            $lodging->setDescription($faker->realText(400));
+            $lodging->setName($faker->realText(25));
+
+            $lodging->setPicture("https://via.placeholder.com/150");
 
             $manager->persist($lodging);
+
+            $this->addReference('lodging_'.$i, $lodging);
         }
 
         $manager->flush();
@@ -32,8 +38,8 @@ class LodgingFixtures extends Fixture
 
     public function getDependencies()
     {
-        return array(
-            LodgingTypeFixtures::class,
-        );
+        return[
+            LodgingTypeFixtures::class
+        ];
     }
 }

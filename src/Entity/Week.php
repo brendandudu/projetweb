@@ -20,12 +20,12 @@ class Week
     private $id;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $beginsAt;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="date")
      */
     private $endsAt;
 
@@ -44,29 +44,6 @@ class Week
         return $this->id;
     }
 
-    public function getBeginsAt(): ?\DateTimeInterface
-    {
-        return $this->beginsAt;
-    }
-
-    public function setBeginsAt(\DateTimeInterface $beginsAt): self
-    {
-        $this->beginsAt = $beginsAt;
-
-        return $this;
-    }
-
-    public function getEndsAt(): ?\DateTimeInterface
-    {
-        return $this->endsAt;
-    }
-
-    public function setEndsAt(\DateTimeInterface $endsAt): self
-    {
-        $this->endsAt = $endsAt;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Booking[]
@@ -101,5 +78,29 @@ class Week
     public function __toString()
     {
         return date_format($this->beginsAt, 'd/m/Y');
+    }
+
+    public function getBeginsAt(): ?\DateTimeInterface
+    {
+        return $this->beginsAt;
+    }
+
+    public function setBeginsAt(\DateTimeInterface $beginsAt): self
+    {
+        $this->beginsAt = $beginsAt;
+
+        return $this;
+    }
+
+    public function getEndsAt(): ?\DateTimeInterface
+    {
+        return $this->endsAt;
+    }
+
+    public function setEndsAt(\DateTimeInterface $endsAt): self
+    {
+        $this->endsAt = $endsAt;
+
+        return $this;
     }
 }

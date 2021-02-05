@@ -45,7 +45,7 @@ class LodgingCrudController extends AbstractCrudController
             TextField::new('currentCondition')->setTextAlign('center'),
             IntegerField::new('space')->setTextAlign('center'),
             BooleanField::new('internetAvailable')->setLabel('Internet'),
-            MoneyField::new('weeklyPricing')->setCurrency('EUR')->setLabel('Price'),
+            IntegerField::new('weeklyPricing')->setLabel('Price'),
             IntegerField::new('capacity')->setTextAlign('center'),
             AssociationField::new('lodgingType')->setLabel('Type'),
         ];

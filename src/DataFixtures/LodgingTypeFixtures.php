@@ -9,44 +9,26 @@ use Doctrine\Persistence\ObjectManager;
 class LodgingTypeFixtures extends Fixture
 {
 
-    const TYPE_1 = 'chalet';
-    const TYPE_2 = 'bungalow';
-    const TYPE_3 = 'mobil-home';
-    const TYPE_4 = 'flat';
-    const TYPE_5 = 'house';
-
     public function load(ObjectManager $manager)
     {
-        $lodgingType1 = new LodgingType();
-        $lodgingType1->setTypeName('Chalet');
 
-        $manager->persist($lodgingType1);
+        $types = [
+            1 => "chalet",
+            2 => "bungalow",
+            3 => "mobil-home",
+            4 => "flat",
+            5 => "house",
+        ];
 
-        $lodgingType2 = new LodgingType();
-        $lodgingType2->setTypeName('Bungalow');
 
-        $manager->persist($lodgingType2);
+        foreach ($types as $key => $value){
+            $lodgingType = new LodgingType();
+            $lodgingType->setTypeName($value);
 
-        $lodgingType3 = new LodgingType();
-        $lodgingType3->setTypeName('Mobil-home');
+            $manager->persist($lodgingType);
 
-        $manager->persist($lodgingType3);
-
-        $lodgingType4 = new LodgingType();
-        $lodgingType4->setTypeName('Flat');
-
-        $manager->persist($lodgingType4);
-
-        $lodgingType5 = new LodgingType();
-        $lodgingType5->setTypeName('House');
-
-        $manager->persist($lodgingType5);
-
-        $this->addReference(self::TYPE_1, $lodgingType1);
-        $this->addReference(self::TYPE_2, $lodgingType2);
-        $this->addReference(self::TYPE_3, $lodgingType3);
-        $this->addReference(self::TYPE_4, $lodgingType4);
-        $this->addReference(self::TYPE_5, $lodgingType5);
+            $this->addReference('type_'.$key, $lodgingType);
+        }
 
         $manager->flush();
     }
