@@ -8,29 +8,33 @@ use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Entity\User;
-use App\Form\RegistrationType;
+use App\Entity\Availability;
+use App\Form\SearchAvailabilityType;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class MainController extends AbstractController
 {
     /**
-     * @Route("/index", name="main")
-     */
-    public function index(): Response
-    {
-        return $this->render('main/index.html.twig', [
-            'controller_name' => 'MainController',
-        ]);
-    }
-
-    /**
      * @Route("/", name="home")
      */
-    public function home(): Response
+    public function home(Request $request): Response
     {
+        $availability = new Availability();
+
+        $form = $this->createForm(SearchAvailabilityType::class, $availability);
+
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid()) {
+            $availability = $form->getData();
+
+            return $this->redirectToRoute('security_registration');
+        }
+
         return $this->render('main/home.html.twig', [
             'controller_name' => 'MainController',
+            'form' => $form->createView()
         ]);
     }
 

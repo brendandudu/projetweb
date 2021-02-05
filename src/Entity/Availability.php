@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\AvailabilityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=AvailabilityRepository::class)
@@ -19,17 +20,29 @@ class Availability
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank
+     * @Assert\GreaterThan(
+     *     "today",
+     *     message = "La date doit être supérieure à aujourd'hui !"
+     * )
      */
     private $beginsAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\NotBlank
+     * @Assert\GreaterThan(
+     *      propertyPath = "beginsAt",
+     *      message = "La date de départ doit être supérieure à celle d'arrivée !"
+     * )
      */
     private $endsAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=Lodging::class, inversedBy="availabilities")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank
+     * @Assert\Valid
      */
     private $lodging;
 

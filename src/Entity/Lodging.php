@@ -6,6 +6,7 @@ use App\Repository\LodgingRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=LodgingRepository::class)
@@ -32,6 +33,9 @@ class Lodging
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\Positive(
+     *      message = "Le nombre de visiteurs doit être supérieur à 0 !"
+     * )
      */
     private $capacity;
 

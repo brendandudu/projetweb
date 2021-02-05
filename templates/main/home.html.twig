@@ -10,42 +10,43 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="booking-form">
-                            <form>
+                            {{ form_start(form) }}
+                                <div class="alert alert-danger" role="alert">
+                                    {{ form_errors(form.beginsAt) }}
+                                    {{ form_errors(form.endsAt) }}
+                                    {{ form_errors(form.lodging.capacity) }}
+                                </div>
+                                
                                 <div class="row no-margin">
                                     <div class="col-md-8">
                                         <div class="row no-margin">
                                             <div class="col-md-5">
                                                 <div class="form-group">
                                                     <span class="form-label">Arrivée</span>
-                                                    <input class="form-control" type="date" required>
+                                                    {{ form_widget(form.beginsAt, {'attr': {'required': 'true', 'class' : 'form-control'}}) }}
                                                 </div>
                                             </div>
                                             <div class="col-md-5">
                                                 <div class="form-group">
                                                     <span class="form-label">Départ</span>
-                                                    <input class="form-control" type="date" required>
+                                                    {{ form_widget(form.endsAt, {'attr': {'required': 'true', 'class' : 'form-control'}}) }}
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    <span class="form-label">Invité</span>
-                                                    <select class="form-control">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                    </select>
-                                                    <span class="select-arrow"></span>
+                                                    <span class="form-label">Visiteurs</span>
+                                                    {{ form_widget(form.lodging.capacity, {'attr': {'required': 'true', 'class' : 'form-control', 'min' : 1 }}) }}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-btn">
-                                            <button class="submit-btn">Disponibilité</button>
+                                            <button class="submit-btn">Voir disponibilités</button>
                                         </div>
                                     </div>
                                 </div>
-                            </form>
+                            {{ form_end(form) }}
                         </div>
                     </div>
                 </div>
