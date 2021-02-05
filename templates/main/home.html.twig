@@ -12,6 +12,7 @@
                         <div class="booking-form">
                             {{ form_start(form) }}
 
+
                             {% if not form.vars.valid %}
                                 <div class="alert alert-danger" role="alert">
                                     {{ form_errors(form.beginsAt) }}
@@ -19,6 +20,7 @@
                                     {{ form_errors(form.capacity) }}
                                 </div>
                             {% endif %}
+
                                 
                                 <div class="row no-margin">
                                     <div class="col-md-8">

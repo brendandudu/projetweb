@@ -38,7 +38,13 @@ class MainController extends AbstractController
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            return $this->redirectToRoute('lodging_search');
+
+            return $this->redirectToRoute('search', [
+                'beginsAt' => $request->request->get('beginsAt'),
+                'endsAt' => $request->request->get('endsAt'),
+                'visitors' => $request->request->get('capacity'),
+            ]);
+
         }
 
         return $this->render('main/home.html.twig', [
