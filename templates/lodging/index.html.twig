@@ -6,6 +6,8 @@
 {% endblock %}
 
 {% block body %}
+
+    {% for lodging in lodgings %}
     <div class="container">
         <div class="row justify-content-center">
     <div class="media">
@@ -13,40 +15,18 @@
         </div>
         <img class="d-flex align-self-start" src="https://www.chalets-bayrou.com/wp-content/uploads/2020/03/realisation-chalet-a-serre-chevalier-chalets-bayrou86-1-1024x483.jpg" alt="Generic placeholder image">
         <div class="media-body pl-3">
-            <div class="price">799,00 €<small>Chalet</small></div>
+            <div class="price">{{ lodging.name}}<small>{{lodging.lodgingType}}</small></div>
             <div class="address">5 rue des champottes magiques</div>
-            <div class="description">Mauris feugiat urna est, quis accumsan urna ornare eu. Praesent pharetra, dui ut scelerisque mollis, magna lorem luctus urna, et efficitur enim lorem nec tellus.
-                Suspendisse tempus nibh id neque accumsan, sed faucibus lorem sodales. Nulla faucibus </div>
+            <div class="description">{{ lodging.description }} </div>
             <div class="stats">
-                <span><i class="fa fa-arrows-alt"></i>50000000 m2</span>
-                <span><i class="fa fa-user"></i>5</span>
-                <span><i class="fa fa-wifi"></i>oui</span>
+                <span><i class="fa fa-arrows-alt"></i>{{ lodging.space}} m2</span>
+                <span><i class="fa fa-user"></i>{{ lodging.capacity }} </span>
+                <span><i class="fa fa-wifi"></i>{% if lodging.internetAvailable == 1 %} oui {% else %} non {% endif %}</span>
             </div>
 
         </div>
     </div>
         </div>
-        <div class="row justify-content-center"><img src="{{ asset('assets/img/liane.png') }}" height="150px"></div>
-
-
-        <div class="row justify-content-center">
-            <div class="media ">
-                <div class="fav-box"><i class="fa fa-heart-o" aria-hidden="true"></i>
-                </div>
-                <img class="d-flex align-self-start" src="https://www.chalets-bayrou.com/wp-content/uploads/2020/03/realisation-chalet-a-serre-chevalier-chalets-bayrou86-1-1024x483.jpg" alt="Generic placeholder image">
-                <div class="media-body pl-3">
-                    <div class="price">799,00 €<small>Chalet</small></div>
-                    <div class="address">5 rue des champottes magiques</div>
-                    <div class="description">Mauris feugiat urna est, quis accumsan urna ornare eu. Praesent pharetra, dui ut scelerisque mollis, magna lorem luctus urna, et efficitur enim lorem nec tellus.
-                        Suspendisse tempus nibh id neque accumsan, sed faucibus lorem sodales. Nulla faucibus </div>
-                    <div class="stats">
-                        <span><i class="fa fa-arrows-alt"></i>50000000 m2</span>
-                        <span><i class="fa fa-user"></i>5</span>
-                        <span><i class="fa fa-wifi"></i>oui</span>
-                    </div>
-
-                </div>
-            </div>
-        </div>
     </div>
+    {% endfor %}
 {% endblock %}

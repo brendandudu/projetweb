@@ -11,11 +11,14 @@
                     <div class="row justify-content-center">
                         <div class="booking-form">
                             {{ form_start(form) }}
+
+                            {% if not form.vars.valid %}
                                 <div class="alert alert-danger" role="alert">
                                     {{ form_errors(form.beginsAt) }}
                                     {{ form_errors(form.endsAt) }}
-                                    {{ form_errors(form.lodging.capacity) }}
+                                    {{ form_errors(form.capacity) }}
                                 </div>
+                            {% endif %}
                                 
                                 <div class="row no-margin">
                                     <div class="col-md-8">
@@ -35,7 +38,7 @@
                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <span class="form-label">Visiteurs</span>
-                                                    {{ form_widget(form.lodging.capacity, {'attr': {'required': 'true', 'class' : 'form-control', 'min' : 1 }}) }}
+                                                    {{ form_widget(form.capacity, {'attr': {'required': 'true', 'class' : 'form-control', 'min' : 1 }}) }}
                                                 </div>
                                             </div>
                                         </div>

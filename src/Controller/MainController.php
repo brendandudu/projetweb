@@ -6,6 +6,8 @@ use App\Entity\Customer;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Entity\Availability;
@@ -20,20 +22,26 @@ class MainController extends AbstractController
      */
     public function home(Request $request): Response
     {
-        $availability = new Availability();
+        $form = $this->createFormBuilder()
+            ->add('beginsAt', DateType::class,[
+                'widget' => 'single_text',
+            ])
 
-        $form = $this->createForm(SearchAvailabilityType::class, $availability);
+            ->add('endsAt', DateType::class,[
+                'widget' => 'single_text',
+            ])
+
+            ->add('capacity', IntegerType::class)
+            ->getForm();
+
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $availability = $form->getData();
-
-            return $this->redirectToRoute('security_registration');
+            return $this->redirectToRoute('lodging_search');
         }
 
         return $this->render('main/home.html.twig', [
-            'controller_name' => 'MainController',
             'form' => $form->createView()
         ]);
     }
