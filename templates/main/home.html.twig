@@ -11,11 +11,13 @@
                     <div class="row justify-content-center">
                         <div class="booking-form">
                             {{ form_start(form) }}
-                                <div class="alert alert-danger" role="alert">
-                                    {{ form_errors(form.beginsAt) }}
-                                    {{ form_errors(form.endsAt) }}
-                                    {{ form_errors(form.lodging.capacity) }}
-                                </div>
+                                {% if not form.vars.valid %}
+                                    <div class="alert alert-danger" role="alert">
+                                        {{ form_errors(form.beginsAt) }}
+                                        {{ form_errors(form.endsAt) }}
+                                        {{ form_errors(form.lodging.capacity) }}
+                                    </div>
+                                {% endif %}
                                 
                                 <div class="row no-margin">
                                     <div class="col-md-8">

@@ -6,25 +6,20 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
- * @ORM\InheritanceType("JOINED")
- * @ORM\DiscriminatorColumn(name="type",type="string")
- * @ORM\DiscriminatorMap({
-            "admin" = "Admin",
- *          "customer" = "Customer"
- *     })
  * @UniqueEntity(
             fields = {"email"},
  *          message = "l'email est déjà utilisé"
  *     )
- *
+ * @ORM\HasLifecycleCallbacks()
  */
-abstract class User implements UserInterface
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -72,9 +67,22 @@ abstract class User implements UserInterface
     private $deletedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="idUser")
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="User")
      */
     private $bookings;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    /**
+     * @ORM\Column(type="json")
+     */
+    private $roles = [];
 
     public function __construct()
     {
@@ -236,5 +244,10 @@ abstract class User implements UserInterface
         }
 
         return $this;
+    }
+
+    public function __toString()
+    {
+        return $this->email;
     }
 }

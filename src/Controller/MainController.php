@@ -29,7 +29,11 @@ class MainController extends AbstractController
         if($form->isSubmitted() && $form->isValid()) {
             $availability = $form->getData();
 
-            return $this->redirectToRoute('security_registration');
+            return $this->redirectToRoute('search', [
+                'beginsAt' => $availability->getBeginsAt()->format("Y-m-d"),
+                'endsAt' => $availability->getEndsAt()->format("Y-m-d"),
+                'visitors' => $availability->getLodging()->getCapacity()
+            ]);
         }
 
         return $this->render('main/home.html.twig', [

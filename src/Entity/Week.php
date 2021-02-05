@@ -97,4 +97,9 @@ class Week
 
         return $this;
     }
+
+    public function __toString()
+    {
+        return date_format($this->beginsAt, 'd/m/Y');
+    }
 }
