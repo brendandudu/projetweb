@@ -19,32 +19,23 @@ class LodgingRepository extends ServiceEntityRepository
         parent::__construct($registry, Lodging::class);
     }
 
-    // /**
-    //  * @return Lodging[] Returns an array of Lodging objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findAllDisponibility(\DateTime $begin, \DateTime $end, $capacity)
     {
         return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('l.id', 'ASC')
-            ->setMaxResults(10)
+            ->select('l.id') //on veut recuperer les hebergements
+            ->select('week.id')  //on veut recuperer les semaines
+            ->from('booking', 'b')
+            ->from('week', 'w')
+            ->where('l.id = b.lodging') // on join heb et reservation (attention si pas dedans recuperer tout)
+            ->andWhere('b.week = w.id') //on join reservation et week
             ->getQuery()
             ->getResult()
         ;
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Lodging
-    {
-        return $this->createQueryBuilder('l')
-            ->andWhere('l.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
+    //(SELECT chambre
+    //FROM reservation
+    //WHERE  TO_DATE(:debut,'dd/mm/yy')  BETWEEN  date_reservation AND date_reservation + nb_nuits
+    //    OR  TO_DATE(:debut,'dd/mm/yy') - 1 + :duree BETWEEN  date_reservation AND date_reservation + nb_nuits)
+
 }

@@ -7,8 +7,9 @@
         </div>
         <div id="mainListDiv" class="main_list">
             <ul class="navlinks">
-                <li><a href="#">A propos</a></li>
-                <li><a href="#">Hebergement</a></li>
+
+                <li><a href="#">À propos</a></li>
+                <li><a href="{{ path('lodging_index')}}">Hebergements</a></li>
                 <li><a href="#">Services</a></li>
 
             {% if app.user %}
