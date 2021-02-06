@@ -39,7 +39,7 @@ class MainController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()) {
 
-            return $this->redirectToRoute('search', [
+            return $this->redirectToRoute('lodging_search', [
                 'beginsAt' => $request->request->get('beginsAt'),
                 'endsAt' => $request->request->get('endsAt'),
                 'visitors' => $request->request->get('capacity'),

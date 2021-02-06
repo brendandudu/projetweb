@@ -1,32 +1,43 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Hello LodgingController!{% endblock %}
+
 {% block stylesheets %}
-    <link href="{{ asset('css/lodgingCard.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/lodging.css') }}" rel="stylesheet"/>
 {% endblock %}
 
 {% block body %}
-
-    {% for lodging in lodgings %}
-    <div class="container">
-        <div class="row justify-content-center">
-    <div class="media">
-        <div class="fav-box"><i class="fa fa-heart-o" aria-hidden="true"></i>
-        </div>
-        <img class="d-flex align-self-start" src="https://www.chalets-bayrou.com/wp-content/uploads/2020/03/realisation-chalet-a-serre-chevalier-chalets-bayrou86-1-1024x483.jpg" alt="Generic placeholder image">
-        <div class="media-body pl-3">
-            <div class="price">{{ lodging.name}}<small>{{lodging.lodgingType}}</small></div>
-            <div class="address">5 rue des champottes magiques</div>
-            <div class="description">{{ lodging.description }} </div>
-            <div class="stats">
-                <span><i class="fa fa-arrows-alt"></i>{{ lodging.space}} m2</span>
-                <span><i class="fa fa-user"></i>{{ lodging.capacity }} </span>
-                <span><i class="fa fa-wifi"></i>{% if lodging.internetAvailable == 1 %} oui {% else %} non {% endif %}</span>
+        <section class="head">
+            <div class="container">
+                <h2 class="text-center"><span>Vos résultats</span>01/07/2021 - 08/07/2021</h2>
             </div>
+        </section>
+        <div class="clearfix"></div>
+        <section class="search-box">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12 listing-block">
+                     {% for lodging in lodgings %}
+                        {% include 'includes/lodgingCard.html.twig' %}
+                     {% endfor %}
+                    </div>
+                    <div class="col-md-7 map-box mx-0 px-0">
+                        <iframe width="100%" height="495" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.co.uk/maps?f=q&source=s_q&hl=en&geocode=&815&sspn=8.047465,13.666992&ie=UTF8&hq=&hnear=15+Springfield+Way,+Hythe+CT21+5SH,+United+Kingdom&t=m&z=14&ll=51.077429,1.121722&output=embed"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+{% endblock %}
 
-        </div>
-    </div>
-        </div>
-    </div>
-    {% endfor %}
+{% block javascripts %}
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-slimScroll/1.3.8/jquery.slimscroll.min.js"></script>
+    <script>
+        $(function(){
+            $('.listing-block').slimScroll({
+                height: '500px'
+            });
+        });
+    </script>
 {% endblock %}

@@ -8,10 +8,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/lodging", name="lodging_")
+ */
 class LodgingController extends AbstractController
 {
     /**
-     * @Route("/lodging", name="lodging")
+     * @Route("/", name="index")
      */
     public function index(LodgingRepository $repository): Response
     {
@@ -23,7 +26,7 @@ class LodgingController extends AbstractController
     }
 
     /**
-     * @Route("/lodging/{id}", name="lodging_show")
+     * @Route("/{id}", name="show")
      */
     public function show(Lodging $lodging): Response
     {
@@ -33,14 +36,12 @@ class LodgingController extends AbstractController
     }
 
     /**
-     * @Route("/lodging/search", name="lodging_search")
+     * @Route("/{beginsAt}/{endsAt}/{visitors}", name="search")
      */
-    public function searchLodging(LodgingRepository $repository): Response
+    public function search(\DateTime $beginsAt, \DateTime $endsAt, int $visitors): Response
     {
-        $lodgings = $repository->findAll(); //changer methode pour trouver les hebergements dispo
-
         return $this->render('lodging/index.html.twig', [
-            'lodgings' => $lodgings
+
         ]);
     }
 
