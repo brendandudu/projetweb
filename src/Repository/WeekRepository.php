@@ -2,6 +2,8 @@
 
 namespace App\Repository;
 
+use App\Entity\Booking;
+use App\Entity\Lodging;
 use App\Entity\Week;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -19,32 +21,33 @@ class WeekRepository extends ServiceEntityRepository
         parent::__construct($registry, Week::class);
     }
 
-    // /**
-    //  * @return Week[] Returns an array of Week objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function findWeeksAvailaible($id)
     {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('w.id', 'ASC')
-            ->setMaxResults(10)
+
+        $qb1 = $this->createQueryBuilder('w'); //récupère les semaines utilisées par l'hebergement
+
+        $usedWeeks = $qb1
+            ->select('w.id')
+            ->join('w.bookings', 'b')
+            ->join('b.lodging', 'l')
+            ->andWhere('l.id = :id')
+            ->setParameter('id', $id)
+            ->orderBy('w.beginsAt', 'ASC')
             ->getQuery()
             ->getResult()
-        ;
-    }
-    */
+            ;
 
-    /*
-    public function findOneBySomeField($value): ?Week
-    {
-        return $this->createQueryBuilder('w')
-            ->andWhere('w.exampleField = :val')
-            ->setParameter('val', $value)
+
+        $qb2 = $this->createQueryBuilder('w'); //récupère les semaines différentes de celles utilisées (not in)
+
+        $availableWeeks = $qb2
+            ->andWhere($qb2->expr()->notIn('w.id', ':weeks'))
+            ->setParameter('weeks', $usedWeeks)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult()
+            ;
+
+        return $availableWeeks;
     }
-    */
+
 }
