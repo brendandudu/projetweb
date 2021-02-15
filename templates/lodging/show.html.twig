@@ -79,7 +79,6 @@
         #re{
             text-align: center;
             font-size: 30px;
-            font-style: bold;
         }
 
         .lignedates{
@@ -107,6 +106,7 @@
             height: 300px;
         }
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
 {% endblock %}
 {% block body %}
 
@@ -124,6 +124,30 @@
 
     </div>
 
+     <input type="text" name="literange" id="literange" />
 
-</div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+<script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js"></script>
+
+
+
+<script>
+  const picker = new Litepicker({
+    element: document.getElementById('literange'),
+    singleMode: false,
+    numberOfMonths: 2,
+    numberOfColumns:2,
+    lang: "fr-FR",
+    minDate: new Date(),
+    resetButton: true,
+    disallowLockDaysInRange: true,
+    lockDays: ['2021-02-14', '2021-02-18']
+  });
+</script>
+
+
 {% endblock %}

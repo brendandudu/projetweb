@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Customer;
+use App\Entity\User;
 use App\Form\RegistrationType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,15 +20,15 @@ class SecurityController extends AbstractController
      */
     public function register(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder)
     {
-        $customer = new Customer();
-        $form = $this->createForm(RegistrationType::class, $customer);
+        $user = new User();
+        $form = $this->createForm(RegistrationType::class, $user);
         $form -> handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()){
-            $hash = $encoder->encodePassword($customer, $customer->getPassword());
-            $customer->setPassword($hash);
+            $hash = $encoder->encodePassword($user, $user->getPassword());
+            $user->setPassword($hash);
 
-            $manager->persist($customer);
+            $manager->persist($user);
             $manager->flush();
 
             return $this->redirectToRoute('home');
