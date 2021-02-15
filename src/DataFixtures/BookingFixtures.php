@@ -20,7 +20,8 @@ class BookingFixtures extends Fixture implements DependentFixtureInterface
 
             $booking->setLodging($lodging);
             $booking->setUser($this->getReference('user_'.$faker->numberBetween(1,20)));
-            $booking->setWeek($this->getReference('week_'.$faker->numberBetween(1,8))); //attention verifier week
+            $booking->setBeginsAt($faker->dateTimeBetween($startDate = '-10 days', $endDate = 'now', $timezone = null));
+            $booking->setEndsAt($faker->dateTimeBetween($startDate = '-10 days', $endDate = 'now', $timezone = null));
             $booking->setBookingState($this->getReference('state_'.$faker->numberBetween(1,5)));
 
             $booking->setTotalOccupiers($faker->numberBetween(1,$lodging->getCapacity()));

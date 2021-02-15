@@ -29,10 +29,6 @@ class Week
      */
     private $endsAt;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="week")
-     */
-    private $bookings;
 
     public function __construct()
     {
@@ -75,10 +71,10 @@ class Week
         return $this;
     }
 
-    public function __toString()
+   /* public function __toString()
     {
         return date_format($this->beginsAt, 'd/m/Y');
-    }
+    }*/
 
     public function getBeginsAt(): ?\DateTimeInterface
     {

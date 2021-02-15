@@ -52,10 +52,16 @@ class Booking
     private $lodging;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Week::class, inversedBy="bookings")
+     * @ORM\Column(type="date")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $week;
+    private $beginsAt;
+
+    /**
+     * @ORM\Column(type="date")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $endsAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=BookingState::class, inversedBy="bookings")
