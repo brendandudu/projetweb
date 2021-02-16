@@ -19,18 +19,20 @@ class LodgingRepository extends ServiceEntityRepository
         parent::__construct($registry, Lodging::class);
     }
 
-    public function findAllDisponibility(\DateTime $begin, \DateTime $end, $capacity)
+    public function findAllDisponibility(\DateTime $begin, \DateTime $end, int $capacity)
     {
         return $this->createQueryBuilder('l')
-            ->select('l.id') //on veut recuperer les hebergements
-            ->select('week.id')  //on veut recuperer les semaines
-            ->from('booking', 'b')
-            ->from('week', 'w')
-            ->where('l.id = b.lodging') // on join heb et reservation (attention si pas dedans recuperer tout)
-            ->andWhere('b.week = w.id') //on join reservation et week
+            ->select('l') //on veut recuperer les hebergements
+            ->where('l.capacity = :capacity')
+            ->setParameter('capacity', $capacity)
+            ->leftJoin('l.bookings', 'b', 'WITH', '(:begin < b.beginsAt AND :end < b.beginsAt) AND (:begin > b.endsAt AND :end > b.endsAt)')
+            ->setParameter('begin', $begin)
+            ->setParameter('end', $end)
             ->getQuery()
             ->getResult()
         ;
+
+
     }
 
     //(SELECT chambre

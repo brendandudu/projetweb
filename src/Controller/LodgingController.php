@@ -54,8 +54,14 @@ class LodgingController extends AbstractController
      */
     public function search(\DateTime $beginsAt, \DateTime $endsAt, int $visitors): Response
     {
-        return $this->render('lodging/index.html.twig', [
+        $lodgings = $this->getDoctrine()
+            ->getRepository(Lodging::class)
+            ->findAllDisponibility($beginsAt, $endsAt, $visitors);
 
+        return $this->render('lodging/index.html.twig', [
+            'lodgings' => $lodgings,
+            'beginsAt' => $beginsAt->format('d\/m\/Y'),
+            'endsAt' => $endsAt->format('d\/m\/Y'),
         ]);
     }
 

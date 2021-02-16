@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LodgingController!{% endblock %}
+{% block title %}Hébergements trouvés{% endblock %}
 
 {% block stylesheets %}
     <link href="{{ asset('css/lodging.css') }}" rel="stylesheet"/>
@@ -9,7 +9,7 @@
 {% block body %}
         <section class="head">
             <div class="container">
-                <h2 class="text-center"><span>Vos résultats</span>01/07/2021 - 08/07/2021</h2>
+                <h2 class="text-center"><span>Hébergements trouvés </span>{% if beginsAt is defined and endsAt is defined %}{{ beginsAt }} - {{ endsAt }}{% endif %}</h2>
             </div>
         </section>
 

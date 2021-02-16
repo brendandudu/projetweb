@@ -31,18 +31,19 @@ class MainController extends AbstractController
                 'widget' => 'single_text',
             ])
 
-            ->add('capacity', IntegerType::class)
+            ->add('visitors', IntegerType::class)
             ->getForm();
 
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
+            $formData = $form->getData();
 
             return $this->redirectToRoute('lodging_search', [
-                'beginsAt' => $request->request->get('beginsAt'),
-                'endsAt' => $request->request->get('endsAt'),
-                'visitors' => $request->request->get('capacity'),
+                'beginsAt' => $formData['beginsAt']->format('Y-m-d'),
+                'endsAt' => $formData['endsAt']->format('Y-m-d'),
+                'visitors' => $formData['visitors'],
             ]);
 
         }

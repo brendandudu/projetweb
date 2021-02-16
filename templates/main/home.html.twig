@@ -17,7 +17,7 @@
                                 <div class="alert alert-danger" role="alert">
                                     {{ form_errors(form.beginsAt) }}
                                     {{ form_errors(form.endsAt) }}
-                                    {{ form_errors(form.capacity) }}
+                                    {{ form_errors(form.visitors) }}
                                 </div>
                             {% endif %}
 
@@ -40,7 +40,7 @@
                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <span class="form-label">Visiteurs</span>
-                                                    {{ form_widget(form.capacity, {'attr': {'required': 'true', 'class' : 'form-control', 'min' : 1 }}) }}
+                                                    {{ form_widget(form.visitors, {'attr': {'required': 'true', 'class' : 'form-control', 'min' : 1 }}) }}
                                                 </div>
                                             </div>
                                         </div>
