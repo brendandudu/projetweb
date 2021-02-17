@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Customer;
+use App\Form\SearchLodgingType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,27 +23,17 @@ class MainController extends AbstractController
      */
     public function home(Request $request): Response
     {
-        $form = $this->createFormBuilder()
-            ->add('beginsAt', DateType::class,[
-                'widget' => 'single_text',
-            ])
 
-            ->add('endsAt', DateType::class,[
-                'widget' => 'single_text',
-            ])
-
-            ->add('capacity', IntegerType::class)
-            ->getForm();
-
+        $form = $this->createForm(SearchLodgingType::class);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
 
             return $this->redirectToRoute('lodging_search', [
-                'beginsAt' => $request->request->get('beginsAt'),
-                'endsAt' => $request->request->get('endsAt'),
-                'visitors' => $request->request->get('capacity'),
+                'beginsAt' => $form->get('beginsAt')->getData(),
+                'endsAt' => $form->get('endsAt')->getData(),
+                'capacity' => $form->get('capacity')->getData(),
             ]);
 
         }

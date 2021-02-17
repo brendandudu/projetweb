@@ -26,36 +26,19 @@ class BookingRepository extends ServiceEntityRepository
             ->where('l.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getDQL()
-            ;
+            ->getDQL();
     }
 
-    // /**
-    //  * @return Booking[] Returns an array of Booking objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('b.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Booking
+    public function findBookedDates($id)
     {
         return $this->createQueryBuilder('b')
-            ->andWhere('b.exampleField = :val')
-            ->setParameter('val', $value)
+            ->select('b.beginsAt', 'b.endsAt')
+            ->join('b.lodging', 'l')
+            ->where('l.id = :id')
+            ->setParameter('id', $id)
             ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->getResult();
     }
-    */
+
 }

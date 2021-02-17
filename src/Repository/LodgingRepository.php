@@ -19,23 +19,36 @@ class LodgingRepository extends ServiceEntityRepository
         parent::__construct($registry, Lodging::class);
     }
 
-    public function findAllDisponibility(\DateTime $begin, \DateTime $end, $capacity)
+    public function findAvailableLodgings(\DateTime $begin, \DateTime $end, $capacity)
     {
+
+        $bookedLodgings = $this->findBookedLodgings($begin, $end, $capacity);
+
+        $qb = $this->createQueryBuilder('l');
+
+        $availableLodgings= $qb
+            ->andWhere($qb->expr()->notIn('l.id', ':lodging'))
+            ->andWhere('l.capacity >= :capacity')
+            ->setParameter('lodging', $bookedLodgings)
+            ->setParameter('capacity', $capacity)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        return $availableLodgings;
+    }
+
+    private function findBookedLodgings(\DateTime $begin, \DateTime $end){
+
         return $this->createQueryBuilder('l')
-            ->select('l.id') //on veut recuperer les hebergements
-            ->select('week.id')  //on veut recuperer les semaines
-            ->from('booking', 'b')
-            ->from('week', 'w')
-            ->where('l.id = b.lodging') // on join heb et reservation (attention si pas dedans recuperer tout)
-            ->andWhere('b.week = w.id') //on join reservation et week
+            ->select('l.id')
+            ->join('l.bookings', 'b')
+            ->where('b.beginsAt <= :end')
+            ->andWhere('b.endsAt >= :start')
+            ->setParameter('end', $end)
+            ->setParameter('start', $begin)
             ->getQuery()
             ->getResult()
         ;
     }
-
-    //(SELECT chambre
-    //FROM reservation
-    //WHERE  TO_DATE(:debut,'dd/mm/yy')  BETWEEN  date_reservation AND date_reservation + nb_nuits
-    //    OR  TO_DATE(:debut,'dd/mm/yy') - 1 + :duree BETWEEN  date_reservation AND date_reservation + nb_nuits)
-
 }

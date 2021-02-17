@@ -124,7 +124,19 @@
 
     </div>
 
-     <input type="text" name="literange" id="literange" />
+
+     {{ form_start(form, {'attr': {'class': 'form'}}) }}
+
+        {{ form_widget(form.beginsAt, {'attr': { 'class' : 'test'}}) }}
+        {{ form_widget(form.endsAt, {'attr': { 'class' : 'test'}}) }}
+
+        {% if app.user %}
+        <button type="submit" class="btn btn-block">Réserver</button>
+        {% else %}
+        <a href="{{ path('app_login') }}" class="btn btn-block"> Vous devez vous connecter pour réserver</a>
+        {% endif %}
+
+     {{ form_end(form) }}
 
 
 {% endblock %}
@@ -136,8 +148,11 @@
 
 
 <script>
+    var test = {{ date|json_encode|raw }};
+    console.log(test);
   const picker = new Litepicker({
-    element: document.getElementById('literange'),
+    element: document.getElementById('booking_beginsAt'),
+    elementEnd: document.getElementById('booking_endsAt'),
     singleMode: false,
     numberOfMonths: 2,
     numberOfColumns:2,
@@ -145,7 +160,7 @@
     minDate: new Date(),
     resetButton: true,
     disallowLockDaysInRange: true,
-    lockDays: ['2021-02-14', '2021-02-18']
+    lockDays: test,
   });
 </script>
 

@@ -9,7 +9,14 @@
 {% block body %}
         <section class="head">
             <div class="container">
-                <h2 class="text-center"><span>Vos résultats</span>01/07/2021 - 08/07/2021</h2>
+                <h2 class="text-center"><span>Vos résultats</span>
+                    {% if begin is defined %}
+                        {{ begin|date('d-m-Y') }} -
+                    {% endif %}
+                    {% if end is defined %}
+                        {{ end|date('d-m-Y') }}
+                    {% endif %}
+                </h2>
             </div>
         </section>
 
