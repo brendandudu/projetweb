@@ -21,6 +21,7 @@ class BookingStateFixtures extends Fixture
 
         foreach ($state as $key => $value){
             $bookingState= new BookingState();
+            $bookingState->setId($key);
             $bookingState->setTypeName($value);
 
             $manager->persist($bookingState);

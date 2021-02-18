@@ -18,7 +18,7 @@ class LodgingFixtures extends Fixture implements DependentFixtureInterface
             $lodging = new Lodging();
 
             $lodging->setLodgingType($this->getReference('type_'. $faker->numberBetween(1,5)));
-            $lodging->setWeeklyPricing($faker->numberBetween(150, 899));
+            $lodging->setNightPrice($faker->numberBetween(45, 120));
             $lodging->setSpace($faker->numberBetween(10, 30));
             $lodging->setInternetAvailable($faker->numberBetween(0, 1));
             $lodging->setCurrentCondition($faker->realText(25));

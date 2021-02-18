@@ -18,14 +18,20 @@ class BookingFixtures extends Fixture implements DependentFixtureInterface
             $booking = new Booking();
             $lodging = $this->getReference('lodging_'.$faker->numberBetween(1,20));
 
+            $beginsAt = $faker->dateTimeBetween($startDate = '-7 days', $endDate = 'now', $timezone = null);
+            $endsAt = $faker->dateTimeBetween($startDate = 'now', $endDate = '+7 days', $timezone = null);
+            $nbNuits = $endsAt->diff($beginsAt)->format("%a");
+
+            $totalPrice = $nbNuits*$lodging->getNightPrice();
+
             $booking->setLodging($lodging);
             $booking->setUser($this->getReference('user_'.$faker->numberBetween(1,20)));
-            $booking->setBeginsAt($faker->dateTimeBetween($startDate = '-10 days', $endDate = 'now', $timezone = null));
-            $booking->setEndsAt($faker->dateTimeBetween($startDate = '-10 days', $endDate = 'now', $timezone = null));
+            $booking->setBeginsAt($beginsAt);
+            $booking->setEndsAt($endsAt);
             $booking->setBookingState($this->getReference('state_'.$faker->numberBetween(1,5)));
 
             $booking->setTotalOccupiers($faker->numberBetween(1,$lodging->getCapacity()));
-            $booking->setTotalPricing($lodging->getWeeklyPricing());
+            $booking->setTotalPricing($totalPrice);
             $booking->setNote($faker->numberBetween(0,5));
             $manager-> persist($booking);
         }

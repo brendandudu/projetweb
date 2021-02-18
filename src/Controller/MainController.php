@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Customer;
+use App\Form\SearchLodgingType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,18 +23,7 @@ class MainController extends AbstractController
      */
     public function home(Request $request): Response
     {
-        $form = $this->createFormBuilder()
-            ->add('beginsAt', DateType::class,[
-                'widget' => 'single_text',
-            ])
-
-            ->add('endsAt', DateType::class,[
-                'widget' => 'single_text',
-            ])
-
-            ->add('visitors', IntegerType::class)
-            ->getForm();
-
+        $form = $this->createForm(SearchLodgingType::class);
 
         $form->handleRequest($request);
 

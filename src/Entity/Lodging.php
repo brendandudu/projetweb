@@ -65,7 +65,7 @@ class Lodging
     /**
      * @ORM\Column(type="float")
      */
-    private $weeklyPricing;
+    private $nightPrice;
 
     /**
      * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="lodging")
@@ -198,14 +198,14 @@ class Lodging
         return $this;
     }
 
-    public function getWeeklyPricing(): ?float
+    public function getNightPrice(): ?float
     {
-        return $this->weeklyPricing;
+        return $this->nightPrice;
     }
 
-    public function setWeeklyPricing(float $weeklyPricing): self
+    public function setNightPrice(float $nightPrice): self
     {
-        $this->weeklyPricing = $weeklyPricing;
+        $this->nightPrice = $nightPrice;
 
         return $this;
     }

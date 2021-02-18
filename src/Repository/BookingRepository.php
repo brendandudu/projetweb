@@ -26,8 +26,18 @@ class BookingRepository extends ServiceEntityRepository
             ->where('l.id = :id')
             ->setParameter('id', $id)
             ->getQuery()
-            ->getDQL()
-            ;
+            ->getDQL();
+    }
+
+    public function findBookedDates($id)
+    {
+        return $this->createQueryBuilder('b')
+            ->select('b.beginsAt', 'b.endsAt')
+            ->join('b.lodging', 'l')
+            ->where('l.id = :id')
+            ->setParameter('id', $id)
+            ->getQuery()
+            ->getResult();
     }
 
 }
