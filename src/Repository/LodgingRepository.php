@@ -35,9 +35,6 @@ class LodgingRepository extends ServiceEntityRepository
 
     }
 
-    //(SELECT chambre
-    //FROM reservation
-    //WHERE  TO_DATE(:debut,'dd/mm/yy')  BETWEEN  date_reservation AND date_reservation + nb_nuits
-    //    OR  TO_DATE(:debut,'dd/mm/yy') - 1 + :duree BETWEEN  date_reservation AND date_reservation + nb_nuits)
+
 
 }
