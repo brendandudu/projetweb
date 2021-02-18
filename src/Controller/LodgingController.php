@@ -38,6 +38,7 @@ class LodgingController extends AbstractController
         ]);
     }
 
+
     /**
      * @Route("/search", name="search")
      */
@@ -55,6 +56,7 @@ class LodgingController extends AbstractController
             'end' => $end,
         ]);
     }
+
 
     /**
      * @Route("/{id}", name="show")
