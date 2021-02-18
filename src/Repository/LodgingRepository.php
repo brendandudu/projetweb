@@ -22,13 +22,34 @@ class LodgingRepository extends ServiceEntityRepository
 
     public function findAvailableLodgings(\DateTime $begin, \DateTime $end, int $capacity)
     {
-        return $this->createQueryBuilder('l')
-            ->where('l.capacity = :capacity')
-            ->leftJoin('l.bookings', 'b', 'WITH', '(:begin <= b.beginsAt AND :end <= b.beginsAt) AND (:begin >= b.endsAt AND :end >= b.endsAt)')
+        $bookedLodgings = $this->findBookedLodgings($begin, $end, $capacity);
+
+        $qb = $this->createQueryBuilder('l');
+
+        $availableLodgings= $qb
+            ->andWhere($qb->expr()->notIn('l.id', ':lodging'))
+            ->andWhere('l.capacity >= :capacity')
+            ->setParameter('lodging', $bookedLodgings)
             ->setParameter('capacity', $capacity)
-            ->setParameter('begin', $begin)
-            ->setParameter('end', $end)
             ->getQuery()
-            ->getResult();
+            ->getResult()
+        ;
+
+        return $availableLodgings;
     }
+
+    private function findBookedLodgings(\DateTime $begin, \DateTime $end){
+
+        return $this->createQueryBuilder('l')
+            ->select('l.id')
+            ->join('l.bookings', 'b')
+            ->where('b.beginsAt <= :end')
+            ->andWhere('b.endsAt >= :start')
+            ->setParameter('end', $end)
+            ->setParameter('start', $begin)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
 }
