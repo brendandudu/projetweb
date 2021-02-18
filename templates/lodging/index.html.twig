@@ -10,7 +10,7 @@
         <section class="head">
             <div class="container">
 
-                <h2 class="text-center"><span>Hébergements trouvés </span>{% if beginsAt is defined and endsAt is defined %}{{ beginsAt }} - {{ endsAt }}{% endif %}</h2>
+                <h2 class="text-center"><span>Hébergements trouvés </span>{% if beginsAt is defined and endsAt is defined %}{{ beginsAt|date('d-m-Y') }} - {{ endsAt|date('d-m-Y') }}{% endif %}</h2>
 
             </div>
         </section>
