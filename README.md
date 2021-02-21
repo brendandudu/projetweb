@@ -10,8 +10,8 @@ Charger les composants avec composer : $ composer install
 
 # BDD
 
-$ php bin/console doctrine:database:create
-$ php bin/console doctrine:migrations:migrate
+Créer la base de donnée : $ php bin/console doctrine:database:create
+Charger la base de donnée : $ php bin/console doctrine:migrations:migrate
 
 # FIXTURES
 
