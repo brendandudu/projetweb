@@ -28,5 +28,7 @@ Password : Admin2021@
 
 Base de donnée pour les Tests : $ php bin/console doctrine:database:create
 
+Avant de lancer les tests pensez à charger les fxtures pour la base de test : $ php bin/console doctrine:fixtures:load --env=dev
+
 Lancer les tests : $ php bin/phpunit
 
