@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <script src="./js/vue.js"></script>
+  <!-- 引入样式 -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <!-- 引入组件库 -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <style>
+    html,body{
+      padding: 0;
+      margin: 0;
+    }
+    .top{
+      width: 100%;
+      background : red;
+      height: 300px;
+      overflow: hidden;
+      position: relative;
+    }
+    .top .top-bg{
+      width: 100%;
+      height: 300px;
+    }
+    .data-container{
+      width: 600px;
+      height: 80px;
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      position: absolute;
+      right: 0;
+      top : 0
+    }
+    .data-container .el-button{
+      width: 100px;
+      height: 40px;
+      border-radius: 20px;
+      border-color: #fcfdfb;
+      background: #fcfdfb;
+      display: flex;
+      align-items: center;
+      padding: 0;
+      justify-content: space-around;
+    }
+
+    .bottom {
+      background: rgb(246, 246, 246);
+      padding-top: 30px;
+      height: 1300px;
+      padding-left: 10%;
+    }
+    .left{
+      margin: 0 50px;
+      float: left;
+      width: 300px;
+      height: 800px;
+      border-radius: 40px;
+      border: 1px solid rgb(216,216,216);
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .left-img-container{
+      display: inline-block;
+      width: 180px;
+      height: 180px;
+      border-radius: 100px;
+      overflow : hidden;
+    }
+    .left .left-item{
+      margin-top: 40px;
+      text-align: left;
+    }
+    .left .left-line{
+      margin-top: 40px;
+      width: 340px;
+      margin-left: -20px;
+      height: 1px;
+      background: rgb(216,216,216);
+    }
+    .right{
+      overflow: hidden;
+    }
+    .right-item{
+      margin-top: 40px;
+      margin-left: 60px;
+      font-size: 20px;
+    }
+    .right-item .item-top{
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+
+    .left-img {
+      width: 180px;
+      height: 180px;
+      display: flex;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+  </style>
+</head>
+<body>
+<div id="app">
+  <div class="top">
+    <img src="./img/topbanner.jpg" class="top-bg">
+    <div class="data-container">
+      <div>
+        A propos
+      </div>
+      <div>
+        Hebergement
+      </div>
+      <div>
+        Services
+      </div>
+      <div>
+        <el-dropdown>
+          <el-button type="primary">
+            <i class="el-icon-s-unfold" style="font-size: 30px;margin-right: 5px;color: rgb(71,73,70)"></i><img src="./img/head.jpg" style="height: 25px;width: 25px">
+          </el-button>
+          <el-dropdown-menu slot="dropdown">
+            <el-dropdown-item>Compte</el-dropdown-item>
+            <el-dropdown-item>Messages</el-dropdown-item>
+            <el-dropdown-item>Voyages</el-dropdown-item>
+            <el-dropdown-item>Enregistres</el-dropdown-item>
+            <el-dropdown-item>Aide</el-dropdown-item>
+            <el-dropdown-item>Deconnection</el-dropdown-item>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+    </div>
+  </div>
+  <div class="bottom">
+    <div class="left">
+      <div class="left-img-container">
+        <img src="./img/head.jpg" class="left-img">
+      </div>
+      <div class="left-item" style="text-align: center;margin-top: 20px;text-decoration: underline">
+        metter a your ia photo
+      </div>
+      <div class="left-item" style="font-weight: bold;text-decoration: underline;margin-top: 60px">
+        Infos personnells
+      </div>
+      <div class="left-item">
+        metter a your ia photo
+      </div>
+      <div class="left-item">
+        metter a your ia photo
+      </div>
+      <div class="left-item">
+        metter a your ia photo
+      </div>
+      <div class="left-line">
+      </div>
+      <div class="left-item" style="font-weight: bold">
+        Messages
+      </div>
+      <div class="left-item" style="font-weight: bold">
+        Messages
+      </div>
+      <div class="left-item" style="font-weight: bold">
+        Messages
+      </div>
+    </div>
+    <div class="right">
+      <h2>Bonjour,bienvenue dans votre compte !</h2>
+      <div style="text-decoration: underline;margin-left: 30px;margin-top: 20px">
+        Modifier le profll
+      </div>
+      <div class="right-container">
+        <div class="right-item">
+          <div class="item-top">Nom</div>
+          <div class="item-bottom">Rakan</div>
+        </div>
+        <div class="right-item">
+          <div class="item-top">Prenom</div>
+          <div class="item-bottom">Tom</div>
+        </div>
+        <div class="right-item">
+          <div class="item-top">Sexe</div>
+          <div class="item-bottom">Homme</div>
+        </div>
+        <div class="right-item">
+          <div class="item-top">Date de naissance</div>
+          <div class="item-bottom">3 Juin 1986</div>
+        </div>
+        <div class="right-item">
+          <div class="item-top">Adresse e-mail</div>
+          <div class="item-bottom">Exemple_Utill@gmail</div>
+        </div>
+        <div class="right-item">
+          <div class="item-top">Number</div>
+          <div class="item-bottom">+33 1 23 45 67 89</div>
+        </div>
+        <div class="right-item">
+          <div class="item-top">Address</div>
+          <div class="item-bottom">Bat.A,90 rue de tolbiac, 702223233</div>
+        </div>
+      </div>
+      <div style="margin-top: 80px;margin-left: 60px;font-size: 18px">
+        @ 2021 RESA,Inc.All rights reserved
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  new Vue({
+    el:'#app',
+    data(){
+      return{
+      }
+    }
+  })
+</script>
+</body>
+</html>
