@@ -77,6 +77,16 @@ class Booking
         $this->bookedAt = new \DateTime();
     }
 
+    /**
+     * @ORM\PrePersist()
+     */
+    public function calculateTotalPrice(): void
+    {
+        $nbNuits = $this->endsAt->diff($this->beginsAt)->format("%a");
+        $total = $nbNuits * $this->getLodging()->getNightPrice();
+        $this->totalPricing = $total;
+    }
+
     public function getId(): ?int
     {
         return $this->id;

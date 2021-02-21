@@ -21,7 +21,7 @@ class DateRangeHelper{
      * Cette méthode retourne les plages de date réservés pour un hébergements et les convertie en string pour LitePicker.js
      */
     public function getBookedDateRangesForJS(Lodging $lodging) : array{
-        $bookedRanges = $this->bookingRepository->findBookedDates($lodging->getId());
+        $bookedRanges = $this->bookingRepository->findBookedDateRanges($lodging->getId());
 
         return  $this->convertToString($bookedRanges);
     }

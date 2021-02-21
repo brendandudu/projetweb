@@ -17,14 +17,20 @@ class LodgingFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 1; $i <= 20; $i++) {
             $lodging = new Lodging();
 
-            $lodging->setLodgingType($this->getReference('type_'. $faker->numberBetween(1,5)));
+            if($i===1){
+                $lodging->setName('test');
+            }
+            else {
+                $lodging->setName($faker->realText(15));
+            }
+
+            $lodging->setLodgingType($this->getReference('type_' . $faker->numberBetween(1, 5)));
             $lodging->setNightPrice($faker->numberBetween(45, 120));
             $lodging->setSpace($faker->numberBetween(10, 30));
             $lodging->setInternetAvailable($faker->numberBetween(0, 1));
             $lodging->setCurrentCondition($faker->realText(25));
             $lodging->setCapacity($faker->numberBetween(1, 8));
-            $lodging->setDescription($faker->realText(400));
-            $lodging->setName($faker->realText(25));
+            $lodging->setDescription($faker->realText(300));
 
             $lodging->setPicture("https://via.placeholder.com/150");
 

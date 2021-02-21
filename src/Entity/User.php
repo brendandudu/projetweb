@@ -31,6 +31,7 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\NotBlank(message="L'email ne peut pas être vide")
      * @Assert\Email()
      */
     private $email;
@@ -38,6 +39,10 @@ class User implements UserInterface
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
+     * @Assert\NotBlank(message="Le mot de passe ne peut pas être vide")
+     * @Assert\Regex(
+     *     pattern="^(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z]).{8}^",
+     *     message="Le mot de passe doit contenir minimum 8 caractères, dont au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial (@,#..)")
      */
     private $password;
 
