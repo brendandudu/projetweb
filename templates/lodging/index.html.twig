@@ -1,6 +1,6 @@
-{% set page_title = "Hébergements trouvés" %}
-
 {% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Hébergements trouvés{% endblock %}
 
 {% block stylesheets %}
     <link href="{{ asset('css/lodging.css') }}" rel="stylesheet"/>
