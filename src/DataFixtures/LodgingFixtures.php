@@ -26,7 +26,7 @@ class LodgingFixtures extends Fixture implements DependentFixtureInterface
             $lodging->setDescription($faker->realText(400));
             $lodging->setName($faker->realText(25));
 
-            $lodging->setPicture("https://via.placeholder.com/150");
+            $lodging->setPicture("https://manager.groupe-bdl.com/web_content/modeles/114-modele-maison-individuelle-a-etage-1.jpg");
 
             $manager->persist($lodging);
 
