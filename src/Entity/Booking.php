@@ -65,7 +65,7 @@ class Booking
 
     /**
      * @ORM\ManyToOne(targetEntity=Week::class, inversedBy="bookings")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=true)
      */
     private $week;
 
