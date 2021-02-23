@@ -29,6 +29,11 @@ class Week
      */
     private $endsAt;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="week")
+     */
+    private $bookings;
+
 
     public function __construct()
     {
