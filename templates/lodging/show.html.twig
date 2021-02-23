@@ -1,116 +1,11 @@
 {% extends 'base.html.twig' %}
 {% block stylesheets %}
-    <style>
-        *::selection{
-            background-color: lightgreen;
-            color: orange;
-        }
-        body{
-            margin: 0px;
-            padding: 0px;
-        }
-        #popup{
-            display: block;
-            position: fixed;
-            z-index: 9;
-            padding-top: 3%;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.8);
-        }
-        #popup_content{
-            margin: 2px auto;
-            position: relative;
-            border: 2px solid rgba(133, 104, 73, 0.9);;
-            width: 50%;
-            height: auto;
-            background-color: white;
-        }
-        #popup_content form *{
-            display: inline-block;
-            /* margin: auto;*/
-        }
 
-        #popup_content img{
-            width: 100%;
-            height: 350px;
-        }
-
-
-        #close_popup{
-            position: absolute;
-            top: 0px;
-            right: 0px;
-        }
-        #close_popup img{
-            width: 20px;
-            height: 25px;
-        }
-        #close_popup img::selection{
-            display: none;
-        }
-        #close_popup:hover, #close_popup:focus{
-            color: #000;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .ligneinformation
-        {
-            display: inline-block;
-            width: 100%;
-            height: 100%;
-
-        }
-        .informations{
-            display: inline-block;
-            float: left;
-            margin-left: 100px;
-        }
-
-        .description{
-            display: block;
-            border: 2px solid black;
-        }
-
-        #re{
-            text-align: center;
-            font-size: 30px;
-        }
-
-        .lignedates{
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .dates{
-            display: block;
-            width: 400px;
-            margin: 0 auto;
-
-        }
-
-        .reserver{
-            float: right;
-        }
-
-        .surligne{
-            text-decoration: underline;
-            font-size: 18px;
-        }
-        .photo{
-            width: 100%;
-            height: 300px;
-        }
-    </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
+    <link rel="stylesheet" href="{{ asset('css/showLodging.css') }}"/>
 {% endblock %}
 {% block body %}
-
-<div class="container mt-5">
+    <!-- <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-8 p-0"><img class="photo" src="{{ lodging.picture }}" id="photo"></div>
         <div class="row border border-dark text-center justify-content-center col-8">
@@ -122,22 +17,73 @@
             <p>RESERVER :</p>
         </div>
 
+    </div> -->
+    {{ form_start(form, {'attr': {'class': 'form'}}) }}
+    <div class="wrapper">
+        <div class="card">
+            <div class="product-left">
+                <div class="header">
+                    <h1>{{ lodging.name }}</h1>
+                    <h2>{{ lodging.lodgingType }}</h2>
+                </div>
+
+                <div class="focus">
+                    <span id="togg1">Description</span>
+                    <span id="togg2">Reservation</span>
+                </div>
+                <!--DESCRIPITON / DETAILS-->
+                <div class="product-main">
+
+                    <div id="d1">
+                        <p class="description">{{ lodging.description }}</p>
+                        <div class="row justify-content-center">
+                            <span class="mr-5">{{ lodging.capacity }} <i class="fa fa-user"></i></span>
+                            <span >{{ lodging.space }}m² <i class="fa fa-arrows-alt"></i></span>
+                            {% if lodging.internetAvailable %}
+                                <span class="ml-5"><i class="fa fa-wifi"></i></span>
+                            {% endif %}
+                        </div>
+                        <div class="product-total">
+                            <h3>Prix/nuit</h3>
+                            <p class=pt-0">{{ lodging.nightPrice }}€</p>
+                        </div>
+                    </div>
+                    <div id="d2">
+                        <div class="date pt-4">
+                            {{ form_widget(form.beginsAt) }}
+                            {{ form_widget(form.endsAt) }}
+                        </div>
+                        <div>
+                            {{ form_widget(form.totalOccupiers, {'attr': { 'class' : 'input-occupiers'}}) }}<i class="fa fa-user"></i>
+                        </div>
+                        <div class="product-btns">
+                            {% if app.user %}
+                                <button type="submit" class="product-add">Réserver</button>
+                            {% else %}
+                                <a href="{{ path('app_login') }}" class="product-add"> Veuillez vous connectez</a>
+                            {% endif %}
+                        </div>
+                        <div class="product-total">
+                            <h3>Prix total</h3>
+                            <p class=pt-0">750€</p>
+                        </div>
+                    </div>
+                </div>
+                <!--CHOOSE PRODUCT DETAILS-->
+                <div class="product-details">
+
+                    <!--PRODUCT TOTAL-->
+
+                </div>
+                <!-- ADD TO CART BUTTON -->
+
+            </div>
+            <div class="product-right">
+                <img src="{{ lodging.picture }}" alt="">
+            </div>
+        </div>
     </div>
-
-
-     {{ form_start(form, {'attr': {'class': 'form'}}) }}
-
-        {{ form_widget(form.beginsAt, {'attr': { 'class' : 'test'}}) }}
-        {{ form_widget(form.endsAt, {'attr': { 'class' : 'test'}}) }}
-
-        {% if app.user %}
-        <button type="submit" class="btn btn-block">Réserver</button>
-        {% else %}
-        <a href="{{ path('app_login') }}" class="btn btn-block"> Vous devez vous connecter pour réserver</a>
-        {% endif %}
-
-     {{ form_end(form) }}
-
+    {{ form_end(form) }}
 
 {% endblock %}
 
@@ -163,6 +109,34 @@
     lockDays: test,
   });
 </script>
+
+    <script>
+        let togg1 = document.getElementById("togg1");
+        let togg2 = document.getElementById("togg2");
+        let d1 = document.getElementById("d1");
+        let d2 = document.getElementById("d2");
+
+        togg1.addEventListener("click", () => {
+            if(getComputedStyle(d1).display === "none"){
+                d1.style.display = "block";
+                togg1.style.borderBottom = "0.2rem solid #fff"
+                d2.style.display = "none"
+                togg2.style.borderBottom = "none"
+            }
+
+        })
+
+        function togg(){
+            if(getComputedStyle(d2).display === "none"){
+                d2.style.display = "block";
+                togg2.style.borderBottom = "0.2rem solid #fff"
+                d1.style.display = "none"
+                togg1.style.borderBottom = "none"
+            }
+        }
+
+        togg2.onclick = togg
+    </script>
 
 
 {% endblock %}
