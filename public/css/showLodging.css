@@ -177,11 +177,11 @@ body {
 }
 
 .date input{
-    padding: 0 1.1rem;
+    padding: 0 1rem;
     height: 32px;
     width: 135px;
     border-radius: 5rem;
-    font-size: 1.2rem;
+    font-size: 1rem;
 }
 
 .input-occupiers{
@@ -194,8 +194,4 @@ body {
 
 .litepicker{
     font-size: 1rem;
-}
-
-.litepicker .is-locked{
-    cursor : not-allowed;
 }
