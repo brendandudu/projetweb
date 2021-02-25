@@ -1,6 +1,7 @@
-{% set page_title = "Accueil" %}
-
 {% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Accueil{% endblock %}
+
 {% block stylesheets %}
     <link href="{{ asset('css/home.css') }}" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">

@@ -1,4 +1,7 @@
 {% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | {{ lodging.name }}{% endblock %}
+
 {% block stylesheets %}
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
