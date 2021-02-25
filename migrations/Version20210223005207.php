@@ -19,8 +19,8 @@ final class Version20210223005207 extends AbstractMigration
 
     public function up(Schema $schema) : void
     {
-        // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE booking CHANGE week_id week_id INT DEFAULT NULL');
+        /* this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE booking CHANGE week_id week_id INT DEFAULT NULL');*/
     }
 
     public function down(Schema $schema) : void
