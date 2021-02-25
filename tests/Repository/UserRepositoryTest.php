@@ -14,7 +14,7 @@ class UserRepositoryTest extends KernelTestCase
         $this->assertEquals(20, $users);
     }
 
-    public function testAdmin()
+    public function testAdminRole()
     {
         $kernel = self::bootKernel();
         $admin = self::$container->get(UserRepository::class)->findOneBy(array('email' => 'admin@gmail.com'));

@@ -15,7 +15,7 @@ class LodgingRepositoryTest extends KernelTestCase
         $this->assertEquals(20, $lodgings);
     }
 
-    public function testAvailaibleLodgings(): void
+    public function testAvailableLodgings(): void
     {
         $kernel = self::bootKernel();
         $lodgings = self::$container->get(LodgingRepository::class)->findAvailableLodgings(new \DateTime('2018/11/20'),new \DateTime('2018/11/25'), 1);
