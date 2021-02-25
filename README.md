@@ -11,6 +11,7 @@ Charger les composants avec composer : $ composer install
 # BDD
 
 Créer la base de donnée : $ php bin/console doctrine:database:create
+
 Charger la base de donnée : $ php bin/console doctrine:migrations:migrate
 
 # FIXTURES
@@ -26,7 +27,9 @@ Password : Admin2021@
 
 # Tests
 
-Base de donnée pour les Tests : $ php bin/console doctrine:database:create
+Créer la base de donnée pour les tests : $ php bin/console doctrine:database:create --env=test
+
+Puis créer la structure des tables :  php bin/console doctrine:schema:update --env=test --force
 
 Avant de lancer les tests pensez à charger les fxtures pour la base de test : $ php bin/console doctrine:fixtures:load --env=dev
 
