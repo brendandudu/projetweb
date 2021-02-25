@@ -64,13 +64,6 @@ class Booking
     private $endsAt;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Week::class, inversedBy="bookings")
-     * @ORM\JoinColumn(nullable=true)
-     */
-    private $week;
-
-
-    /**
      * @ORM\ManyToOne(targetEntity=BookingState::class, inversedBy="bookings")
      * @ORM\JoinColumn(nullable=false)
      */
@@ -190,18 +183,6 @@ class Booking
     public function setLodging(?Lodging $id_lodging): self
     {
         $this->lodging = $id_lodging;
-
-        return $this;
-    }
-
-    public function getWeek(): ?Week
-    {
-        return $this->week;
-    }
-
-    public function setWeek(?Week $week): self
-    {
-        $this->week = $week;
 
         return $this;
     }

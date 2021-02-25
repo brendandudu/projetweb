@@ -14,7 +14,7 @@ class LodgingType
 {
     /**
      * @ORM\Id
-     * @ORM\GeneratedValue
+     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\Column(type="integer")
      */
     private $id;
@@ -32,6 +32,11 @@ class LodgingType
     public function __construct()
     {
         $this->lodgings = new ArrayCollection();
+    }
+
+    public function setId(int $id)
+    {
+        $this->id = $id;
     }
 
     public function getId(): ?int

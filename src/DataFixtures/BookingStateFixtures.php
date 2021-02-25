@@ -11,11 +11,11 @@ class BookingStateFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $state = [
-            1 => "bloqued",
-            2 => "paid",
-            3 => "keys recovered",
-            4 => "canceled",
-            5 => "finished"
+            1 => "Bloqued",
+            2 => "Paid",
+            3 => "Keys recovered",
+            4 => "Canceled",
+            5 => "Finished"
         ];
 
 

@@ -13,16 +13,17 @@ class LodgingTypeFixtures extends Fixture
     {
 
         $types = [
-            1 => "chalet",
-            2 => "bungalow",
-            3 => "mobil-home",
-            4 => "flat",
-            5 => "house",
+            1 => "Chalet",
+            2 => "Bungalow",
+            3 => "Mobil-home",
+            4 => "Flat",
+            5 => "House",
         ];
 
 
         foreach ($types as $key => $value){
             $lodgingType = new LodgingType();
+            $lodgingType->setId($key);
             $lodgingType->setTypeName($value);
 
             $manager->persist($lodgingType);
