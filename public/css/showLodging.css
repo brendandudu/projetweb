@@ -12,6 +12,7 @@ COLORS - SAND: #CCC5B9, DARK BROWN: #252422, BLUE: #577590
 
 html {
     font-family: "Roboto", sans-serif;
+    font-size: 1rem;
     color: #fff;
 }
 
@@ -26,7 +27,7 @@ body {
 }
 
 .card {
-    max-width: 65rem;
+    max-width: 55rem;
     position: relative;
     display: flex;
     top: 50%;
@@ -38,7 +39,7 @@ body {
 
 .product-left {
     height: 100%;
-    width: 70%;
+    width: 60%;
     padding: 2rem 2rem 0.5rem 2rem;
     border-top-left-radius: 0.5rem;
     border-bottom-left-radius: 0.5rem;
@@ -137,9 +138,10 @@ body {
 /* Add to cart button  */
 
 .product-add {
+    font-size: 0.8rem;
     border: 1px solid #fff;
     width: 100%;
-    padding: 1.5rem;
+    padding: 1.2rem;
     border-radius: 5rem;
     transition: all 0.5s ease-out;
 }
@@ -150,7 +152,7 @@ body {
 }
 
 .product-btns a {
-    margin-top: 80px;
+    margin-top: 60px;
     text-decoration: none;
     color: #fff;
     text-transform: uppercase;
@@ -161,12 +163,12 @@ body {
 
 #d2{
     display: none;
-    height: 290px;
+    height: 310px;
 }
 
 #d1{
     font-size: 13px;
-    height: 290px;
+    height: 310px;
     padding-bottom: 2rem;
 }
 
@@ -177,7 +179,7 @@ body {
 .date input{
     padding: 0 1.1rem;
     height: 32px;
-    width: 49.3%;
+    width: 135px;
     border-radius: 5rem;
     font-size: 1.2rem;
 }
@@ -191,5 +193,9 @@ body {
 }
 
 .litepicker{
-    font-size: 1.1rem;
+    font-size: 1rem;
+}
+
+.litepicker .is-locked{
+    cursor : not-allowed;
 }

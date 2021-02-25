@@ -75,7 +75,6 @@
         </div>
     </div>
     {{ form_end(form) }}
->>>>>>> reservation
 
 
 {% endblock %}
@@ -87,7 +86,7 @@
 
 
 <script>
-    var dateRanges {{ dates|json_encode|raw }};
+    let dateRanges = {{ dates|json_encode|raw }};
 
   const picker = new Litepicker({
     element: document.getElementById('booking_beginsAt'),
