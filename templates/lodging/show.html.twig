@@ -3,7 +3,6 @@
 {% block title %}{{ parent() }} | {{ lodging.name }}{% endblock %}
 
 {% block stylesheets %}
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
     <link rel="stylesheet" href="{{ asset('css/showLodging.css') }}"/>
 {% endblock %}
@@ -88,7 +87,7 @@
 
 
 <script>
-    var test = {{ dates|json_encode|raw }};
+    var dateRanges {{ dates|json_encode|raw }};
 
   const picker = new Litepicker({
     element: document.getElementById('booking_beginsAt'),
@@ -100,7 +99,7 @@
     minDate: new Date(),
     resetButton: true,
     disallowLockDaysInRange: true,
-    lockDays: test,
+    lockDays: dateRanges,
   });
 </script>
 

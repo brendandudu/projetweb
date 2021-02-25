@@ -25,20 +25,29 @@ class UserFixtures extends Fixture
             $user = new User();
 
             if($i === 1){ //Admin
-                $user -> setEmail('admin@gmail.com');
-                $user ->setRoles(['ROLE_ADMIN']);
-                $user -> setFirstName('admin');
-                $user -> setLastName('admin');
-                $user -> setPassword($this->encoder->encodePassword($user, 'admin'));
+                $email = 'admin@gmail.com';
+                $roles = ['ROLE_ADMIN'];
+                $firstName = 'admin';
+                $lastName = 'admin';
+                $password = 'Admin2021@';
             }
             else {
-                $user -> setEmail($faker->email);
-                $user->setRoles(['ROLE_USER']);
-                $user -> setFirstName($faker->firstName);
-                $user -> setLastName($faker->lastName);
-                $user -> setPassword($this->encoder->encodePassword($user, 'azerty'));
+                if($i === 2)
+                    $email = 'user@gmail.com';
+                else
+                    $email = $faker->email;
+
+                $roles = ['ROLE_USER'];
+                $firstName = $faker->firstName;
+                $lastName = $faker->lastName;
+                $password = 'Resa2021@';
             }
 
+            $user ->setEmail($email);
+            $user ->setRoles($roles);
+            $user -> setFirstName($firstName);
+            $user -> setLastName($lastName);
+            $user -> setPassword($this->encoder->encodePassword($user, $password));
 
             $manager->persist($user);
 

@@ -71,17 +71,9 @@ class LodgingController extends AbstractController
 
         if($form->isSubmitted() && $form->isValid()){
 
-            $beginsAt = $form->get('beginsAt')->getData();
-            $endsAt = $form->get('endsAt')->getData();
-
-            $nbNuits = $endsAt->diff($beginsAt)->format("%a");
-            $totalPrice = $nbNuits*$lodging->getNightPrice();
-            $booking->setTotalPricing($totalPrice);
-
             $booking->setUser($this->getUser());
             $booking->setLodging($lodging);
             $booking->setBookingState($bookingStateRepository->find(1));
-            $booking->setNote(2);
 
             $manager->persist($booking);
             $manager->flush();

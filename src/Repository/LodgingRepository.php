@@ -24,10 +24,14 @@ class LodgingRepository extends ServiceEntityRepository
     {
         $bookedLodgings = $this->findBookedLodgings($begin, $end, $capacity);
 
+        if (empty($bookedLodgings)){
+            return  $this->findAll();
+        }
+
         $qb = $this->createQueryBuilder('l');
 
         $availableLodgings= $qb
-            ->andWhere($qb->expr()->notIn('l.id', ':lodging'))
+            ->where($qb->expr()->notIn('l.id', ':lodging'))
             ->andWhere('l.capacity >= :capacity')
             ->setParameter('lodging', $bookedLodgings)
             ->setParameter('capacity', $capacity)
@@ -38,7 +42,7 @@ class LodgingRepository extends ServiceEntityRepository
         return $availableLodgings;
     }
 
-    private function findBookedLodgings(\DateTime $begin, \DateTime $end){
+    private function findBookedLodgings(\DateTime $begin, \DateTime $end): ?array {
 
         return $this->createQueryBuilder('l')
             ->select('l.id')
