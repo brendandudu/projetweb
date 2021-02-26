@@ -110,11 +110,12 @@
   <div class="top">
     <img src="./img/topbanner.jpg" class="top-bg">
     <div class="data-container">
+      <div style="float: left;margin-left:100px;"><img src="./img/logo.png" style="height: 25px;width: 25px"></div>
       <div>
-        A propos
+        À propos
       </div>
       <div>
-        Hebergement
+        Hébergement
       </div>
       <div>
         Services
@@ -128,9 +129,9 @@
             <el-dropdown-item>Compte</el-dropdown-item>
             <el-dropdown-item>Messages</el-dropdown-item>
             <el-dropdown-item>Voyages</el-dropdown-item>
-            <el-dropdown-item>Enregistres</el-dropdown-item>
+            <el-dropdown-item>Enregistrés</el-dropdown-item>
             <el-dropdown-item>Aide</el-dropdown-item>
-            <el-dropdown-item>Deconnection</el-dropdown-item>
+            <el-dropdown-item>Déconnection</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown>
       </div>
@@ -142,19 +143,19 @@
         <img src="./img/head.jpg" class="left-img">
       </div>
       <div class="left-item" style="text-align: center;margin-top: 20px;text-decoration: underline">
-        metter a your ia photo
+        mettre à jour la photo
       </div>
       <div class="left-item" style="font-weight: bold;text-decoration: underline;margin-top: 60px">
         Infos personnells
       </div>
       <div class="left-item">
-        metter a your ia photo
+        Connexion et sécurité
       </div>
       <div class="left-item">
-        metter a your ia photo
+        Palements et versements
       </div>
       <div class="left-item">
-        metter a your ia photo
+        Notifications
       </div>
       <div class="left-line">
       </div>
@@ -162,14 +163,14 @@
         Messages
       </div>
       <div class="left-item" style="font-weight: bold">
-        Messages
+        Voyages
       </div>
       <div class="left-item" style="font-weight: bold">
-        Messages
+        Enregistrés
       </div>
     </div>
     <div class="right">
-      <h2>Bonjour,bienvenue dans votre compte !</h2>
+      <h2>Bonjour, bienvenue dans votre compte !</h2>
       <div style="text-decoration: underline;margin-left: 30px;margin-top: 20px">
         Modifier le profll
       </div>
@@ -182,10 +183,22 @@
           <div class="item-top">Prenom</div>
           <div class="item-bottom">Tom</div>
         </div>
+
         <div class="right-item">
-          <div class="item-top">Sexe</div>
-          <div class="item-bottom">Homme</div>
+          {#          <div class="item-top">Sexe</div>#}
+          {#          <div class="item-bottom">Homme</div>#}
+          <el-dropdown>
+            <el-button type="primary">
+              <div class="item-top">Sexe</div>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>Homme</el-dropdown-item>
+              <el-dropdown-item>Femme</el-dropdown-item>
+              <el-dropdown-item>Autre</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
         </div>
+
         <div class="right-item">
           <div class="item-top">Date de naissance</div>
           <div class="item-bottom">3 Juin 1986</div>
@@ -194,15 +207,74 @@
           <div class="item-top">Adresse e-mail</div>
           <div class="item-bottom">Exemple_Utill@gmail</div>
         </div>
+
+
         <div class="right-item">
           <div class="item-top">Number</div>
           <div class="item-bottom">+33 1 23 45 67 89</div>
+          <el-dropdown>
+            <el-button type="primary">
+              <div class="item-top">numéro de téléphone</div>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>：Allemagne(+49)</el-dropdown-item>
+              <el-dropdown-item>：Afrique du sud(+27)</el-dropdown-item>
+              <el-dropdown-item>：Belgique(+32)</el-dropdown-item>
+              <el-dropdown-item>：Chine(+86)</el-dropdown-item>
+              <el-dropdown-item>：ÉtatsUnis(+1)</el-dropdown-item>
+              <el-dropdown-item>：France(+33)</el-dropdown-item>
+              <el-dropdown-item>：Grèce(+30)</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+
+        <div class="right-item">
+          <div class="item-top">Address Pays</div>
+          <el-dropdown>
+            <el-button type="primary">
+              <div class="item-top">numéro de téléphone</div>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>：Allemagne</el-dropdown-item>
+              <el-dropdown-item>：Afrique du sud</el-dropdown-item>
+              <el-dropdown-item>：Belgique</el-dropdown-item>
+              <el-dropdown-item>：Chine</el-dropdown-item>
+              <el-dropdown-item>：ÉtatsUnis</el-dropdown-item>
+              <el-dropdown-item>：France</el-dropdown-item>
+              <el-dropdown-item>：Grèce</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+
+
+        {#        <div class="right-item">#}
+        {#          <div class="item-top">Address</div>#}
+        {#          <div class="item-bottom">Bat.A,90 rue de tolbiac, 702223233</div>#}
+        {#        </div>#}
+        <div class="right-item">
+          <div class="item-top">Address Postale</div>
+          <div class="item-bottom">ex:27 rue Jean Goujon</div>
         </div>
         <div class="right-item">
-          <div class="item-top">Address</div>
-          <div class="item-bottom">Bat.A,90 rue de tolbiac, 702223233</div>
+          <div class="item-top">Appartment,bàtiment(facultatif)</div>
+          <div class="item-bottom"></div>
         </div>
+        <div class="right-item">
+          <div style="float: left;">
+            <div class="item-top">Code Pastale</div>
+            <div class="item-bottom"></div>
+          </div>
+          <div style="float: left;">
+            <div class="item-top">Ville</div>
+            <div class="item-bottom"></div>
+          </div>
+        </div>
+
+        <button style="float: right;">Enregistrer</button>
       </div>
+
+
+
       <div style="margin-top: 80px;margin-left: 60px;font-size: 18px">
         @ 2021 RESA,Inc.All rights reserved
       </div>
@@ -221,3 +293,4 @@
 </script>
 </body>
 </html>
+
