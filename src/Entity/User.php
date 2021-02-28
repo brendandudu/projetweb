@@ -77,6 +77,11 @@ class User implements UserInterface
     private $bookings;
 
     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
+
+    /**
      * @ORM\PrePersist
      */
     public function setCreatedAtValue(): void
@@ -93,13 +98,6 @@ class User implements UserInterface
     {
         $this->bookings = new ArrayCollection();
     }
-
-    /**
-     * @ORM\Column(type="boolean")
-     */
-    private $isVerified = false;
-
-
 
     public function getId(): ?int
     {

@@ -13,6 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
+use Symfony\Component\Mime\Address;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\Mailer\MailerInterface;
 use SymfonyCasts\Bundle\VerifyEmail\VerifyEmailHelperInterface;
@@ -39,18 +40,19 @@ class SecurityController extends AbstractController
         if($form->isSubmitted() && $form->isValid()){
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
-            $email = $user->getEmail();
 
             $manager->persist($user);
             $manager->flush();
 
-            $this->emailVerifier->sendEmailConfirmation('confirmation_inscription', $user,
-                (new TemplatedEmail())
-                    ->from('betview.conseil@gmail.com')
-                    ->to($email)
-                    ->subject('Veuillez confirmer votre compte Baya Musicothérapie')
-                    ->htmlTemplate('security/confirm_email.html.twig')
-            );
+            $templatedEmail = new TemplatedEmail();
+            $templatedEmail->from(new Address('betview.conseil@gmail.com', 'Projet RESA (NE PAS RÉPONDRE)'))
+            ->to($user->getEmail())
+            ->subject('Veuillez confirmer votre compte RESA')
+            ->htmlTemplate('security/confirm_email.html.twig');
+
+            $this->emailVerifier->sendEmailConfirmation('confirmation_inscription', $user, $templatedEmail);
+
+            $this->addFlash('success', 'Veuillez vous connecter puis cliquer sur le lien qui vous a été envoyé par mail pour confirmer votre compte.');
 
             return $this->redirectToRoute('home');
         }
@@ -73,7 +75,7 @@ class SecurityController extends AbstractController
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $exception->getReason());
 
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('security_registration');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
