@@ -26,16 +26,19 @@ class Lodging
     /**
      * @ORM\ManyToOne(targetEntity=LodgingType::class, inversedBy="lodgings")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank
      */
     private $lodgingType;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $name;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank
      * @Assert\Positive(
      *      message = "Le nombre de visiteurs doit être supérieur à 0 !"
      * )
@@ -44,6 +47,8 @@ class Lodging
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank
+     * @Assert\Positive
      */
     private $space;
 
@@ -54,16 +59,20 @@ class Lodging
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank
      */
     private $currentCondition;
 
     /**
      * @ORM\Column(type="string", length=500)
+     * @Assert\NotBlank
      */
     private $description;
 
     /**
      * @ORM\Column(type="float")
+     * @Assert\NotBlank
+     * @Assert\Positive
      */
     private $nightPrice;
 
@@ -74,6 +83,7 @@ class Lodging
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank
      */
     private $picture;
 

@@ -21,45 +21,58 @@ class Booking
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\NotBlank
      */
     private $bookedAt;
 
     /**
      * @ORM\Column(type="float")
+     * @AssertNotBlank
+     * @Assert\Positive
      */
     private $totalPricing;
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\NotBlank
+     * @Assert\Positive
      */
     private $totalOccupiers;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\NotBlank
+     * @Assert\PositiveOrZero
      */
     private $note;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="bookings")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank
      */
     private $User;
 
     /**
      * @ORM\ManyToOne(targetEntity=Lodging::class, inversedBy="bookings")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotBlank
      */
     private $lodging;
 
     /**
      * @ORM\Column(type="date")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull
+     * @Assert\GreaterThan("Today")
      */
     private $beginsAt;
 
     /**
      * @ORM\Column(type="date")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\NotNull
+     * @Assert\GreaterThan(propertyPath="beginsAt")
      */
     private $endsAt;
 
