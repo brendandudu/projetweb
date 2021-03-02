@@ -45,9 +45,11 @@ class LodgingCrudController extends AbstractCrudController
             TextField::new('currentCondition')->setTextAlign('center'),
             IntegerField::new('space')->setTextAlign('center'),
             BooleanField::new('internetAvailable')->setLabel('Internet'),
-            IntegerField::new('weeklyPricing')->setLabel('Price'),
+            IntegerField::new('nightPrice')->setLabel('Price'),
             IntegerField::new('capacity')->setTextAlign('center'),
             AssociationField::new('lodgingType')->setLabel('Type'),
+            NumberField::new('lat')->setFormTypeOptions(['scale' => 8]),
+            NumberField::new('lon')->setFormTypeOptions(['scale' => 8]),
         ];
 
         if($pageName == Crud::PAGE_INDEX || $pageName == Crud::PAGE_DETAIL)

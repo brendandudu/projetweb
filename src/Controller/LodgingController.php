@@ -49,6 +49,7 @@ class LodgingController extends AbstractController
         $capacity = $request->query->get('visitors');
 
         $lodgings = $repository->findAvailableLodgings($begin, $end, $capacity);
+
         return $this->render('lodging/index.html.twig', [
             'lodgings' => $lodgings,
             'beginsAt' => $begin,

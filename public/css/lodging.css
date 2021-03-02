@@ -13,7 +13,6 @@ body{
 }
 .head{
     float:left;width:100%;
-    margin-top:
 }
 .search-box{width:90%; margin:0 auto 40px; box-shadow:10px 13px 0 rgba(0,0,0,0.2);}
 .listing-block{background:#fff; height:500px; padding-top:20px; overflow-y:scroll;}
@@ -42,3 +41,8 @@ a:hover{
 }
 .grow { transition: all .2s ease-in-out; }
 .grow:hover { transform: scale(1.02); box-shadow: 1px 1px 12px #555;}
+
+/*OpenStreetMap*/
+.marker.is-active .leaflet-popup-content-wrapper{
+    background-color: #0f6674;
+}

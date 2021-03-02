@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\BookingRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=BookingRepository::class)
@@ -27,7 +28,7 @@ class Booking
 
     /**
      * @ORM\Column(type="float")
-     * @AssertNotBlank
+     * @Assert\NotBlank
      * @Assert\Positive
      */
     private $totalPricing;
@@ -51,7 +52,7 @@ class Booking
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotBlank
      */
-    private $User;
+    private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Lodging::class, inversedBy="bookings")
@@ -178,12 +179,12 @@ class Booking
 
     public function getUser(): ?User
     {
-        return $this->User;
+        return $this->user;
     }
 
     public function setUser(?User $idUser): self
     {
-        $this->User = $idUser;
+        $this->user = $idUser;
 
         return $this;
     }

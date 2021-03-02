@@ -98,6 +98,16 @@ class Lodging
      */
     private $updatedAt;
 
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=8)
+     */
+    private $lat;
+
+    /**
+     * @ORM\Column(type="decimal", precision=11, scale=8)
+     */
+    private $lon;
+
     public function setPictureFile(?File $picture = null)
     {
         $this->pictureFile = $picture;
@@ -277,5 +287,29 @@ class Lodging
     public function __toString()
     {
         return $this->name;
+    }
+
+    public function getLat(): ?string
+    {
+        return $this->lat;
+    }
+
+    public function setLat(string $lat): self
+    {
+        $this->lat = $lat;
+
+        return $this;
+    }
+
+    public function getLon(): ?string
+    {
+        return $this->lon;
+    }
+
+    public function setLon(string $lon): self
+    {
+        $this->lon = $lon;
+
+        return $this;
     }
 }

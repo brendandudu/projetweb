@@ -3,7 +3,7 @@
 
 {% block body %}
     <a href="{{ path('lodging_show', { 'id' : lodging.id }) }}">
-    <div class="media grow">
+    <div class="media grow js-marker" data-lat="{{ lodging.lat }}" data-lon="{{ lodging.lon }}" data-price="{{ lodging.nightPrice }}">
         <div class="fav-box"><i class="fa fa-heart-o" aria-hidden="true"></i>
         </div>
         <img class="d-flex align-self-start" src="https://images.pexels.com/photos/186077/pexels-photo-186077.jpeg?h=350&auto=compress&cs=tinysrgb" alt="Generic placeholder image">
