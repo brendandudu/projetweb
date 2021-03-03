@@ -1,0 +1,46 @@
+#Titres translation
+homeTitle: "Home"
+registerTitle: "Register"
+loginTitle: "Login"
+lodgingsIndexTitle: "Lodgings found"
+
+#Navbar translation
+
+about: "About us"
+lodgings: "Lodgings"
+services: "Services"
+
+#Home translation
+
+arrival: "Arrival"
+departure: "Departure"
+visitors: "Visitors"
+availabilities: "See what's available"
+
+#Lodgings translation
+
+lodgingsFound: "Lodgings found"
+description: "Description"
+booking: "Booking"
+pricePerNight: "Price per night"
+
+#Login / register translation
+
+login: "Login"
+register: "Register"
+logout: "Log out"
+registeredAs: "You are registered as"
+rememberMe: "Remember me"
+password: "Password"
+createAccount: "Create an account"
+firstName: "First name"
+lastName: "Last name"
+repeatPassword: "Repeat password"
+
+#LodgingType traduction
+
+Chalet: "Chalet"
+Bungalow: "Bungalow"
+Mobil-home: "Mobil-home"
+House: "House"
+Flat: "Flat"

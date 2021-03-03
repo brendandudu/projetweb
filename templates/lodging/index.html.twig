@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} | Hébergements trouvés{% endblock %}
+{% block title %}{{ parent() }} | {{ "lodgingsIndexTitle" | trans }}{% endblock %}
 
 {% block stylesheets %}
     <link href="{{ asset('css/lodging.css') }}" rel="stylesheet"/>
@@ -10,7 +10,7 @@
         <section class="head">
             <div class="container">
 
-                <h2 class="text-center"><span>Hébergements trouvés </span>{% if beginsAt is defined and endsAt is defined %}{{ beginsAt|date('d-m-Y') }} - {{ endsAt|date('d-m-Y') }}{% endif %}</h2>
+                <h2 class="text-center"><span>{{ "lodgingsFound" | trans }} </span>{% if beginsAt is defined and endsAt is defined %}{{ beginsAt|date('d-m-Y') }} - {{ endsAt|date('d-m-Y') }}{% endif %}</h2>
 
             </div>
         </section>

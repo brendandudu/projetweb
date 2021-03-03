@@ -26,6 +26,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
  */
 class LodgingController extends AbstractController
 {
+
     /**
      * @Route("/", name="index")
      */

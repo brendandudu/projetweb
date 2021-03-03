@@ -15,12 +15,12 @@
             <div class="product-left">
                 <div class="header">
                     <h1>{{ lodging.name }}</h1>
-                    <h2>{{ lodging.lodgingType }}</h2>
+                    <h2>{{ lodging.lodgingType | trans }}</h2>
                 </div>
 
                 <div class="focus">
-                    <span id="togg1">Description</span>
-                    <span id="togg2">Reservation</span>
+                    <span id="togg1">{{ "description" | trans }}</span>
+                    <span id="togg2">{{ "booking" | trans }}</span>
                 </div>
                 <!--DESCRIPITON / DETAILS-->
                 <div class="product-main">
@@ -35,7 +35,7 @@
                             {% endif %}
                         </div>
                         <div class="product-total">
-                            <h3>Prix/nuit</h3>
+                            <h3>{{ "pricePerNight" | trans }}</h3>
                             <p class=pt-0">{{ lodging.nightPrice }}€</p>
                         </div>
                     </div>

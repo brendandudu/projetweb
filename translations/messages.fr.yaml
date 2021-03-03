@@ -1,0 +1,46 @@
+#Titres traduction
+homeTitle: "Accueil"
+registerTitle: "S'inscrire"
+loginTitle: "Se connecter"
+lodgingsIndexTitle: "Hébergements trouvés"
+
+#Navbar traduction
+
+about: "À propos"
+lodgings: "Hébergements"
+services: "Services"
+
+#Home traduction
+
+arrival: "Arrivée"
+departure: "Départ"
+visitors: "Visiteurs"
+availabilities: "Voir disponibilités"
+
+#Lodgings traduction
+
+lodgingsFound: "Hébergements trouvés"
+description: "Description"
+booking: "Réservation"
+pricePerNight: "Prix/nuit"
+
+#Login / register traduction
+
+login: "Se connecter"
+register: "S'inscrire"
+logout: "Se déconnecter"
+registeredAs: "Vous êtes connecté en tant que "
+rememberMe: "Se souvenir de moi"
+password: "Mot de passe"
+createAccount: "Créer votre compte"
+firstName: "Prénom"
+lastName: "Nom de famille"
+repeatPassword: "Répéter mot de passe"
+
+#LodgingType traduction
+
+Chalet: "Chalet"
+Bungalow: "Bungalow"
+Mobil-home: "Mobil-home"
+House: "Maison"
+Flat: "Appartement"

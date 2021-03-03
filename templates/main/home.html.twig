@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} | Accueil{% endblock %}
+{% block title %}{{ parent() }} | {{ "homeTitle" | trans }}{% endblock %}
 
 {% block stylesheets %}
     <link href="{{ asset('css/home.css') }}" rel="stylesheet"/>
@@ -30,19 +30,19 @@
                                         <div class="row no-margin">
                                             <div class="col-md-5">
                                                 <div class="form-group">
-                                                    <span class="form-label">Arrivée</span>
+                                                    <span class="form-label">{{ "arrival"| trans }}</span>
                                                     {{ form_widget(form.beginsAt, {'attr': {'required': 'true', 'class' : 'form-control'}}) }}
                                                 </div>
                                             </div>
                                             <div class="col-md-5">
                                                 <div class="form-group">
-                                                    <span class="form-label">Départ</span>
+                                                    <span class="form-label">{{ "departure"| trans }}</span>
                                                     {{ form_widget(form.endsAt, {'attr': {'required': 'true', 'class' : 'form-control'}}) }}
                                                 </div>
                                             </div>
                                             <div class="col-md-2">
                                                 <div class="form-group">
-                                                    <span class="form-label">Visiteurs</span>
+                                                    <span class="form-label">{{ "visitors"| trans }}</span>
                                                     {{ form_widget(form.visitors, {'attr': {'required': 'true', 'class' : 'form-control', 'min' : 1 }}) }}
                                                 </div>
                                             </div>
@@ -50,7 +50,7 @@
                                     </div>
                                     <div class="col-md-4">
                                         <div class="form-btn">
-                                            <button type="submit" class="submit-btn">Voir disponibilités</button>
+                                            <button type="submit" class="submit-btn">{{ "availabilities"| trans }}</button>
                                         </div>
                                     </div>
                                 </div>
@@ -70,7 +70,7 @@
                     <div class="card">
                         <img src="https://www.chalets-bayrou.com/wp-content/uploads/2020/03/realisation-chalet-a-serre-chevalier-chalets-bayrou86-1-1024x483.jpg" alt="" class="card-img-top" height="230px">
                         <div class="card-body">
-                            <h5 class="card-title">Chalet</h5>
+                            <h5 class="card-title">{{ "Chalet" | trans }}</h5>
                             <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut eum similique repellat a laborum, rerum voluptates ipsam eos quo tempore iusto dolore modi dolorum in pariatur. Incidunt repellendus praesentium quae!</p>
                         </div>
                     </div>
@@ -79,7 +79,7 @@
                     <div class="card">
                         <img src="https://www.baiaholiday.com/images/w-1900/h-1200/zc-1/q-80/p?src=https%3A%2F%2Fwww.baiaholiday.com%2Fuploads%2Fimage%2F1560980171756.jpg" alt="" class="card-img-top" height="230px">
                         <div class="card-body">
-                            <h5 class="card-title">Bungalow</h5>
+                            <h5 class="card-title">{{ "Bungalow" | trans }}</h5>
                             <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut eum similique repellat a laborum, rerum voluptates ipsam eos quo tempore iusto dolore modi dolorum in pariatur. Incidunt repellendus praesentium quae!</p>
                         </div>
                     </div>
@@ -88,7 +88,7 @@
                     <div class="card">
                         <img src="https://www.mobilhome-neuf-occasion.fr/images/Image/OHARA-10641064.JPG" alt="" class="card-img-top" height="230px">
                         <div class="card-body">
-                            <h5 class="card-title">Mobil-home</h5>
+                            <h5 class="card-title">{{ "Mobil-home" | trans }}</h5>
                             <p class="card-text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ut eum similique repellat a laborum, rerum voluptates ipsam eos quo tempore iusto dolore modi dolorum in pariatur. Incidunt repellendus praesentium quae!</p>
                         </div>
                     </div>
