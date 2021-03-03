@@ -1,4 +1,6 @@
-<link href="{{ asset('css/navbar.css') }}" rel="stylesheet"/>
+{% set route = app.request.attributes.get('_route') %}
+{% set route_params = app.request.attributes.get('_route_params') %}
+{% set params = route_params|merge(app.request.query.all) %}
 
 <nav class="nav">
     <div class="container">
@@ -12,11 +14,17 @@
                 <li><a href="{{ path('lodging_index')}}">Hébergements</a></li>
                 <li><a href="#">Services</a></li>
 
-            {% if app.user %}
-                <li><a href="{{ path('app_logout')}}"><i class="fas fa-sign-out-alt"></i></a></li>
+            {% if app.request.locale == 'fr' %}
+                <li><a href="{{ path(route, params|merge({ _locale: 'en' })) }}"><i class="fas fa-globe"></i></a></li>
+
+            {% elseif app.request.locale == 'en' %}
+                <li><a href="{{ path(route, params|merge({ _locale: 'fr' })) }}"><i class="flag-icon flag-icon-fr"></i></a></li>
             {% endif %}
 
-            {% if not app.user %}
+            {% if app.user %}
+                <li><a href="{{ path('app_logout')}}"><i class="fas fa-sign-out-alt"></i></a></li>
+
+            {% elseif not app.user %}
                 <li><a href="{{ path('app_login')}}"><i class="fas fa-sign-in-alt"></i></a></li>
             {% endif %}
             
