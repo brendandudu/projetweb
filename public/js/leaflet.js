@@ -15,6 +15,7 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
 let bounds = [];
 let activePopup = null; //la popup active
 
+
 /*ADD POPUPS & EVENT*/
 Array.from(document.querySelectorAll('.js-marker')).forEach((item) => {
 

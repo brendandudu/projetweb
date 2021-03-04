@@ -106,6 +106,16 @@ class Lodging
      */
     private $lon;
 
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $fullAddress;
+
+    /**
+     * @ORM\Column(type="string", length=8)
+     */
+    private $postalCode;
+
     public function setPictureFile(?File $picture = null)
     {
         $this->pictureFile = $picture;
@@ -307,6 +317,30 @@ class Lodging
     public function setLon(string $lon): self
     {
         $this->lon = $lon;
+
+        return $this;
+    }
+
+    public function getFullAddress(): ?string
+    {
+        return $this->fullAddress;
+    }
+
+    public function setFullAddress(string $fullAddress): self
+    {
+        $this->fullAddress = $fullAddress;
+
+        return $this;
+    }
+
+    public function getPostalCode(): ?int
+    {
+        return $this->postalCode;
+    }
+
+    public function setPostalCode(int $postalCode): self
+    {
+        $this->postalCode = $postalCode;
 
         return $this;
     }

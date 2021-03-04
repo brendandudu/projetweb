@@ -24,11 +24,11 @@ class LodgingRepository extends ServiceEntityRepository
     {
         $bookedLodgings = $this->findBookedLodgings($postalCodesArray, $begin, $end);
 
+        $qb = $this->createQueryBuilder('l');
+
         if (empty($bookedLodgings)){
             return  $this->findAll();
         }
-
-        $qb = $this->createQueryBuilder('l');
 
         $availableLodgings= $qb
             ->where($qb->expr()->notIn('l.id', ':lodging'))

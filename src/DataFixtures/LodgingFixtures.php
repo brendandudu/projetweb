@@ -26,17 +26,39 @@ class LodgingFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 1; $i <= 20; $i++) {
             $lodging = new Lodging();
 
-            if($i===1){
-                $lodging->setName('test');
+            if($i <= 5){ //Brest
+                $lodging->setLat($faker->latitude(48.382359, 48.389359));
+                $lodging->setLon($faker->longitude(-4.465491, -4.48491));
+
+                $lodging->setPostalCode('29200');
             }
-            else {
-                $lodging->setName($faker->realText(20));
+            elseif ($i <= 10){ //Paris
+                $lodging->setLat($faker->latitude(48.840233, 48.891895));
+                $lodging->setLon($faker->longitude(2.304609, 2.357188));
+
+                $lodging->setPostalCode('75001'); //Attention pas forcement dans 1er arrondissement
+            }
+            elseif($i <= 15){ //Marseille
+                $lodging->setLat($faker->latitude(43.270741, 43.293684));
+                $lodging->setLon($faker->longitude(5.357497, 5.397497));
+
+                $lodging->setPostalCode('13000');
+            }
+            else{ //Bordeaux
+                $lodging->setLat($faker->latitude(44.830342, 44.840342));
+                $lodging->setLon($faker->longitude(-0.559277, -0.599277));
+
+                $lodging->setPostalCode('33000');
             }
 
-            $lodging->setLat($faker->latitude(43.57639, 43.60639));
-            $lodging->setLon($faker->longitude(3.96306, 3.98306));
 
 
+
+            //$lodging->setLat($faker->latitude(43.57639, 43.60639));
+            //$lodging->setLon($faker->longitude(3.96306, 3.98306));
+
+            $lodging->setFullAddress($faker->realText(50));
+            $lodging->setName($faker->realText(20));
             $lodging->setLodgingType($this->getReference('type_' . $faker->numberBetween(1, 5)));
             $lodging->setNightPrice($faker->numberBetween(45, 120));
             $lodging->setSpace($faker->numberBetween(10, 30));
