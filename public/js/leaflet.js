@@ -1,6 +1,6 @@
 
 /*LOAD MAP*/
-let mymap = L.map('mapid').setView([43.262448, 6.658939], 13);
+let mymap = L.map('mapid').setView([47.171079, 2.700238], 11);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
@@ -33,7 +33,9 @@ Array.from(document.querySelectorAll('.js-marker')).forEach((item) => {
     })
 });
 
-mymap.fitBounds(bounds);
+if(bounds.length > 0) {
+    mymap.fitBounds(bounds);
+}
 
 function placePopup(point, text) {
     return L.popup({

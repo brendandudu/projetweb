@@ -32,9 +32,13 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-12 listing-block">
-                     {% for lodging in lodgings %}
-                        {% include 'includes/lodgingCard.html.twig' %}
-                     {% endfor %}
+                     {% if lodgings|length == 0  %}
+                         Désolé, nous n'avons pas trouvé d'hébergements disponibles pour ces critères.
+                     {% else %}
+                         {% for lodging in lodgings %}
+                            {% include 'includes/lodgingCard.html.twig' %}
+                         {% endfor %}
+                     {% endif %}
                     </div>
                     <div class="col-md-7 map-box mx-0 px-0">
                         <div id="mapid"></div>

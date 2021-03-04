@@ -12,16 +12,10 @@ class LodgingFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        //fake latitude & longitude in Saint Tropez
-        $geo = [
-            1 => ["lat" => -89.96434100, "lon" => 121.74843300],
-            2 => ["lat" => 43.277753, "lon" => 6.678500],
-            3 => ["lat" => 43.277539, "lon" => 6.679179],
-            4 => ["lat" => 43.276828, "lon" => 6.680383],
-            5 => ["lat" => 43.278836, "lon" => 6.677947]
-        ];
+        /*Lodging fixtures in France*/
 
         $faker = Faker\Factory::create('fr_FR');
+        $faker->addProvider(new Faker\Provider\fr_FR\Address($faker));
 
         for ($i = 1; $i <= 20; $i++) {
             $lodging = new Lodging();
@@ -30,34 +24,38 @@ class LodgingFixtures extends Fixture implements DependentFixtureInterface
                 $lodging->setLat($faker->latitude(48.382359, 48.389359));
                 $lodging->setLon($faker->longitude(-4.465491, -4.48491));
 
-                $lodging->setPostalCode('29200');
+                $postalCode = '29200';
+                $cityName = "Brest";
+                $regionName = "Bretagne";
             }
             elseif ($i <= 10){ //Paris
                 $lodging->setLat($faker->latitude(48.840233, 48.891895));
                 $lodging->setLon($faker->longitude(2.304609, 2.357188));
 
-                $lodging->setPostalCode('75001'); //Attention pas forcement dans 1er arrondissement
+                $postalCode = $faker->numberBetween(75000, 75020); //arrondissement pas forcement cohérent avec lat et lon (juste dans les fixtures)
+                $cityName = "Paris";
+                $regionName = "Ile-de-France";
             }
             elseif($i <= 15){ //Marseille
                 $lodging->setLat($faker->latitude(43.270741, 43.293684));
                 $lodging->setLon($faker->longitude(5.357497, 5.397497));
 
-                $lodging->setPostalCode('13000');
+                $postalCode = '13000';
+                $cityName = "Marseille";
+                $regionName = "Provence-Alpes-Côte d'Azur";
             }
             else{ //Bordeaux
                 $lodging->setLat($faker->latitude(44.830342, 44.840342));
                 $lodging->setLon($faker->longitude(-0.559277, -0.599277));
 
-                $lodging->setPostalCode('33000');
+                $postalCode = '33000';
+                $cityName = "Bordeaux";
+                $regionName = "Nouvelle-Aquitaine";
             }
 
 
-
-
-            //$lodging->setLat($faker->latitude(43.57639, 43.60639));
-            //$lodging->setLon($faker->longitude(3.96306, 3.98306));
-
-            $lodging->setFullAddress($faker->realText(50));
+            $lodging->setPostalCode($postalCode);
+            $lodging->setFullAddress($faker->streetAddress.",".$cityName.",".$regionName.",".$postalCode.", France");
             $lodging->setName($faker->realText(20));
             $lodging->setLodgingType($this->getReference('type_' . $faker->numberBetween(1, 5)));
             $lodging->setNightPrice($faker->numberBetween(45, 120));
