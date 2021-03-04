@@ -39,9 +39,7 @@ class Lodging
     /**
      * @ORM\Column(type="integer")
      * @Assert\NotBlank
-     * @Assert\Positive(
-     *      message = "Le nombre de visiteurs doit être supérieur à 0 !"
-     * )
+     * @Assert\Positive
      */
     private $capacity;
 
