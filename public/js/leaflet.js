@@ -1,6 +1,6 @@
 
 /*LOAD MAP*/
-let mymap = L.map('mapid').setView([47.171079, 2.700238], 11);
+let mymap = L.map('mapid').setView([47.171079, 2.700238], 5);
 L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     maxZoom: 18,
