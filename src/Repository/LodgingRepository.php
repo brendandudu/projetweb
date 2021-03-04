@@ -19,15 +19,22 @@ class LodgingRepository extends ServiceEntityRepository
         parent::__construct($registry, Lodging::class);
     }
 
-
-    public function findAvailableLodgings(array $postalCodesArray, \DateTime $begin, \DateTime $end, int $capacity)
+    /**
+     * ATTENTION : Code pas propre du tout, tout peut être regrouper en 1 requête !!
+     */
+    public function findAvailableLodgings(array $postalCodesArray, \DateTime $begin, \DateTime $end, int $capacity) //TODO
     {
         $bookedLodgings = $this->findBookedLodgings($postalCodesArray, $begin, $end);
 
         $qb = $this->createQueryBuilder('l');
 
         if (empty($bookedLodgings)){
-            return  $this->findAll();
+            return  $qb
+                ->where($qb->expr()->in('l.postalCode', ':CPs'))
+                ->setParameter('CPs', $postalCodesArray)
+                ->getQuery()
+                ->getResult()
+                ;
         }
 
         $availableLodgings= $qb
