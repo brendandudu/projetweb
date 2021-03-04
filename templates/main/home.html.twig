@@ -1,10 +1,46 @@
 {% extends 'base.html.twig' %}
 
+
 {% block title %}{{ parent() }} | Accueil{% endblock %}
 
 {% block stylesheets %}
     <link href="{{ asset('css/home.css') }}" rel="stylesheet"/>
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet">
+
+    <!-- Load Leaflet from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+
+    <!-- Load geocoding plugin after Leaflet -->
+    <link rel="stylesheet" href="https://maps.locationiq.com/v2/libs/leaflet-geocoder/1.9.6/leaflet-geocoder-locationiq.min.css">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
+
+    <style type="text/css">
+        #map{
+            width: 0;
+            height: 0;
+            background-color:transparent;
+            display: none;
+        }
+        #result {
+            padding-left: 20px;
+            padding-top: 20px;
+            width: 800px;
+            height: 100px;
+        }
+        .leaflet-locationiq-results{
+            top: 45px!important;
+            max-height: 200px;
+            width: auto;
+        }
+        .leaflet-locationiq-expanded{
+             width: 100%;
+             margin-top: 5px;
+         }
+
+    </style>
 {% endblock %}
 {% block body %}
     <section class="home">
@@ -26,15 +62,20 @@
 
                                 
                                 <div class="row no-margin">
-                                    <div class="col-md-8">
+                                    <div class="col-md-10">
                                         <div class="row no-margin">
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
+                                                <div class="form-group" id="search-box">
+                                                    <span class="form-label">Location</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <span class="form-label">Arrivée</span>
                                                     {{ form_widget(form.beginsAt, {'attr': {'required': 'true', 'class' : 'form-control'}}) }}
                                                 </div>
                                             </div>
-                                            <div class="col-md-5">
+                                            <div class="col-md-3">
                                                 <div class="form-group">
                                                     <span class="form-label">Départ</span>
                                                     {{ form_widget(form.endsAt, {'attr': {'required': 'true', 'class' : 'form-control'}}) }}
@@ -43,14 +84,14 @@
                                             <div class="col-md-2">
                                                 <div class="form-group">
                                                     <span class="form-label">Visiteurs</span>
-                                                    {{ form_widget(form.visitors, {'attr': {'required': 'true', 'class' : 'form-control', 'min' : 1 }}) }}
+                                                    {{ form_widget(form.visitors, {'attr': {'required': 'true', 'class' : 'form-control input-visitor', 'min' : 1 }}) }}
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-4">
+                                    <div class="col-md-2">
                                         <div class="form-btn">
-                                            <button type="submit" class="submit-btn">Voir disponibilités</button>
+                                            <button type="submit" class="submit-btn">Rechercher</button>
                                         </div>
                                     </div>
                                 </div>
@@ -61,7 +102,6 @@
             </div>
         </div>
     </section>
-
 
     <section id="gallery">
         <div class="container mt-5">
@@ -96,5 +136,32 @@
             </div>
         </div>
     </section>
+
+    <!-- Invisible map -->
+    <div id="map"></div>
+
+    <!-- To display the result -->
+    <div id="result"></div>
+
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://maps.locationiq.com/v2/libs/leaflet-geocoder/1.9.6/leaflet-geocoder-locationiq.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js"></script>
+
+    <script src="{{ asset('js/homeGeocoder.js') }}"></script>
+    <script>
+        const picker = new Litepicker({
+            element: document.getElementById('search_lodging_beginsAt'),
+            elementEnd: document.getElementById('search_lodging_endsAt'),
+            singleMode: false,
+            numberOfMonths: 2,
+            numberOfColumns:2,
+            lang: "fr-FR",
+            minDate: new Date(),
+            resetButton: true,
+        });
+    </script>
 
 {% endblock %}

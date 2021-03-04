@@ -20,9 +20,9 @@ class LodgingRepository extends ServiceEntityRepository
     }
 
 
-    public function findAvailableLodgings(\DateTime $begin, \DateTime $end, int $capacity)
+    public function findAvailableLodgings(array $postalCodesArray, \DateTime $begin, \DateTime $end, int $capacity)
     {
-        $bookedLodgings = $this->findBookedLodgings($begin, $end, $capacity);
+        $bookedLodgings = $this->findBookedLodgings($postalCodesArray, $begin, $end);
 
         if (empty($bookedLodgings)){
             return  $this->findAll();
@@ -42,15 +42,19 @@ class LodgingRepository extends ServiceEntityRepository
         return $availableLodgings;
     }
 
-    private function findBookedLodgings(\DateTime $begin, \DateTime $end): ?array {
+    private function findBookedLodgings(array $postalCodesArray, \DateTime $begin, \DateTime $end): ?array {
 
-        return $this->createQueryBuilder('l')
+        $qb = $this->createQueryBuilder('l');
+
+        return $qb
             ->select('l.id')
             ->join('l.bookings', 'b')
             ->where('b.beginsAt <= :end')
             ->andWhere('b.endsAt >= :start')
+            ->andWhere($qb->expr()->in('l.postalCode', ':CPs'))
             ->setParameter('end', $end)
             ->setParameter('start', $begin)
+            ->setParameter('CPs', $postalCodesArray)
             ->getQuery()
             ->getResult()
             ;

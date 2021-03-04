@@ -31,6 +31,8 @@ class MainController extends AbstractController
             $formData = $form->getData();
 
             return $this->redirectToRoute('lodging_search', [
+                'cityName' => $formData['cityName'],
+                'postalCodes' => $formData['postalCodes'],
                 'beginsAt' => $formData['beginsAt']->format('Y-m-d'),
                 'endsAt' => $formData['endsAt']->format('Y-m-d'),
                 'visitors' => $formData['visitors'],

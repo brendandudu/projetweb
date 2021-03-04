@@ -10,15 +10,32 @@ L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_toke
     accessToken: 'pk.eyJ1IjoiYnJlbmRhbjc4MzMwIiwiYSI6ImNrbHMzbDNueTB2NzIycGxsdG9icTZmZ3oifQ.tOMbhVIstg5MBHh6_m5_WA'
 }).addTo(mymap);
 
-let bounds = [];
 
-/*ADDs POPUPS*/
+
+let bounds = [];
+let activePopup = null; //la popup active
+
+/*ADD POPUPS & EVENT*/
 Array.from(document.querySelectorAll('.js-marker')).forEach((item) => {
 
     let point = [item.dataset.lat, item.dataset.lon];
-    bounds.push(point);
 
-    let popup = L.popup({
+    bounds.push(point);
+    let popup = placePopup(point, item.dataset.price);
+
+    item.addEventListener('mouseover', function () {
+        if(activePopup !== null){
+            activePopup.getElement().classList.remove('is-active')//on "desactive"
+        }
+        popup.getElement().classList.add('is-active'); //on "active"
+        activePopup = popup;
+    })
+});
+
+mymap.fitBounds(bounds);
+
+function placePopup(point, text) {
+    return L.popup({
         autoClose: false,
         closeOnEscapeKey: false,
         closeOnClick: false,
@@ -27,12 +44,6 @@ Array.from(document.querySelectorAll('.js-marker')).forEach((item) => {
         maxWidth: 400
     })
         .setLatLng(point)
-        .setContent(item.dataset.price + "€")
+        .setContent(text + "€")
         .openOn(mymap);
-
-    item.addEventListener('mouseover', function () {
-        popup.getElement().classList.add('is-active');
-    })
-});
-
-mymap.fitBounds(bounds);
+}
