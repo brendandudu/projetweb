@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Lodging;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Lodging|null find($id, $lockMode = null, $lockVersion = null)
@@ -20,51 +21,32 @@ class LodgingRepository extends ServiceEntityRepository
     }
 
     /**
-     * ATTENTION : Code pas propre du tout, tout peut être regrouper en 1 requête !!
+     * Return available lodgings for criteria
      */
-    public function findAvailableLodgings(array $postalCodesArray, \DateTime $begin, \DateTime $end, int $capacity) //TODO
+    public function findSearch(array $search): array
     {
-        $bookedLodgings = $this->findBookedLodgings($postalCodesArray, $begin, $end);
 
-        $qb = $this->createQueryBuilder('l');
-
-        if (empty($bookedLodgings)){
-            return  $qb
-                ->where($qb->expr()->in('l.postalCode', ':CPs'))
-                ->setParameter('CPs', $postalCodesArray)
-                ->getQuery()
-                ->getResult()
-                ;
-        }
-
-        $availableLodgings= $qb
-            ->where($qb->expr()->notIn('l.id', ':lodging'))
-            ->andWhere('l.capacity >= :capacity')
-            ->setParameter('lodging', $bookedLodgings)
-            ->setParameter('capacity', $capacity)
-            ->getQuery()
-            ->getResult()
-        ;
-
-        return $availableLodgings;
-    }
-
-    private function findBookedLodgings(array $postalCodesArray, \DateTime $begin, \DateTime $end): ?array {
+        $postalCodesArray = explode(";", $search['postalCodes']);
 
         $qb = $this->createQueryBuilder('l');
 
         return $qb
-            ->select('l.id')
-            ->join('l.bookings', 'b')
-            ->where('b.beginsAt <= :end')
-            ->andWhere('b.endsAt >= :start')
-            ->andWhere($qb->expr()->in('l.postalCode', ':CPs'))
-            ->setParameter('end', $end)
-            ->setParameter('start', $begin)
+            ->leftJoin('l.bookings', 'b')
+            ->andWhere(
+                $qb->expr()->orX(
+                    ':end <= b.beginsAt OR :start >= b.endsAt', //soit il est deja dans booking, mais les dates sont libres
+                    $qb->expr()->isNull('b') //soit il ne l'est pas encore
+                )
+            )
+            ->andWhere('l.capacity >= :capacity')
+            ->andWhere('l.postalCode IN (:CPs)')
+            ->setParameter('start', $search['beginsAt']['date'])
+            ->setParameter('end', $search['endsAt']['date'])
+            ->setParameter('capacity', $search['visitors'])
             ->setParameter('CPs', $postalCodesArray)
             ->getQuery()
-            ->getResult()
-            ;
+            ->getResult();
     }
+
 
 }

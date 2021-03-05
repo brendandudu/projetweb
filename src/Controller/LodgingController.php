@@ -44,21 +44,15 @@ class LodgingController extends AbstractController
      */
     public function search(Request $request, LodgingRepository $repository): Response
     {
-        $cityName = $request->query->get('cityName');
-        $postalCodes = $request->query->get('postalCodes');
-        $postalCodesArray = explode ( ';' , $postalCodes); //array
-        $begin = new \DateTime($request->query->get('beginsAt'));
-        $end = new \DateTime($request->query->get('endsAt'));
-        $capacity = $request->query->get('visitors');
+        $data = $request->query->get('data');
 
-        $lodgings = $repository->findAvailableLodgings($postalCodesArray, $begin, $end, $capacity);
+        $lodgings = $repository->findSearch((array)$data);
 
         return $this->render('lodging/index.html.twig', [
             'lodgings' => $lodgings,
-            'cityName' => $cityName,
-            'postalCodes' => $postalCodes,
-            'beginsAt' => $begin,
-            'endsAt' => $end,
+            'cityName' => $data['cityName'],
+            'beginsAt' => $data['beginsAt']['date'],
+            'endsAt' => $data['endsAt']['date']
         ]);
     }
 

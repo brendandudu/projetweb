@@ -40,8 +40,8 @@ let geocoderContainer = geocoderControl.getContainer();
 //Append the geocoder container to the "search-box" div
 searchBoxControl.appendChild(geocoderContainer);
 
-let cityNameInput = document.getElementById("search_lodging_cityName");
-let postalCodesInput = document.getElementById("search_lodging_postalCodes");
+let cityNameInput = document.getElementById("search_cityName");
+let postalCodesInput = document.getElementById("search_postalCodes");
 
 //Displays the geocoding response in the "result" div
 function putInputValues(cityName, cp) {

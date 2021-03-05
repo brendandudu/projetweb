@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Data\SearchLodgingData;
 use App\Entity\Customer;
 use App\Form\SearchLodgingType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -23,19 +24,15 @@ class MainController extends AbstractController
      */
     public function home(Request $request): Response
     {
-        $form = $this->createForm(SearchLodgingType::class);
+        $data = new SearchLodgingData();
+        $form = $this->createForm(SearchLodgingType::class, $data);
 
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid()) {
-            $formData = $form->getData();
 
             return $this->redirectToRoute('lodging_search', [
-                'cityName' => $formData['cityName'],
-                'postalCodes' => $formData['postalCodes'],
-                'beginsAt' => $formData['beginsAt']->format('Y-m-d'),
-                'endsAt' => $formData['endsAt']->format('Y-m-d'),
-                'visitors' => $formData['visitors'],
+                'data' => $data
             ]);
 
         }

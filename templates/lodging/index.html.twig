@@ -20,7 +20,8 @@
 
                 <h2 class="text-center"><span>Hébergements trouvés </span>
                     {% if cityName is defined and beginsAt is defined and endsAt is defined%}
-                        {{ cityName ~ " : " }}{{ beginsAt|date('d-m-Y') }} - {{ endsAt|date('d-m-Y') }}
+                        {{ cityName ~ " : " }}
+                        {{ beginsAt|date('d-m-Y') }} - {{ endsAt|date('d-m-Y') }}
                     {% endif %}
                 </h2>
 
@@ -36,7 +37,7 @@
                          Désolé, nous n'avons pas trouvé d'hébergements disponibles pour ces critères.
                      {% else %}
                          {% for lodging in lodgings %}
-                            {% include 'includes/lodgingCard.html.twig' %}
+                            {% include 'includes/_lodgingCard.html.twig' with {lodging: lodging} only %}
                          {% endfor %}
                      {% endif %}
                     </div>

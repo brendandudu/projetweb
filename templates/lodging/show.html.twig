@@ -9,7 +9,6 @@
 {% block body %}
 
     </div>
-    {{ form_start(form, {'attr': {'class': 'form'}}) }}
     <div class="wrapper">
         <div class="card">
             <div class="product-left">
@@ -36,28 +35,11 @@
                         </div>
                         <div class="product-total">
                             <h3>Prix/nuit</h3>
-                            <p class=pt-0">{{ lodging.nightPrice }}€</p>
+                            <p class=pt-0">{{ lodging.nightPrice | number_format(0, ',', ' ') }}€</p>
                         </div>
                     </div>
                     <div id="d2">
-                        <div class="date pt-4">
-                            {{ form_widget(form.beginsAt) }}
-                            {{ form_widget(form.endsAt) }}
-                        </div>
-                        <div>
-                            {{ form_widget(form.totalOccupiers, {'attr': { 'class' : 'input-occupiers'}}) }}<i class="fa fa-user"></i>
-                        </div>
-                        <div class="product-btns">
-                            {% if app.user %}
-                                <button type="submit" class="product-add">Réserver</button>
-                            {% else %}
-                                <a href="{{ path('app_login') }}" class="product-add"> Veuillez vous connectez</a>
-                            {% endif %}
-                        </div>
-                        <div class="product-total">
-                            <h3>Prix total</h3>
-                            <p class=pt-0">750€</p>
-                        </div>
+                        {% include 'includes/_bookingForm.html.twig' %}
                     </div>
                 </div>
                 <!--CHOOSE PRODUCT DETAILS-->
@@ -74,7 +56,6 @@
             </div>
         </div>
     </div>
-    {{ form_end(form) }}
 
 
 {% endblock %}

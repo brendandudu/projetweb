@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Data\SearchLodgingData;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\HiddenType;
@@ -34,7 +35,13 @@ class SearchLodgingType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'method' => 'GET',
+            'data_class' => SearchLodgingData::class,
+            'method' => 'POST'
         ]);
+    }
+
+    public function getBlockPrefix()
+    {
+        return 'search';
     }
 }

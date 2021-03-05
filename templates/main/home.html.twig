@@ -49,53 +49,7 @@
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="booking-form">
-                            {{ form_start(form) }}
-
-
-                            {% if not form.vars.valid %}
-                                <div class="alert alert-danger" role="alert">
-                                    {{ form_errors(form.beginsAt) }}
-                                    {{ form_errors(form.endsAt) }}
-                                    {{ form_errors(form.visitors) }}
-                                </div>
-                            {% endif %}
-
-                                
-                                <div class="row no-margin">
-                                    <div class="col-md-10">
-                                        <div class="row no-margin">
-                                            <div class="col-md-4">
-                                                <div class="form-group" id="search-box">
-                                                    <span class="form-label">Location</span>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <span class="form-label">Arrivée</span>
-                                                    {{ form_widget(form.beginsAt, {'attr': {'required': 'true', 'class' : 'form-control'}}) }}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <div class="form-group">
-                                                    <span class="form-label">Départ</span>
-                                                    {{ form_widget(form.endsAt, {'attr': {'required': 'true', 'class' : 'form-control'}}) }}
-                                                </div>
-                                            </div>
-                                            <div class="col-md-2">
-                                                <div class="form-group">
-                                                    <span class="form-label">Visiteurs</span>
-                                                    {{ form_widget(form.visitors, {'attr': {'required': 'true', 'class' : 'form-control input-visitor', 'min' : 1 }}) }}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-2">
-                                        <div class="form-btn">
-                                            <button type="submit" class="submit-btn">Rechercher</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            {{ form_end(form) }}
+                            {% include 'includes/_search.html.twig' %}
                         </div>
                     </div>
                 </div>
@@ -140,9 +94,6 @@
     <!-- Invisible map -->
     <div id="map"></div>
 
-    <!-- To display the result -->
-    <div id="result"></div>
-
 {% endblock %}
 
 {% block javascripts %}
@@ -153,8 +104,8 @@
     <script src="{{ asset('js/homeGeocoder.js') }}"></script>
     <script>
         const picker = new Litepicker({
-            element: document.getElementById('search_lodging_beginsAt'),
-            elementEnd: document.getElementById('search_lodging_endsAt'),
+            element: document.getElementById('search_beginsAt'),
+            elementEnd: document.getElementById('search_endsAt'),
             singleMode: false,
             numberOfMonths: 2,
             numberOfColumns:2,
