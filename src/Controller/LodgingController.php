@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Booking;
 use App\Entity\Lodging;
 use App\Form\BookingType;
+use App\Form\LodgingType;
 use App\Repository\BookingStateRepository;
 use App\Repository\LodgingRepository;
 use App\Services\DateRangeHelper;
@@ -19,18 +20,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class LodgingController extends AbstractController
 {
-    /**
-     * @Route("/", name="index")
-     */
-    public function index(LodgingRepository $repository): Response
-    {
-        $lodgings = $repository->findAll();
-
-        return $this->render('lodging/index.html.twig', [
-            'lodgings' => $lodgings
-        ]);
-    }
-
 
     /**
      * @Route("/search", name="search")
@@ -41,12 +30,37 @@ class LodgingController extends AbstractController
 
         $lodgings = $repository->findSearch((array)$data);
 
-        return $this->render('lodging/index.html.twig', [
+        return $this->render('lodging/search.html.twig', [
             'lodgings' => $lodgings,
             'data' => $data,
         ]);
     }
 
+    /**
+     * @Route("/new", name="new")
+     * @Route("/{id}/edit", name="edit")
+     */
+    public function form(Lodging $lodging = null, Request $request, EntityManagerInterface $manager): Response
+    {
+        if(!$lodging){
+            $lodging = new Lodging();
+        }
+
+        $form = $this->createForm(LodgingType::class, $lodging);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            if($lodging->getId()){
+                $lodging->setUpdatedAt(new \DateTime());
+            }
+            $manager->persist($lodging);
+            $manager->flush();
+        }
+
+        return $this->render('lodging/create.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
 
     /**
      * @Route("/{id}", name="show")
@@ -57,8 +71,6 @@ class LodgingController extends AbstractController
         $form = $this->createForm(BookingType::class, $booking);
         $form->handleRequest($request);
 
-        $bookedRanges = $dateRangeHelper->getBookedDateRangesForJS($lodging);
-
         if ($form->isSubmitted() && $form->isValid()) {
 
             $booking->setUser($this->getUser());
@@ -68,6 +80,8 @@ class LodgingController extends AbstractController
             $manager->persist($booking);
             $manager->flush();
         }
+
+        $bookedRanges = $dateRangeHelper->getBookedDateRangesForJS($lodging);
 
         return $this->render('lodging/show.html.twig', [
             'lodging' => $lodging,

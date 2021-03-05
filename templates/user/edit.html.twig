@@ -1,14 +1,7 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-  <meta charset="UTF-8">
-  <title>Title</title>
-  <script src="./js/vue.js"></script>
-  <!-- 引入样式 -->
+{% extends 'base.html.twig' %}
+{% block title %}{{ parent() }} | Modifier{% endblock %}
+{% block stylesheets  %}
   <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-  <!-- 引入组件库 -->
-  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
   <style>
     html,
     body {
@@ -26,7 +19,7 @@
 
     .top .top-bg {
       width: 100%;
-      height: 300px;
+      height: 400px;
     }
 
     .data-container {
@@ -79,13 +72,13 @@
     }
 
     .left .left-item {
-      margin-top: 40px;
+      margin-top: 35px;
       text-align: left;
     }
 
     .left .left-line {
-      margin-top: 40px;
-      width: 340px;
+      margin-top: 35px;
+      width: 300px;
       margin-left: -20px;
       height: 1px;
       background: rgb(216, 216, 216);
@@ -140,7 +133,7 @@
 
     .btn-container {
       width: 50%;
-      margin-top: 40px;
+      margin-top: 150px;
       display: flex;
       align-items: center;
       justify-content: space-around;
@@ -156,88 +149,33 @@
       overflow: hidden;
     }
   </style>
-</head>
+{% endblock %}
 
-<body>
+{% block body %}
+
 <div id="app">
   <div class="top">
     <img src="./img/topbanner.jpg" class="top-bg">
-    <div class="data-container">
-      <div>
-        A propos
-      </div>
-      <div>
-        Hebergement
-      </div>
-      <div>
-        Services
-      </div>
-      <div>
-        <el-dropdown>
-          <el-button type="primary">
-            <i class="el-icon-s-unfold" style="font-size: 30px;margin-right: 5px;color: rgb(71,73,70)"></i><img src="./img/head.jpg" style="height: 25px;width: 25px">
-          </el-button>
-          <el-dropdown-menu slot="dropdown">
-            <el-dropdown-item>Compte</el-dropdown-item>
-            <el-dropdown-item>Messages</el-dropdown-item>
-            <el-dropdown-item>Voyages</el-dropdown-item>
-            <el-dropdown-item>Enregistres</el-dropdown-item>
-            <el-dropdown-item>Aide</el-dropdown-item>
-            <el-dropdown-item>Deconnection</el-dropdown-item>
-          </el-dropdown-menu>
-        </el-dropdown>
-      </div>
-    </div>
   </div>
   <div class="bottom">
-    <div class="left">
-      <div class="left-img-container">
-        <img src="./img/head.jpg" class="left-img">
-      </div>
-      <div class="left-item" style="text-align: center;margin-top: 20px;text-decoration: underline">
-        metter a your ia photo
-      </div>
-      <div class="left-item" style="font-weight: bold;text-decoration: underline;margin-top: 60px">
-        Infos personnells
-      </div>
-      <div class="left-item">
-        metter a your ia photo
-      </div>
-      <div class="left-item">
-        metter a your ia photo
-      </div>
-      <div class="left-item">
-        metter a your ia photo
-      </div>
-      <div class="left-line">
-      </div>
-      <div class="left-item" style="font-weight: bold">
-        Messages
-      </div>
-      <div class="left-item" style="font-weight: bold">
-        Messages
-      </div>
-      <div class="left-item" style="font-weight: bold">
-        Messages
-      </div>
-    </div>
+    {% include 'includes/_leftPart.html.twig' %}
     <div class="right">
-      <h2>Modifler ie profll!</h2>
-      <div style="text-decoration: underline;margin-left: 30px;margin-top: 20px">
-        Modifier le profll
-      </div>
+      <h2>Modifier votre profil</h2>
+
+      {{ form_start(form) }}
+
       <div class="right-container">
         <div class="right-item">
           <div class="line-throw">
             <div class="item-top">Nom</div>
-            <el-input v-model="Nom" placeholder="please"></el-input>
+            {{ form_widget(form.lastName) }}
           </div>
           <div class="line-throw">
-            <div class="item-top">prenom</div>
-            <el-input v-model="prenom" placeholder="please"></el-input>
+            <div class="item-top">Prenom</div>
+            {{ form_widget(form.firstName) }}
           </div>
         </div>
-        <div class="right-item">
+        <!--<div class="right-item">
           <div class="item-top">sexe</div>
           <el-select v-model="sexe" placeholder="please">
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
@@ -267,12 +205,12 @@
               </el-option>
             </el-select>
           </div>
-        </div>
+        </div>-->
         <div class="right-item">
           <div class="item-top">email</div>
-          <el-input v-model="email" placeholder="please"></el-input>
+          {{ form_widget(form.email) }}
         </div>
-        <div class="right-item">
+        <!--<div class="right-item">
           <div class="item-top">numberSelect</div>
           <el-select v-model="numberSelect" placeholder="please">
             <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
@@ -310,11 +248,20 @@
             <el-input v-model="AdresseCode" placeholder="please"></el-input>
           </div>
         </div>
-      </div>
-      <div class="btn-container">
-        <span style="color: red;text-decoration: underline;cursor: pointer">Annuler</span>
-        <el-button type="primary">Enregistrer</el-button>
-      </div>
+      </div>-->
+        {% for message in app.flashes('success') %}
+          <div class="alert alert-success mt-5">
+            {{ message }}
+          </div>
+        {% endfor %}
+
+        <div class="btn-container">
+          <a href="{{ path("user_info") }}" style="color: red;text-decoration: underline;cursor: pointer;">Annuler</a>
+          <button type="submit" style="box-shadow: 8px 8px 12px #aaa;">Modifier</button>
+        </div>
+
+      {{ form_end(form) }}
+
       <div style="margin-top: 80px;margin-left: 60px;font-size: 18px">
         @ 2021 RESA,Inc.All rights reserved
       </div>
@@ -322,45 +269,4 @@
   </div>
 </div>
 
-<script>
-  new Vue({
-    el: '#app',
-    data() {
-      return {
-        options: [{
-          value: '+32',
-          label: '黄金糕'
-        }, {
-          value: '+33',
-          label: 'France(+33)'
-        }, {
-          value: '+34',
-          label: '蚵仔煎'
-        }, {
-          value: '+35',
-          label: '龙须面'
-        }, {
-          value: '+36',
-          label: '北京烤鸭'
-        }],
-        Nom: '',
-        prenom: '',
-        sexe: '',
-        dateJour: '',
-        dateMois: '',
-        dateAnnee: '',
-        email: '',
-        numberSelect: '+33',
-        numberValue: '',
-        AdressePay: '',
-        AdresseAdr: '',
-        AdresseCom: '',
-        AdresseCode: '',
-        AdresseVille: '',
-      }
-    }
-  })
-</script>
-</body>
-
-</html>
+{% endblock %}

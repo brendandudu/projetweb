@@ -71,13 +71,12 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
-     * @Assert\NotBlank
      * @Assert\GreaterThan(propertyPath="createdAt")
      */
     private $deletedAt;
 
     /**
-     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="User")
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="user")
      */
     private $bookings;
 

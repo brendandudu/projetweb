@@ -6,8 +6,6 @@ body {
     box-sizing: border-box;
     font-family: "Quicksand", sans-serif;
 }
-/*-- Inspiration taken from abdo steif -->
-/* --> https://codepen.io/abdosteif/pen/bRoyMb?editors=1100*/
 
 /* Navbar section */
 
@@ -62,7 +60,7 @@ body {
     text-decoration: none;
     color: #fff;
     line-height: 65px;
-    font-size: 1.7rem;
+    font-size: 1.6rem;
 }
 
 .nav div.main_list ul li a:hover {
@@ -333,11 +331,6 @@ body {
     background-color: #2588be;
 }
 
-
-
-
-
-
 .myH2 {
     text-align:center;
     font-size: 4rem;
@@ -352,4 +345,11 @@ body {
     .myP {
         padding:2%;
     }
+}
+
+.nav .dropdown-menu a{
+    color: black !important;
+    font-size: 1.1rem !important;
+    line-height: 30px !important;
+    text-decoration: none !important;
 }

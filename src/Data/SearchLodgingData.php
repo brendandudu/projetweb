@@ -26,7 +26,6 @@ class SearchLodgingData
 
     /**
      * @var string[]
-     * @Assert\NotBlank
      */
     public $postalCodes;
 

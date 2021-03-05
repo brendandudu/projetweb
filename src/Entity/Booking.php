@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\BookingRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
@@ -182,7 +183,7 @@ class Booking
         return $this->user;
     }
 
-    public function setUser(?User $idUser): self
+    public function setUser(?UserInterface $idUser): self
     {
         $this->user = $idUser;
 

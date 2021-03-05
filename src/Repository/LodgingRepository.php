@@ -23,34 +23,41 @@ class LodgingRepository extends ServiceEntityRepository
     /**
      * Return available lodgings for criteria
      */
-    public function findSearch(array $search): array
+    public function findSearch(?array $search): array
     {
-        $postalCodesArray = explode(";", $search['postalCodes']);
-
         $qb = $this->createQueryBuilder('l');
 
-        return $qb
-            ->leftJoin('l.bookings', 'b')
-            ->andWhere(
-                $qb->expr()->orX(
-                    ':end <= b.beginsAt OR :start >= b.endsAt',     //soit il est deja dans booking, mais les dates sont libres
-                    $qb->expr()->andX(                                 //soit les dates sont prises mais la réservation est annulée/terminée
-                        ':start <= b.endsAt AND :end >= b.beginsAt',
-                        'b.bookingState = :stateIdCanceled OR b.bookingState = :stateIdFinished'
-                    ),
-                    $qb->expr()->isNull('b')                        //soit il ne l'est pas encore
+        if(!empty($search)) {
+            $qb = $qb
+                ->leftJoin('l.bookings', 'b')
+                ->andWhere(
+                    $qb->expr()->orX(
+                        ':end <= b.beginsAt OR :start >= b.endsAt',     //soit il est deja dans booking, mais les dates sont libres
+                        $qb->expr()->andX(                                 //soit les dates sont prises mais la réservation est annulée/terminée
+                            ':start <= b.endsAt AND :end >= b.beginsAt',
+                            'b.bookingState = :stateIdCanceled OR b.bookingState = :stateIdFinished'
+                        ),
+                        $qb->expr()->isNull('b')                        //soit il ne l'est pas encore
+                    )
                 )
-            )
-            ->andWhere('l.capacity >= :capacity')
-            ->andWhere('l.postalCode IN (:CPs)')
-            ->setParameters([
-                'start' => $search['beginsAt']['date'],
-                'end' => $search['endsAt']['date'],
-                'capacity' => $search['visitors'],
-                'CPs' => $postalCodesArray,
-                'stateIdCanceled' => 4,
-                'stateIdFinished'=> 5
-            ])
+                ->andWhere('l.capacity >= :capacity')
+                ->setParameters([
+                    'start' => $search['beginsAt']['date'],
+                    'end' => $search['endsAt']['date'],
+                    'capacity' => $search['visitors'],
+                    'stateIdCanceled' => 4,
+                    'stateIdFinished' => 5
+                ]);
+
+            if (!empty($search['postalCodes'])) {
+                $postalCodesArray = explode(";", $search['postalCodes']);
+                $qb = $qb
+                    ->andWhere('l.postalCode IN (:CPs)')
+                    ->setParameter(':CPs', $postalCodesArray);
+            }
+        }
+
+        return $qb
             ->getQuery()
             ->getResult();
     }
