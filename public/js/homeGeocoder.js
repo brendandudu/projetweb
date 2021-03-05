@@ -28,7 +28,7 @@ let geocoderControlOptions = {
     }
 }
 
-//Initialize the geocoder
+//Initialize the geocoder and add event
 let geocoderControl = new L.control.geocoder(locationIQToken, geocoderControlOptions).addTo(map).on('select', function (e) {
     putInputValues(e.feature.feature.address.name, e.feature.feature.address.postcode);
 });
@@ -43,8 +43,13 @@ searchBoxControl.appendChild(geocoderContainer);
 let cityNameInput = document.getElementById("search_cityName");
 let postalCodesInput = document.getElementById("search_postalCodes");
 
-//Displays the geocoding response in the "result" div
+//Put the geocoding response in the input values
 function putInputValues(cityName, cp) {
     cityNameInput.value = cityName;
     postalCodesInput.value = cp;
+}
+
+//Reset input on load to avoid conflicts
+window.onload = function() {
+    geocoderControl.reset();
 }

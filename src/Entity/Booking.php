@@ -65,7 +65,6 @@ class Booking
      * @ORM\Column(type="date")
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotNull
-     * @Assert\GreaterThan("Today")
      */
     private $beginsAt;
 
@@ -74,6 +73,7 @@ class Booking
      * @ORM\JoinColumn(nullable=false)
      * @Assert\NotNull
      * @Assert\GreaterThan(propertyPath="beginsAt")
+     * @Assert\GreaterThan("+1 days")
      */
     private $endsAt;
 

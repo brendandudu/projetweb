@@ -5,7 +5,6 @@ namespace App\Repository;
 use App\Entity\Lodging;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Lodging|null find($id, $lockMode = null, $lockVersion = null)
@@ -25,7 +24,6 @@ class LodgingRepository extends ServiceEntityRepository
      */
     public function findSearch(array $search): array
     {
-
         $postalCodesArray = explode(";", $search['postalCodes']);
 
         $qb = $this->createQueryBuilder('l');
@@ -47,6 +45,5 @@ class LodgingRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
 
 }

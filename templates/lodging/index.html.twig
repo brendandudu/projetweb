@@ -19,9 +19,9 @@
             <div class="container">
 
                 <h2 class="text-center"><span>Hébergements trouvés </span>
-                    {% if cityName is defined and beginsAt is defined and endsAt is defined%}
-                        {{ cityName ~ " : " }}
-                        {{ beginsAt|date('d-m-Y') }} - {{ endsAt|date('d-m-Y') }}
+                    {% if data.cityName is defined and data.beginsAt is defined and data.endsAt is defined%}
+                        {{ data.cityName ~ " : " }}
+                        {{ data.beginsAt.date|date('d/m/Y') }} - {{ data.endsAt.date|date('d/m/Y') }}
                     {% endif %}
                 </h2>
 
