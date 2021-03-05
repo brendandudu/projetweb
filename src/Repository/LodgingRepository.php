@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Lodging;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use function Doctrine\ORM\QueryBuilder;
 
 /**
  * @method Lodging|null find($id, $lockMode = null, $lockVersion = null)
@@ -32,16 +33,24 @@ class LodgingRepository extends ServiceEntityRepository
             ->leftJoin('l.bookings', 'b')
             ->andWhere(
                 $qb->expr()->orX(
-                    ':end <= b.beginsAt OR :start >= b.endsAt', //soit il est deja dans booking, mais les dates sont libres
-                    $qb->expr()->isNull('b') //soit il ne l'est pas encore
+                    ':end <= b.beginsAt OR :start >= b.endsAt',     //soit il est deja dans booking, mais les dates sont libres
+                    $qb->expr()->andX(                                 //soit les dates sont prises mais la réservation est annulée/terminée
+                        ':start <= b.endsAt AND :end >= b.beginsAt',
+                        'b.bookingState = :stateIdCanceled OR b.bookingState = :stateIdFinished'
+                    ),
+                    $qb->expr()->isNull('b')                        //soit il ne l'est pas encore
                 )
             )
             ->andWhere('l.capacity >= :capacity')
             ->andWhere('l.postalCode IN (:CPs)')
-            ->setParameter('start', $search['beginsAt']['date'])
-            ->setParameter('end', $search['endsAt']['date'])
-            ->setParameter('capacity', $search['visitors'])
-            ->setParameter('CPs', $postalCodesArray)
+            ->setParameters([
+                'start' => $search['beginsAt']['date'],
+                'end' => $search['endsAt']['date'],
+                'capacity' => $search['visitors'],
+                'CPs' => $postalCodesArray,
+                'stateIdCanceled' => 4,
+                'stateIdFinished'=> 5
+            ])
             ->getQuery()
             ->getResult();
     }
