@@ -3,15 +3,175 @@
 {% block title %}{{ parent() }} | Nouveau hébergement{% endblock %}
 
 {% block stylesheets %}
+    <style>
+        .input-group-addon i{
+            padding: 8px 10px;
+            font-size: 24px;
+        }
+        .input-group-addon{
+            height: 38px;
+            width: 41px;
+            background-color: 	rgb(176,224,230);
+        }
+        .leaflet-locationiq-results{
+            top: 45px!important;
+            max-height: 200px;
+            width: auto;
+        }
+        .leaflet-locationiq-expanded{
+            width: 100%;
+            margin-top: 5px;
+        }
+    </style>
+    <!-- Load Leaflet from CDN -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+          integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+          crossorigin=""/>
+
+    <!-- Load geocoding plugin after Leaflet -->
+    <link rel="stylesheet" href="https://maps.locationiq.com/v2/libs/leaflet-geocoder/1.9.6/leaflet-geocoder-locationiq.min.css">
 
 {% endblock %}
 
 {% block body %}
     {{ form_start(form) }}
+    <div class="container">
 
+            <fieldset>
+                <!-- Form Name -->
+                <legend><h2 class="text-center"><b>Nouveau hébergement</b></h2></legend><br>
+
+                <!-- Text input-->
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Titre</label>
+                    {{ form_errors(form.name) }}
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-heading"></i></span>
+                            {{ form_widget(form.name, {'attr': {'class': 'form-control', 'placeholder': "Titre"}} ) }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" >Capacité d'accueil</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-user"></i></span>
+                            {{ form_widget(form.capacity, {'attr': {'class': 'form-control', 'placeholder': "Capacité"}} ) }}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Type</label>
+                    <div class="col-md-4 selectContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-home"></i></span>
+                            {{ form_widget(form.lodgingType, {'attr': {'class': 'form-control'}} ) }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Espace disponible</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-arrows-alt"></i></span>
+                            {{ form_widget(form.space, {'attr': {'class': 'form-control', 'placeholder': "Espace en m²", 'min' : 1}} ) }} m²
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label" >Cette hébergement dispose-t-il d'internet ?</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-wifi"></i></span>
+                            {{ form_widget(form.internetAvailable, {'attr': {'class': 'form-control'}} ) }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Description</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-info"></i></span>
+                            {{ form_widget(form.description, {'attr': {'class': 'form-control', 'placeholder': "Description"}} ) }}
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text input-->
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Prix</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-euro-sign"></i></span>
+                            {{ form_widget(form.nightPrice, {'attr': {'class': 'form-control', 'min': 1, 'placeholder': "Prix en €"}} )}}
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Text input-->
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Image</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="fas fa-image"></i></span>
+                            {{ form_widget(form.pictureFile, {'attr': {'class': 'form-control'}})}}
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Image</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group" id="search-box">
+                            <span class="input-group-addon"><i class="fas fa-search-location"></i></span>
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- Select Basic -->
+
+                <!-- Success message -->
+                <div class="alert alert-success" role="alert" id="success_message">Success <i class="glyphicon glyphicon-thumbs-up"></i> Success!.</div>
+
+                <!-- Button -->
+                <div class="form-group">
+                    <label class="col-md-4 control-label"></label>
+                    <div class="col-md-4"><br>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button type="submit" class="btn btn-warning" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+                    </div>
+                </div>
+
+            </fieldset>
+    </div>
+    </div><!-- /.container -->
     {{ form_end(form) }}
+
+    <!-- Invisible map -->
+    <div id="map"></div>
+
 {% endblock %}
 
 {% block javascripts %}
-
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://maps.locationiq.com/v2/libs/leaflet-geocoder/1.9.6/leaflet-geocoder-locationiq.min.js"></script>
+    <script src="{{ asset('js/lodgingGeocoder.js') }}"></script>
 {% endblock %}

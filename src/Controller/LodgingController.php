@@ -53,6 +53,8 @@ class LodgingController extends AbstractController
             if($lodging->getId()){
                 $lodging->setUpdatedAt(new \DateTime());
             }
+
+            dd($lodging);
             $manager->persist($lodging);
             $manager->flush();
         }

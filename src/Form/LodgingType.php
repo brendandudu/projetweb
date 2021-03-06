@@ -4,8 +4,11 @@ namespace App\Form;
 
 use App\Entity\Lodging;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class LodgingType extends AbstractType
 {
@@ -16,15 +19,13 @@ class LodgingType extends AbstractType
             ->add('capacity')
             ->add('space')
             ->add('internetAvailable')
-            ->add('currentCondition')
             ->add('description')
-            ->add('nightPrice')
-            ->add('picture')
-            ->add('updatedAt')
-            ->add('lat')
-            ->add('lon')
-            ->add('fullAddress')
-            ->add('postalCode')
+            ->add('nightPrice', MoneyType::class)
+            ->add('pictureFile', VichImageType::class)
+            ->add('lat', HiddenType::class)
+            ->add('lon', HiddenType::class)
+            ->add('fullAddress', HiddenType::class)
+            ->add('postalCode', HiddenType::class)
             ->add('lodgingType')
         ;
     }

@@ -71,6 +71,11 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $updatedAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
      * @Assert\GreaterThan(propertyPath="createdAt")
      */
     private $deletedAt;
@@ -211,6 +216,16 @@ class User implements UserInterface
         $this->createdAt = $createdAt;
 
         return $this;
+    }
+
+    public function getUpdatedAt()
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt($updatedAt): void
+    {
+        $this->updatedAt = $updatedAt;
     }
 
     public function getDeletedAt(): ?\DateTimeInterface

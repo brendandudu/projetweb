@@ -56,13 +56,7 @@ class Lodging
     private $internetAvailable;
 
     /**
-     * @ORM\Column(type="string", length=255)
-     * @Assert\NotBlank
-     */
-    private $currentCondition;
-
-    /**
-     * @ORM\Column(type="string", length=500)
+     * @ORM\Column(type="text")
      * @Assert\NotBlank
      */
     private $description;
