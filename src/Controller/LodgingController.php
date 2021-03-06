@@ -54,7 +54,6 @@ class LodgingController extends AbstractController
                 $lodging->setUpdatedAt(new \DateTime());
             }
 
-            dd($lodging);
             $manager->persist($lodging);
             $manager->flush();
         }

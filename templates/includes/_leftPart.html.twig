@@ -25,10 +25,12 @@
     <div class="left-item" style="font-weight: bold">
         Messages
     </div>
+    {% if not is_granted('ROLE_ADMIN') %}
     <div class="left-item" style="font-weight: bold">
-        Mes réservations
+            <a>Mes réservations</a>
     </div>
     <div class="left-item" style="font-weight: bold">
         Wishlist
     </div>
+    {% endif %}
 </div>

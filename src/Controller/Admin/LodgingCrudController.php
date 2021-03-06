@@ -41,13 +41,14 @@ class LodgingCrudController extends AbstractCrudController
         $fields= [
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
-            TextEditorField::new('description'),
-            TextField::new('currentCondition')->setTextAlign('center'),
+            TextareaField::new('description'),
             IntegerField::new('space')->setTextAlign('center'),
             BooleanField::new('internetAvailable')->setLabel('Internet'),
             IntegerField::new('nightPrice')->setLabel('Price'),
             IntegerField::new('capacity')->setTextAlign('center'),
             AssociationField::new('lodgingType')->setLabel('Type'),
+            TextareaField::new('fullAddress')->setLabel('Adresse'),
+            NumberField::new('postalCode')->setLabel('Postal code'),
             NumberField::new('lat')->setFormTypeOptions(['scale' => 8]),
             NumberField::new('lon')->setFormTypeOptions(['scale' => 8]),
         ];

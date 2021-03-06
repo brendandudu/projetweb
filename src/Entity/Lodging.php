@@ -75,7 +75,6 @@ class Lodging
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank
      */
     private $picture;
 
@@ -109,6 +108,7 @@ class Lodging
      * @ORM\Column(type="string", length=8)
      */
     private $postalCode;
+
 
     public function setPictureFile(?File $picture = null)
     {
@@ -338,4 +338,5 @@ class Lodging
 
         return $this;
     }
+
 }

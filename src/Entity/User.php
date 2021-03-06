@@ -98,9 +98,11 @@ class User implements UserInterface
      */
     private $roles = [];
 
+
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
+        $this->User = new ArrayCollection();
     }
 
 

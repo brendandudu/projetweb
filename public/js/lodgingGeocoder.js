@@ -28,6 +28,7 @@ let geocoderControlOptions = {
 
 //Initialize the geocoder and add event
 let geocoderControl = new L.control.geocoder(locationIQToken, geocoderControlOptions).addTo(map).on('select', function (e) {
+    console.log("ok");
     putInputValues(e.feature.feature.display_name, e.feature.feature.address.postcode, e.latlng.lat, e.latlng.lng);
 });
 
@@ -39,13 +40,13 @@ let geocoderContainer = geocoderControl.getContainer();
 searchBoxControl.appendChild(geocoderContainer);
 
 let fullAddressInput = document.getElementById("lodging_fullAddress");
-let postalCodesInput = document.getElementById("lodging_postalCodes");
+let postalCodesInput = document.getElementById("lodging_postalCode");
 let latInput = document.getElementById("lodging_lat");
 let lonInput = document.getElementById("lodging_lon");
 
 //Put the geocoding response in the input values
 function putInputValues(fullAddress, cp, lat, lon) {
-    fullAddressInput.value = cityName;
+    fullAddressInput.value = fullAddress;
     postalCodesInput.value = cp;
     latInput.value = lat;
     lonInput.value = lon;

@@ -23,7 +23,6 @@ class BookingCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-            ->add('week')
             ->add('bookingState')
             ;
     }
@@ -34,12 +33,11 @@ class BookingCrudController extends AbstractCrudController
         return [
             IdField::new('id')->onlyOnIndex(),
             AssociationField::new('lodging')->setLabel('Lodging'),
-            AssociationField::new('User')->autocomplete(),
+            AssociationField::new('user')->autocomplete(),
             DateField::new('bookedAt')->onlyOnIndex(),
             IntegerField::new('totalPricing')->setLabel('Price'),
             IntegerField::new('totalOccupiers')->setTextAlign('center')->setLabel('Occupiers'),
             IntegerField::new('note')->onlyOnIndex(),
-            AssociationField::new('week')->setLabel('Week'),
             AssociationField::new('bookingState')->setLabel('State')->setTextAlign('center')
         ];
     }
