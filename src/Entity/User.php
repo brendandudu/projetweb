@@ -98,11 +98,17 @@ class User implements UserInterface
      */
     private $roles = [];
 
+    /**
+     * @ORM\OneToMany(targetEntity=Lodging::class, mappedBy="user")
+     */
+    private $lodgings;
+
 
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
         $this->User = new ArrayCollection();
+        $this->lodgings = new ArrayCollection();
     }
 
 
@@ -275,5 +281,35 @@ class User implements UserInterface
     public function __toString()
     {
         return $this->email;
+    }
+
+    /**
+     * @return Collection|Lodging[]
+     */
+    public function getLodgings(): Collection
+    {
+        return $this->lodgings;
+    }
+
+    public function addLodging(Lodging $lodging): self
+    {
+        if (!$this->lodgings->contains($lodging)) {
+            $this->lodgings[] = $lodging;
+            $lodging->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLodging(Lodging $lodging): self
+    {
+        if ($this->lodgings->removeElement($lodging)) {
+            // set the owning side to null (unless already changed)
+            if ($lodging->getUser() === $this) {
+                $lodging->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

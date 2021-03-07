@@ -353,3 +353,7 @@ body {
     line-height: 30px !important;
     text-decoration: none !important;
 }
+
+.nav a:active{
+    background-color: #FFFFFF;
+}

@@ -53,13 +53,17 @@ class LodgingController extends AbstractController
             if($lodging->getId()){
                 $lodging->setUpdatedAt(new \DateTime());
             }
+            else{
+                $lodging->setUser($this->getUser());
+            }
 
             $manager->persist($lodging);
             $manager->flush();
         }
 
         return $this->render('lodging/create.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'editMode' => $lodging->getId() !== null
         ]);
     }
 

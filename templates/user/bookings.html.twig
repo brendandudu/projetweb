@@ -1,0 +1,224 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Mes réservations{% endblock %}
+
+{% block stylesheets  %}
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <style>
+        html,body{
+            padding: 0;
+            margin: 0;
+        }
+        .top{
+            width: 100%;
+            height: 300px;
+            overflow: hidden;
+            position: relative;
+        }
+        .top .top-bg{
+            width: 100%;
+            height: 400px;
+        }
+        .data-container{
+            width: 600px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            position: absolute;
+            right: 0;
+            top : 0
+        }
+        .data-container .el-button{
+            width: 100px;
+            height: 40px;
+            border-radius: 20px;
+            border-color: #fcfdfb;
+            background: #fcfdfb;
+            display: flex;
+            align-items: center;
+            padding: 0;
+            justify-content: space-around;
+        }
+
+        .bottom {
+            background: rgb(246, 246, 246);
+            padding-top: 30px;
+            height: 1300px;
+            padding-left: 10%;
+        }
+        .left{
+            margin: 0 50px;
+            float: left;
+            width: 300px;
+            height: 800px;
+            border-radius: 40px;
+            border: 1px solid rgb(216,216,216);
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .left-img-container{
+            display: inline-block;
+            width: 180px;
+            height: 180px;
+            border-radius: 100px;
+            overflow : hidden;
+        }
+        .left .left-item{
+            margin-top: 35px;
+            text-align: left;
+        }
+        .left .left-line{
+            margin-top: 35px;
+            width: 300px;
+            margin-left: -20px;
+            height: 1px;
+            background: rgb(216,216,216);
+        }
+        .right{
+            overflow: hidden;
+        }
+        .right-item{
+            margin-top: 40px;
+            margin-left: 60px;
+            font-size: 20px;
+        }
+        .right-item .item-top{
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+
+        .left-img {
+            width: 180px;
+            height: 180px;
+            display: flex;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .left .isActive{
+            color: red;
+            text-decoration: underline;
+        }
+
+        .left a{
+            color: black;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div id="app">
+        <div class="top">
+            <img src="http://www.38000km.com/wp-content/uploads/2016/06/road-trip-2-609x210.jpg" class="top-bg">
+        </div>
+        <div class="bottom">
+            {% include 'includes/_leftPart.html.twig' %}
+            <div class="right">
+                <h2>{{ is_granted('ROLE_EDITOR') ? "Les réservations de vos annonces" : "Vos réservations"}}</h2>
+                <div class="right-container">
+
+                    {% if bookings is empty %}
+                        Aucune réservation pour le momment
+                    {% else %}
+                        {% for booking in bookings %}
+                            <div class="right-item">
+                                {{ booking.lodging.name}} :   {{ booking.beginsAt|date('d-m-Y') }} <i class="fas fa-arrow-right"></i> {{ booking.beginsAt|date('d-m-Y') }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+
+
+                    <!-- <div class="right-item">
+          {#          <div class="item-top">Sexe</div>#}
+          {#          <div class="item-bottom">Homme</div>#}
+          <el-dropdown>
+            <el-button type="primary">
+              <div class="item-top">Sexe</div>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>Homme</el-dropdown-item>
+              <el-dropdown-item>Femme</el-dropdown-item>
+              <el-dropdown-item>Autre</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div> -->
+
+
+
+                    <!--<div class="right-item">
+          <div class="item-top">Number</div>
+          <div class="item-bottom">+33 1 23 45 67 89</div>
+          <el-dropdown>
+            <el-button type="primary">
+              <div class="item-top">numéro de téléphone</div>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>：Allemagne(+49)</el-dropdown-item>
+              <el-dropdown-item>：Afrique du sud(+27)</el-dropdown-item>
+              <el-dropdown-item>：Belgique(+32)</el-dropdown-item>
+              <el-dropdown-item>：Chine(+86)</el-dropdown-item>
+              <el-dropdown-item>：ÉtatsUnis(+1)</el-dropdown-item>
+              <el-dropdown-item>：France(+33)</el-dropdown-item>
+              <el-dropdown-item>：Grèce(+30)</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+
+        <div class="right-item">
+          <div class="item-top">Address Pays</div>
+          <el-dropdown>
+            <el-button type="primary">
+              <div class="item-top">numéro de téléphone</div>
+            </el-button>
+            <el-dropdown-menu slot="dropdown">
+              <el-dropdown-item>：Allemagne</el-dropdown-item>
+              <el-dropdown-item>：Afrique du sud</el-dropdown-item>
+              <el-dropdown-item>：Belgique</el-dropdown-item>
+              <el-dropdown-item>：Chine</el-dropdown-item>
+              <el-dropdown-item>：ÉtatsUnis</el-dropdown-item>
+              <el-dropdown-item>：France</el-dropdown-item>
+              <el-dropdown-item>：Grèce</el-dropdown-item>
+            </el-dropdown-menu>
+          </el-dropdown>
+        </div>
+
+
+        {#        <div class="right-item">#}
+        {#          <div class="item-top">Address</div>#}
+        {#          <div class="item-bottom">Bat.A,90 rue de tolbiac, 702223233</div>#}
+        {#        </div>#}
+        <div class="right-item">
+          <div class="item-top">Address Postale</div>
+          <div class="item-bottom">ex:27 rue Jean Goujon</div>
+        </div>
+        <div class="right-item">
+          <div class="item-top">Appartment,bàtiment(facultatif)</div>
+          <div class="item-bottom"></div>
+        </div>
+        <div class="right-item">
+          <div style="float: left;">
+            <div class="item-top">Code Pastale</div>
+            <div class="item-bottom"></div>
+          </div>
+          <div style="float: left;">
+            <div class="item-top">Ville</div>
+            <div class="item-bottom"></div>
+          </div>
+        </div>-->
+                </div>
+                <div style="margin-top: 80px;margin-left: 60px;font-size: 18px">
+                    @ 2021 RESA,Inc.All rights reserved
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+{% endblock %}
+
+

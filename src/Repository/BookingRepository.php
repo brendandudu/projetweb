@@ -19,13 +19,23 @@ class BookingRepository extends ServiceEntityRepository
         parent::__construct($registry, Booking::class);
     }
 
-    public function findBookedDateRanges($id) : array
+    public function findBookedDateRanges($lodgingId) : ?array
     {
         return $this->createQueryBuilder('b')
             ->select('b.beginsAt', 'b.endsAt')
             ->join('b.lodging', 'l')
             ->where('l.id = :id')
-            ->setParameter('id', $id)
+            ->setParameter('id', $lodgingId)
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findByOwnerId($ownerId)
+    {
+        return $this->createQueryBuilder('b')
+            ->join('b.lodging', 'l')
+            ->where('l.user = :id')
+            ->setParameter('id', $ownerId)
             ->getQuery()
             ->getResult();
     }

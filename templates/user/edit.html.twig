@@ -148,6 +148,15 @@
       justify-content: center;
       overflow: hidden;
     }
+
+    .left .isActive{
+      color: red;
+      text-decoration: underline;
+    }
+
+    .left a{
+      color: black;
+    }
   </style>
 {% endblock %}
 
@@ -155,7 +164,7 @@
 
 <div id="app">
   <div class="top">
-    <img src="./img/topbanner.jpg" class="top-bg">
+    <img src="{{ asset('user/img/topbanner.jpg') }}" class="top-bg">
   </div>
   <div class="bottom">
     {% include 'includes/_leftPart.html.twig' %}

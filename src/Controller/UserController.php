@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\UserType;
+use App\Repository\BookingRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -43,6 +44,26 @@ class UserController extends AbstractController
 
         return $this->render('user/edit.html.twig', [
             'form' => $form->createView(),
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * @Route("/bookings", name="bookings")
+     */
+    public function showBookings(BookingRepository $repository): Response
+    {
+        $user = $this->getUser();
+
+        if ($this->isGranted('ROLE_EDITOR')) {
+            $bookings = $repository->findByOwnerId($user->getId());
+        }
+        else {
+            $bookings = $user->getBookings();
+        }
+
+        return $this->render('user/bookings.html.twig', [
+            'bookings' => $bookings,
             'user' => $user
         ]);
     }

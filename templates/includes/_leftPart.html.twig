@@ -8,29 +8,34 @@
     <div class="left-item" style="text-align: center;margin-top: 20px;text-decoration: underline">
         {{ user.firstName }}
     </div>
-    <div class="left-item" style="font-weight: bold;text-decoration: underline;margin-top: 60px">
-        Infos personnelles
+    <div class="left-item" style="margin-top: 60px">
+        <a class="{{ setActive("user_info") }}{{ setActive("user_edit") }}" href="{{ path('user_info') }}">Infos personnelles</a>
     </div>
     <div class="left-item">
-        Connexion et sécurité
+        <a>Connexion et sécurité</a>
     </div>
     <div class="left-item">
-        Paiements et versements
+        <a>Paiements et versements</a>
     </div>
     <div class="left-item">
-        Notifications
+        <a>Notifications</a>
     </div>
     <div class="left-line">
     </div>
     <div class="left-item" style="font-weight: bold">
-        Messages
+        <a>Messages</a>
     </div>
     {% if not is_granted('ROLE_ADMIN') %}
-    <div class="left-item" style="font-weight: bold">
-            <a>Mes réservations</a>
-    </div>
-    <div class="left-item" style="font-weight: bold">
-        Wishlist
-    </div>
+        {% if is_granted('ROLE_EDITOR') %}
+            <div class="left-item" style="font-weight: bold">
+                <a href="{{ path('user_ads') }}">Mes annonces</a>
+            </div>
+        {% endif %}
+        <div class="left-item" style="font-weight: bold">
+            <a class="{{ setActive("user_bookings") }}" href="{{ path('user_bookings') }}">Mes réservations</a>
+        </div>
+        <div class="left-item" style="font-weight: bold">
+            <a>Wishlist</a>
+        </div>
     {% endif %}
 </div>

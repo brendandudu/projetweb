@@ -17,7 +17,6 @@
     }
     .top .top-bg{
       width: 100%;
-      height: 400px;
     }
     .data-container{
       width: 600px;
@@ -44,7 +43,7 @@
     .bottom {
       background: rgb(246, 246, 246);
       padding-top: 30px;
-      height: 1300px;
+      height: 1000px;
       padding-left: 10%;
     }
     .left{
@@ -67,6 +66,7 @@
     .left .left-item{
       margin-top: 35px;
       text-align: left;
+      font-size: 18px;
     }
     .left .left-line{
       margin-top: 35px;
@@ -98,18 +98,28 @@
       justify-content: center;
       overflow: hidden;
     }
+
+    .left .isActive{
+      color: red;
+      text-decoration: underline;
+    }
+
+    .left a{
+      color: black;
+    }
+
   </style>
 {% endblock %}
 
 {% block body %}
 <div id="app">
   <div class="top">
-    <img src="./img/topbanner.jpg" class="top-bg">
+    <img src="{{ asset('user/img/topbanner.jpg') }}" class="top-bg">
   </div>
   <div class="bottom">
     {% include 'includes/_leftPart.html.twig' %}
     <div class="right">
-      <h2>Bonjour, {{ user.firstName }}!</h2>
+      <h2>Bonjour, {{ user.firstName }} !</h2>
       <div class="right-container">
         <div class="right-item">
           <div class="item-top">Nom</div>
@@ -207,9 +217,9 @@
           </div>
         </div>-->
 
-        <a href="{{ path('user_edit') }}"><button style="float: right; margin: 50px 200px;box-shadow: 8px 8px 12px #aaa;">Modifier</button></a>
+        <a href="{{ path('user_edit') }}"><button style="float: right; margin: 100px 200px;box-shadow: 8px 8px 12px #aaa;">Modifier</button></a>
       </div>
-      <div style="margin-top: 80px;margin-left: 60px;font-size: 18px">
+      <div style="margin-top: 200px;margin-left: 60px;font-size: 18px">
         @ 2021 RESA,Inc.All rights reserved
       </div>
     </div>
