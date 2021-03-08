@@ -23,13 +23,11 @@ class Booking
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\NotBlank
      */
     private $bookedAt;
 
     /**
      * @ORM\Column(type="float")
-     * @Assert\NotBlank
      * @Assert\Positive
      */
     private $totalPricing;
@@ -43,7 +41,6 @@ class Booking
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\NotBlank
      * @Assert\PositiveOrZero
      */
     private $note;
@@ -51,14 +48,12 @@ class Booking
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="bookings")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotBlank
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity=Lodging::class, inversedBy="bookings")
      * @ORM\JoinColumn(nullable=false)
-     * @Assert\NotBlank
      */
     private $lodging;
 

@@ -62,4 +62,13 @@ class LodgingRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findByOwnerId($ownerId)
+    {
+        return $this->createQueryBuilder('l')
+            ->where('l.user = :id')
+            ->setParameter('id', $ownerId)
+            ->getQuery()
+            ->getResult();
+    }
+
 }

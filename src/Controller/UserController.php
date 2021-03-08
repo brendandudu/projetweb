@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Form\UserType;
 use App\Repository\BookingRepository;
+use App\Repository\LodgingRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -56,7 +58,7 @@ class UserController extends AbstractController
         $user = $this->getUser();
 
         if ($this->isGranted('ROLE_EDITOR')) {
-            $bookings = $repository->findByOwnerId($user->getId());
+            $bookings = $repository->findByUserId($user->getId());
         }
         else {
             $bookings = $user->getBookings();
@@ -64,6 +66,23 @@ class UserController extends AbstractController
 
         return $this->render('user/bookings.html.twig', [
             'bookings' => $bookings,
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * @Route("/lodgings", name="lodgings")
+     * @IsGranted("ROLE_HOST")
+     */
+    public function showLodgings(LodgingRepository $repository): Response
+    {
+        $user = $this->getUser();
+
+        $lodgings = $repository->findByOwnerId($user->getId());
+
+
+        return $this->render('user/lodgings.html.twig', [
+            'lodgings' => $lodgings,
             'user' => $user
         ]);
     }

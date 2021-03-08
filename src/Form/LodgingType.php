@@ -18,6 +18,7 @@ class LodgingType extends AbstractType
         $builder
             ->add('name')
             ->add('capacity')
+            ->add('lodgingType')
             ->add('space')
             ->add('internetAvailable')
             ->add('description')
@@ -27,7 +28,6 @@ class LodgingType extends AbstractType
             ->add('lon', HiddenType::class)
             ->add('fullAddress', HiddenType::class)
             ->add('postalCode', HiddenType::class)
-            ->add('lodgingType')
         ;
     }
 

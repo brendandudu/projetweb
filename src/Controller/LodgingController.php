@@ -10,6 +10,7 @@ use App\Repository\BookingStateRepository;
 use App\Repository\LodgingRepository;
 use App\Services\DateRangeHelper;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -39,6 +40,7 @@ class LodgingController extends AbstractController
     /**
      * @Route("/new", name="new")
      * @Route("/{id}/edit", name="edit")
+     * @IsGranted("ROLE_HOST")
      */
     public function form(Lodging $lodging = null, Request $request, EntityManagerInterface $manager): Response
     {
@@ -59,6 +61,8 @@ class LodgingController extends AbstractController
 
             $manager->persist($lodging);
             $manager->flush();
+
+            return $this->redirectToRoute('user_lodgings');
         }
 
         return $this->render('lodging/create.html.twig', [

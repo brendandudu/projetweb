@@ -65,7 +65,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="datetime")
-     * @Assert\NotBlank
      */
     private $createdAt;
 

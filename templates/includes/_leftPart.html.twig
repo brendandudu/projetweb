@@ -8,7 +8,7 @@
     <div class="left-item" style="text-align: center;margin-top: 20px;text-decoration: underline">
         {{ user.firstName }}
     </div>
-    <div class="left-item" style="margin-top: 60px">
+    <div class="left-item" style="margin-top: 45px">
         <a class="{{ setActive("user_info") }}{{ setActive("user_edit") }}" href="{{ path('user_info') }}">Infos personnelles</a>
     </div>
     <div class="left-item">
@@ -17,18 +17,13 @@
     <div class="left-item">
         <a>Paiements et versements</a>
     </div>
-    <div class="left-item">
-        <a>Notifications</a>
-    </div>
     <div class="left-line">
     </div>
-    <div class="left-item" style="font-weight: bold">
-        <a>Messages</a>
-    </div>
+
     {% if not is_granted('ROLE_ADMIN') %}
-        {% if is_granted('ROLE_EDITOR') %}
+        {% if is_granted('ROLE_HOST') %}
             <div class="left-item" style="font-weight: bold">
-                <a href="{{ path('user_ads') }}">Mes annonces</a>
+                <a class="{{ setActive("user_lodgings") }}" href="{{ path('user_lodgings') }}">Mes annonces</a>
             </div>
         {% endif %}
         <div class="left-item" style="font-weight: bold">

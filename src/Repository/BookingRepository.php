@@ -30,7 +30,7 @@ class BookingRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByOwnerId($ownerId)
+    public function findByUserId($ownerId)
     {
         return $this->createQueryBuilder('b')
             ->join('b.lodging', 'l')

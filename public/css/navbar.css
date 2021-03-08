@@ -354,6 +354,6 @@ body {
     text-decoration: none !important;
 }
 
-.nav a:active{
+.nav .dropdown-menu a:active{
     background-color: #FFFFFF;
 }

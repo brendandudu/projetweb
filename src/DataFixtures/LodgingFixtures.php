@@ -67,7 +67,7 @@ class LodgingFixtures extends Fixture implements DependentFixtureInterface
             $lodging->setUser($this->getReference('user_'.$faker->numberBetween(1,20)));
 
 
-            $lodging->setPicture("https://manager.groupe-bdl.com/web_content/modeles/114-modele-maison-individuelle-a-etage-1.jpg");
+            $lodging->setPicture("baseLodgingPicture.jpeg");
 
             $manager->persist($lodging);
 

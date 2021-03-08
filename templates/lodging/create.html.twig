@@ -40,6 +40,18 @@
             <fieldset>
                 <legend><h2 class="text-center"><b>Nouveau hébergement</b></h2></legend><br>
 
+                {% if not form.vars.valid %}
+                    <div class="alert alert-danger">
+                        <ul>
+                            {% for child in form.children %}
+                                {% for error in child.vars.errors %}
+                                    <li>{{ error.message }}</li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+
                 <div class="form-group">
                     <label class="col-md-4 control-label">Titre</label>
                     {{ form_errors(form.name) }}
