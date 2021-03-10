@@ -3,16 +3,18 @@
 
 {% block body %}
     <a href="{{ path('lodging_show', { 'id' : lodging.id }) }}">
-    <div class="media grow js-marker" style="max-width: 700px" data-lat="{{ lodging.lat }}" data-lon="{{ lodging.lon }}" data-price="{{ lodging.nightPrice }}">
+    <div class="media grow js-marker" data-lat="{{ lodging.lat }}" data-lon="{{ lodging.lon }}" data-price="{{ lodging.nightPrice }}">
         <div class="fav-box"><i class="fa fa-heart-o" aria-hidden="true"></i>
         </div>
         <img class="d-flex align-self-start" src="/assets/img/lodging/{{ lodging.picture }}" alt="Lodging image">
-        <div class="media-body pl-3" style="position: relative">
-            <div class="price">{{lodging.nightPrice}} €<small>{{lodging.lodgingType}}</small>
+        <div class="media-body pl-3">
+            <div class="price">
+                {{lodging.nightPrice}} €
+                <small>{{lodging.lodgingType}}</small>
+            </div>
             <div class="stats">
                 <span><i class="fa fa-arrows-alt"></i>{{ lodging.space}} m2</span>
                 <span><i class="fa fa-user"></i>{{ lodging.capacity }} </span>
-            </div>
             </div>
             <div class="address">{{ lodging.fullAddress}}</div>
         </div>

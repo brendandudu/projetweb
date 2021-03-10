@@ -16,6 +16,7 @@ let geocoderControlOptions = {
     markers: false,
     attribution: null,
     expanded: true,
+    focus: true,
     placeholder: 'Où partez-vous ?',
     panToPoint: false,
     params: {
