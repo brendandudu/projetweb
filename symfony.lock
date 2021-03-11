@@ -1,4 +1,7 @@
 {
+    "beberlei/doctrineextensions": {
+        "version": "v1.3.0"
+    },
     "cache/adapter-common": {
         "version": "1.2.0"
     },

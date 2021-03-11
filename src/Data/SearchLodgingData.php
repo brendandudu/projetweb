@@ -25,9 +25,14 @@ class SearchLodgingData
     public $visitors = 1;
 
     /**
-     * @var string[]
+     * @var float
      */
-    public $postalCodes;
+    public $lat;
+
+    /**
+     * @var float
+     */
+    public $lng;
 
     /**
      * @var string

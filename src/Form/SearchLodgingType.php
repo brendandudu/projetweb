@@ -16,7 +16,8 @@ class SearchLodgingType extends AbstractType
     {
         $builder
             ->add('cityName', HiddenType::class)
-            ->add('postalCodes', HiddenType::class)
+            ->add('lat', HiddenType::class)
+            ->add('lng', HiddenType::class)
 
             ->add('beginsAt', DateType::class,[
                 'widget' => 'single_text',

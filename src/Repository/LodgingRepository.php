@@ -28,6 +28,15 @@ class LodgingRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('l');
 
         if(!empty($search)) {
+
+            $params = [
+                'start' => $search['beginsAt']['date'],
+                'end' => $search['endsAt']['date'],
+                'capacity' => $search['visitors'],
+                'stateIdCanceled' => 4,
+                'stateIdFinished' => 5
+            ];
+
             $qb = $qb
                 ->leftJoin('l.bookings', 'b')
                 ->andWhere(
@@ -40,26 +49,36 @@ class LodgingRepository extends ServiceEntityRepository
                         $qb->expr()->isNull('b')                        //soit il ne l'est pas encore
                     )
                 )
-                ->andWhere('l.capacity >= :capacity')
-                ->setParameters([
-                    'start' => $search['beginsAt']['date'],
-                    'end' => $search['endsAt']['date'],
-                    'capacity' => $search['visitors'],
-                    'stateIdCanceled' => 4,
-                    'stateIdFinished' => 5
-                ]);
 
-            if (!empty($search['postalCodes'])) {
-                $postalCodesArray = explode(";", $search['postalCodes']);
-                $qb = $qb
-                    ->andWhere('l.postalCode IN (:CPs)')
-                    ->setParameter(':CPs', $postalCodesArray);
+                ->andWhere('l.capacity >= :capacity');
+
+            if (!empty($search['lat']) && !empty($search['lng'])) {
+
+                $qb = $qb  //permet de rechercher les hebergements à proximité de la recherche
+                    ->andWhere('(
+                    3959 * acos (
+                          cos ( radians(:searchLat) )
+                          * cos( radians( l.lat ) )
+                          * cos( radians( l.lon ) - radians(:searchLng) )
+                          + sin ( radians(:searchLat) )
+                          * sin( radians( l.lat ) )
+                    )
+                ) <= :radius');
+
+                    $params = array_merge($params,[
+                        'searchLat' => $search['lat'],
+                        'searchLng' => $search['lng'],
+                        'radius' => 30
+                    ]);
             }
+
+            $qb = $qb
+                ->setParameters($params);
         }
 
-        return $qb
+        dd( $qb
             ->getQuery()
-            ->getResult();
+            ->getResult());
     }
 
     public function findByOwnerId($ownerId)

@@ -31,7 +31,7 @@ let geocoderControlOptions = {
 
 //Initialize the geocoder and add event
 let geocoderControl = new L.control.geocoder(locationIQToken, geocoderControlOptions).addTo(map).on('select', function (e) {
-    putInputValues(e.feature.feature.address.name, e.feature.feature.address.postcode);
+    putInputValues(e.feature.feature.address.name, e.latlng.lat, e.latlng.lng);
 });
 
 //Get the "search-box" div
@@ -42,12 +42,14 @@ let geocoderContainer = geocoderControl.getContainer();
 searchBoxControl.appendChild(geocoderContainer);
 
 let cityNameInput = document.getElementById("search_cityName");
-let postalCodesInput = document.getElementById("search_postalCodes");
+let latInput = document.getElementById("search_lat");
+let lngInput = document.getElementById("search_lng");
 
 //Put the geocoding response in the input values
-function putInputValues(cityName, cp) {
+function putInputValues(cityName, lat, lng) {
     cityNameInput.value = cityName;
-    postalCodesInput.value = cp;
+    latInput.value = lat;
+    lngInput.value = lng
 }
 
 //Reset input on load to avoid conflicts
