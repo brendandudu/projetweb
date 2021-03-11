@@ -4,55 +4,51 @@
 
 {% block stylesheets %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/litepicker/dist/css/litepicker.css"/>
-    <link rel="stylesheet" href="{{ asset('css/showLodging.css') }}"/>
+    <link href="{{ asset('css/showLodging.css') }}" rel="stylesheet"/>
 {% endblock %}
 {% block body %}
 
-    </div>
-    <div class="wrapper">
-        <div class="card">
-            <div class="product-left">
-                <div class="header">
-                    <h1>{{ lodging.name }}</h1>
-                    <h2>{{ lodging.lodgingType }}</h2>
-                </div>
-
-                <div class="focus">
-                    <span id="togg1">Description</span>
-                    <span id="togg2">Reservation</span>
-                </div>
-                <!--DESCRIPITON / DETAILS-->
-                <div class="product-main">
-
-                    <div id="d1">
-                        <p class="description">{{ lodging.description }}</p>
-                        <div class="row justify-content-center">
-                            <span class="mr-5">{{ lodging.capacity }} <i class="fa fa-user"></i></span>
-                            <span >{{ lodging.space }}m² <i class="fa fa-arrows-alt"></i></span>
-                            {% if lodging.internetAvailable %}
-                                <span class="ml-5"><i class="fa fa-wifi"></i></span>
-                            {% endif %}
-                        </div>
-                        <div class="product-total">
-                            <h3>Prix/nuit</h3>
-                            <p class=pt-0">{{ lodging.nightPrice | number_format(0, ',', ' ') }}€</p>
-                        </div>
-                    </div>
-                    <div id="d2">
-                        {% include 'includes/_bookingForm.html.twig' %}
-                    </div>
-                </div>
-                <!--CHOOSE PRODUCT DETAILS-->
-                <div class="product-details">
-
-                    <!--PRODUCT TOTAL-->
-
-                </div>
-                <!-- ADD TO CART BUTTON -->
-
+    <div class="card card-custom-wide">
+        <div class="card-custom-wide-img" style="background-image: url(/assets/img/lodging/baseLodgingPicture.jpeg);"></div>
+        <div class="card-custom-avatar">
+            <img class="img-fluid" src="/user/img/user.png" alt="Avatar" />
+        </div>
+        <div class="card-body">
+            <div class="lodging-desc">
+                <h2 class="card-title">{{ lodging.name }}</h2>
+                <p class="card-text"><i class="fas fa-map-marked-alt"></i> {{ lodging.fullAddress }}</p>
+                <p class="card-text">{{ lodging.description }}</p>
+                <hr>
             </div>
-            <div class="product-right">
-                <img src="/assets/img/lodging/{{ lodging.picture }}" alt="">
+            <div class="lodging-info">
+                <h4 class="card-info">Informations sur l'hébergements :</h4> <br>
+                <p class="card-text"><i class="fas fa-arrows-alt"></i> {{ lodging.space }} m²</p>
+                <p class="card-text"><i class="fas fa-user"></i> {{ lodging.capacity }} personne(s)</p>
+                <p class="card-text"><i class="fas fa-wifi"></i> <i class="{{ lodging.internetAvailable ? "fas fa-check text-success" : "fas fa-times text-danger" }}"></i></p>
+                <hr>
+            </div>
+            <div class="user-info">
+                <h4 class="card-info">Informations sur le propriétaire :</h4> <br>
+                <p class="card-text"><u>Nom:</u> {{ lodging.user.lastName }}</p>
+                <p class="card-text"><u>Prénom:</u> {{ lodging.user.firstName }}</p>
+                <p class="card-text"><u>Adresse email:</u> <a href="mailto:{{ lodging.user.email }}">{{ lodging.user.email }}</p></a>
+                <hr>
+            </div>
+            <div class="booking-info">
+                <h4 class="card-info">Ma réservation :</h4> <br>
+                <div class="container mt-4">
+                    {% if app.user %}
+                        {% if not is_granted('ROLE_HOST') %}
+                            {% include 'includes/_bookingForm.html.twig' %}
+                        {% endif %}
+                    {% else %}
+                        <div class="row justify-content-center">
+                            <div class="text-center alert alert-danger col-md-4">
+                                Merci de vous <a href="{{ path('app_login') }}">connectez</a> pour réserver
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
             </div>
         </div>
     </div>
@@ -82,34 +78,5 @@
     lockDays: dateRanges,
   });
 </script>
-
-    <script>
-        let togg1 = document.getElementById("togg1");
-        let togg2 = document.getElementById("togg2");
-        let d1 = document.getElementById("d1");
-        let d2 = document.getElementById("d2");
-
-        togg1.addEventListener("click", () => {
-            if(getComputedStyle(d1).display === "none"){
-                d1.style.display = "block";
-                togg1.style.borderBottom = "0.2rem solid #fff"
-                d2.style.display = "none"
-                togg2.style.borderBottom = "none"
-            }
-
-        })
-
-        function togg(){
-            if(getComputedStyle(d2).display === "none"){
-                d2.style.display = "block";
-                togg2.style.borderBottom = "0.2rem solid #fff"
-                d1.style.display = "none"
-                togg1.style.borderBottom = "none"
-            }
-        }
-
-        togg2.onclick = togg
-    </script>
-
 
 {% endblock %}

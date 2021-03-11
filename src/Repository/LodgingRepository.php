@@ -76,9 +76,9 @@ class LodgingRepository extends ServiceEntityRepository
                 ->setParameters($params);
         }
 
-        dd( $qb
+        return $qb
             ->getQuery()
-            ->getResult());
+            ->getResult();
     }
 
     public function findByOwnerId($ownerId)

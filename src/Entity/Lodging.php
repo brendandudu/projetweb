@@ -107,11 +107,6 @@ class Lodging
     private $fullAddress;
 
     /**
-     * @ORM\Column(type="string", length=8)
-     */
-    private $postalCode;
-
-    /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="lodgings")
      * @ORM\JoinColumn(nullable=false)
      */

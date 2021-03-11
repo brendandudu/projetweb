@@ -77,10 +77,17 @@ class LodgingController extends AbstractController
     public function show(Lodging $lodging, Request $request, DateRangeHelper $dateRangeHelper, BookingStateRepository $bookingStateRepository, EntityManagerInterface $manager): Response
     {
         $booking = new Booking();
-        $form = $this->createForm(BookingType::class, $booking);
+        $form = $this->createForm(BookingType::class, $booking, [
+            'capacity' => $lodging->getCapacity(),
+            'beginsAt' => $request->query->get('beginsAt'),
+            'endsAt' => $request->query->get('endsAt'),
+        ]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+            $this->denyAccessUnlessGranted('ROLE_HOST');
 
             $booking->setUser($this->getUser());
             $booking->setLodging($lodging);

@@ -53,8 +53,6 @@ class LodgingFixtures extends Fixture implements DependentFixtureInterface
                 $regionName = "Nouvelle-Aquitaine";
             }
 
-
-            $lodging->setPostalCode($postalCode);
             $lodging->setFullAddress($faker->streetAddress.",".$cityName.",".$regionName.",".$postalCode.", France");
             $lodging->setName($faker->realText(20));
             $lodging->setLodgingType($this->getReference('type_' . $faker->numberBetween(1, 5)));

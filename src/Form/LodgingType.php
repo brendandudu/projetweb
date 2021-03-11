@@ -27,7 +27,6 @@ class LodgingType extends AbstractType
             ->add('lat', HiddenType::class)
             ->add('lon', HiddenType::class)
             ->add('fullAddress', HiddenType::class)
-            ->add('postalCode', HiddenType::class)
         ;
     }
 

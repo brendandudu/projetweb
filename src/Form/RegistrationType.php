@@ -22,7 +22,7 @@ class RegistrationType extends AbstractType
                     'Invité' => 'ROLE_USER',
                     'Hôte' => 'ROLE_HOST'
                 ],
-                'multiple' => true
+                'multiple' => true,
             ])
             ->add('password', PasswordType::class)
             ->add('firstName', TextType::class)

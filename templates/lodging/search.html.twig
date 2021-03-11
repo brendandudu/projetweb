@@ -40,7 +40,7 @@
                          Désolé, nous n'avons pas trouvé d'hébergements disponibles pour ces critères.
                      {% else %}
                          {% for lodging in lodgings %}
-                            {% include 'includes/_lodgingCard.html.twig' with {lodging: lodging} only %}
+                            {% include 'includes/_lodgingCard.html.twig' with {lodging: lodging, beginsAt: data.beginsAt|default(""), endsAt: data.endsAt|default("") }only %}
                          {% endfor %}
                      {% endif %}
                     </div>

@@ -6,10 +6,12 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -64,6 +66,12 @@ class User implements UserInterface
     private $lastName;
 
     /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File
+     */
+    private $picture;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
@@ -83,6 +91,12 @@ class User implements UserInterface
      * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="user")
      */
     private $bookings;
+
+    /**
+     * @Vich\UploadableField(mapping="userPictures", fileNameProperty="picture")
+     * @var File
+     */
+    private $pictureFile;
 
     /**
      * @ORM\PrePersist
@@ -311,4 +325,15 @@ class User implements UserInterface
 
         return $this;
     }
+
+    public function getPicture()
+    {
+        return $this->picture;
+    }
+
+    public function setPicture($picture): void
+    {
+        $this->picture = $picture;
+    }
+
 }

@@ -17,7 +17,7 @@ body{
 .search-box{width:90%; margin:0 auto 40px; box-shadow:10px 13px 0 rgba(0,0,0,0.2);}
 .listing-block{background:#fff; height:500px; padding-top:20px; overflow-y:scroll;}
 .slimScrollDiv{width:41%!important;}
-.media {background:#fff; position:relative; margin-bottom:15px; max-width: 600px}
+.media {background:#fff; position:relative; margin-bottom:15px; max-width: 600px; overflow: hidden}
 .media img{width:200px;margin:0; height:136px;}
 .media-body{border:1px solid #bcbcbc; border-left:0; height:136px; position: relative}
 .media .price{float:left; width:100%; font-size:30px;font-weight:600; color:#4765AB;}
@@ -46,3 +46,4 @@ a:hover{
 .marker.is-active .leaflet-popup-content-wrapper{
     background-color: #0f6674;
 }
+

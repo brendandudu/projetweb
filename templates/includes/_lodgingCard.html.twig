@@ -1,8 +1,5 @@
-{% block stylesheets %}
-{% endblock %}
-
 {% block body %}
-    <a href="{{ path('lodging_show', { 'id' : lodging.id }) }}">
+    <a href="{{ path('lodging_show', { 'id' : lodging.id, 'beginsAt' : beginsAt|default(""), 'endsAt' : endsAt|default("") }) }}">
     <div class="media grow js-marker" data-lat="{{ lodging.lat }}" data-lon="{{ lodging.lon }}" data-price="{{ lodging.nightPrice }}">
         <div class="fav-box"><i class="fa fa-heart-o" aria-hidden="true"></i>
         </div>
