@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Info</title>
+    <script src="./js/vue.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link href="{{ asset('css/user.css') }}" rel="stylesheet"/>
+    <link href="{{ asset('css/reservation.css') }}" rel="stylesheet"/>
+</head>
+<body>
+<div id="app">
+    {% include 'includes/header.html.twig' %}
+    <div class="bottom">
+        {% include 'includes/userbox.html.twig' %}
+        <div class="right">
+            <h3>Mes réservation</h3>
+            <div class="rightbox">
+                <div class="clearfix"></div>
+                <section class="search-box">
+                    <div class="showarea">
+                        <div class="row">
+                            <div class="mybox">
+                                {% for lodging in lodgings %}
+                                    {% include 'includes/userLodgingCard.html.twig' %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <div style="margin-top: 180px;margin-left: 60px;font-size: 18px">
+                @ 2021 RESA,Inc.All rights reserved
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- import Vue before Element -->
+<script src="https://unpkg.com/vue/dist/vue.js"></script>
+<!-- import JavaScript -->
+<script src="https://unpkg.com/element-ui/lib/index.js"></script>
+<script>
+    new Vue({
+        el: '#app',
+        data: function() {
+            return { visible: false }
+        }
+    });
+    $(function(){
+        $('.listing-block').slimScroll({
+            height: '500px'
+        });
+    });
+</script>
+</body>
+</html>
+
+

@@ -18,12 +18,12 @@ class BookingType extends AbstractType
         $builder
             ->add('beginsAt', DateType::class, [
                 'widget' => 'single_text',
-                'data' => new \DateTime($options['beginsAt']),
+                'data' => empty($options['beginsAt']) ? null : new \DateTime($options['beginsAt']),
                 'html5' => false,
             ])
             ->add('endsAt',  DateType::class, [
                 'widget' => 'single_text',
-                'data' => new \DateTime($options['endsAt']),
+                'data' => empty($options['beginsAt']) ? null : new \DateTime($options['endsAt']),
                 'html5' => false
             ])
             ->add('totalOccupiers', ChoiceType::class, [

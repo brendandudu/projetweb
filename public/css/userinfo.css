@@ -1,0 +1,12 @@
+
+.noms{display: flex;}
+.noms-item{
+    margin-top: 40px;
+    margin-left: 60px;
+    margin-right: 200px;
+    font-size: 20px;
+}
+.noms-item .item-top{
+    font-weight: bold;
+    margin-bottom: 10px;
+}

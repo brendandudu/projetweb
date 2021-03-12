@@ -1,0 +1,31 @@
+.emailcontent{
+    width: 800px;
+    margin:0 auto;
+}
+.regards{
+    font-size: 14pt;
+    margin-top: 20px;
+    font-weight: bold;
+}
+.details{
+    margin-top: 20px;
+}
+.departure{
+    margin-left: 80px;
+}
+.nous{
+    font-weight: bold;
+}
+.imgmiddle{
+    height: 80px;width: 80px;
+    vertical-align: middle;
+}
+.h1middle{
+    vertical-align: middle;
+    margin-left:30px;
+}
+.emailhead{
+    height: 25px;
+    display: flex;
+    margin-bottom: 60px;
+}
