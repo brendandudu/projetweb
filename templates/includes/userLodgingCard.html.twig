@@ -1,0 +1,27 @@
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+
+    <div class="onebox">
+        <div class="myreservationpicbox">
+        <img  class="myreservationpic" src="{{ lodging.picture}}" alt="Generic placeholder image">
+        </div>
+        <div class="rightinfo">
+            <div>
+            <div class="address">{{lodging.fullAddress}}</small></div>
+            <div class="stats">
+                <span><i class="fa fa-arrows-alt"></i>{{ lodging.name}} </span>
+                <span><i class="fa fa-user"></i> </span>
+            </div>
+            <div class="address">€{{ lodging.nightPrice}}</div>
+            </div>
+            <div>
+                <a href="{{ path('reservationdetails', { 'id' : lodging.id }) }}">
+                <button class="infodetails">Afﬁcher les détail</button>
+                </a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
