@@ -20,6 +20,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *          message = "l'email est déjà utilisé"
  *     )
  * @ORM\HasLifecycleCallbacks()
+ * @Vich\Uploadable
  */
 class User implements UserInterface
 {
@@ -67,7 +68,6 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\File
      */
     private $picture;
 
@@ -95,16 +95,9 @@ class User implements UserInterface
     /**
      * @Vich\UploadableField(mapping="userPictures", fileNameProperty="picture")
      * @var File
+     * @Assert\File
      */
     private $pictureFile;
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedAtValue(): void
-    {
-        $this->createdAt = new \DateTime();
-    }
 
     /**
      * @ORM\Column(type="json")
@@ -116,18 +109,47 @@ class User implements UserInterface
      */
     private $lodgings;
 
+    /**
+     * @ORM\Column(type="string", length=15, nullable=true)
+     * @Assert\Regex(
+     *     pattern="^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}^",
+     *     message="Le numéro de téléphone n'est pas bon"
+     *     )
+     */
+    private $phone;
 
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
-        $this->User = new ArrayCollection();
+        $this->user = new ArrayCollection();
         $this->lodgings = new ArrayCollection();
     }
-
 
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTime();
+    }
+
+    public function setPictureFile(?File $picture = null)
+    {
+        $this->pictureFile = $picture;
+
+        if ($picture) {
+            $this->updatedAt = new \DateTime();
+        }
+    }
+
+    public function getPictureFile()
+    {
+        return $this->pictureFile;
     }
 
     public function getEmail(): ?string
@@ -334,6 +356,18 @@ class User implements UserInterface
     public function setPicture($picture): void
     {
         $this->picture = $picture;
+    }
+
+    public function getPhone(): ?string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): self
+    {
+        $this->phone = $phone;
+
+        return $this;
     }
 
 }

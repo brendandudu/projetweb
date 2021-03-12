@@ -28,7 +28,7 @@ class BookingType extends AbstractType
             ])
             ->add('totalOccupiers', ChoiceType::class, [
                 'choices' => array_slice(range(0,$options['capacity']), 1, null, true),
-                'data' => $options['capacity']
+                'data' => 1
                 ])
         ;
     }

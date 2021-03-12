@@ -86,8 +86,7 @@ class LodgingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-            $this->denyAccessUnlessGranted('ROLE_HOST');
+            $this->denyAccessUnlessGranted('ROLE_USER');
 
             $booking->setUser($this->getUser());
             $booking->setLodging($lodging);

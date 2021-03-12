@@ -157,6 +157,11 @@
     .left a{
       color: black;
     }
+
+    .vich-image img{
+      width: 150px;
+      height: 150px;
+    }
   </style>
 {% endblock %}
 
@@ -216,8 +221,16 @@
           </div>
         </div>-->
         <div class="right-item">
-          <div class="item-top">email</div>
+          <div class="item-top">Email</div>
           {{ form_widget(form.email) }}
+        </div>
+        <div class="right-item">
+          <div class="item-top">Image <small>(attention l'image génère une erreur mais upload bien l'img)</small></div>
+          {{ form_widget(form.pictureFile) }}
+        </div>
+        <div class="right-item">
+          <div class="item-top">Téléphone</div>
+          {{ form_widget(form.phone) }}
         </div>
         <!--<div class="right-item">
           <div class="item-top">numberSelect</div>
