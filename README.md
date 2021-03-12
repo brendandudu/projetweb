@@ -4,6 +4,12 @@ Bonjour et bienvenue sur notre projet RESA !
 
 RESA c'est quoi ? un site de réservation d'hebergements : Chalet, bungalow, mobil-home dans toute la france.
 
+Fonction principal : - Se connecter / S'inscrire(avec mail de confirmation)
+                     - Chercher un hébergement par ville et date (client)
+                     - Ajouter un hébergement (admin)
+                     - Réserver un hébergement(avec mail de confirmation)
+                     - Consulter les réservation 
+
 # BUNDLES
 
 Charger les composants avec composer : $ composer install
