@@ -38,6 +38,8 @@ class UserController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()){
+
+            $user->setUpdatedAt(new \DateTime());
             $manager->persist($user);
             $manager->flush();
 
@@ -79,7 +81,6 @@ class UserController extends AbstractController
         $user = $this->getUser();
 
         $lodgings = $repository->findByOwnerId($user->getId());
-
 
         return $this->render('user/lodgings.html.twig', [
             'lodgings' => $lodgings,
