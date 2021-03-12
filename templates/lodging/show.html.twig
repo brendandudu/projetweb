@@ -11,11 +11,7 @@
     <div class="card card-custom-wide">
         <div class="card-custom-wide-img" style="background-image: url(/assets/img/lodging/baseLodgingPicture.jpeg);"></div>
         <div class="card-custom-avatar">
-            {% if lodging.user.picture %}
-                <img class="img-fluid" src="/assets/img/user/{{ lodging.user.picture }}" alt="Avatar" />
-            {% else %}
-                <img class="img-fluid" src="/user/img/user.png" alt="Avatar" />
-            {% endif %}
+            <img class="img-fluid" src="/user/img/user.png" alt="Avatar" />
         </div>
         <div class="card-body">
             <div class="lodging-desc">
@@ -36,7 +32,6 @@
                 <p class="card-text"><u>Nom:</u> {{ lodging.user.lastName }}</p>
                 <p class="card-text"><u>Prénom:</u> {{ lodging.user.firstName }}</p>
                 <p class="card-text"><u>Adresse email:</u> <a href="mailto:{{ lodging.user.email }}">{{ lodging.user.email }}</p></a>
-                <p class="card-text"><u>Téléphone:</u> {{ lodging.user.phone ? "indisponible" : lodging.user.phone }}</p>
                 <hr>
             </div>
             <div class="booking-info">
@@ -54,17 +49,6 @@
                         </div>
                     {% endif %}
                 </div>
-                {% if not form.vars.valid %}
-                    <div class="alert alert-danger">
-                        <ul>
-                            {% for child in form.children %}
-                                {% for error in child.vars.errors %}
-                                    <li>{{ error.message }}</li>
-                                {% endfor %}
-                            {% endfor %}
-                        </ul>
-                    </div>
-                {% endif %}
             </div>
         </div>
     </div>
@@ -92,7 +76,6 @@
     resetButton: true,
     disallowLockDaysInRange: true,
     lockDays: dateRanges,
-      minDays: 2,
   });
 </script>
 

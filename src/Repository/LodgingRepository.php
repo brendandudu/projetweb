@@ -90,4 +90,25 @@ class LodgingRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+
+
+
+    public function findAvailableLodgingsMe($user,BookingRepository $repository): ?array {
+        $ids = $repository->findBy(array("user"=>$user));//userId在Booking的Entity中需要定义
+        //dump($ids);
+
+        $qb = $this->createQueryBuilder('l');
+        $availableLodgings= $qb
+            ->where($qb->expr()->in('l.id', ':lodging'))
+            ->setParameter('lodging', $ids)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        dump($availableLodgings);
+        return $availableLodgings;
+    }
+
+
+
 }

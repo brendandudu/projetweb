@@ -71,6 +71,24 @@ class LodgingController extends AbstractController
         ]);
     }
 
+
+
+    public function sendemail(Booking $booking){
+        $transport = (new \Swift_SmtpTransport('smtp.163.com', 465, 'ssl'))
+            ->setUsername('emmie_shi@163.com')
+            ->setPassword('CINQCUXAHQOBIGJW')
+        ;
+        $mailer = new \Swift_Mailer($transport);
+        $message = (new \Swift_Message('test email'))
+            ->setFrom(['emmie_shi@163.com' => 'Amyshi'])
+            ->setTo(['2359405353@qq.com' => 'GerogeZ'])
+            ->setBody($this->renderView(
+                'user/email.html.twig',array('user' => $this->getUser(),array('booking'=>$booking))
+            ))
+        ;
+        $result = $mailer->send($message);
+        dump($result);
+    }
     /**
      * @Route("/{id}", name="show")
      */
@@ -86,7 +104,8 @@ class LodgingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $this->denyAccessUnlessGranted('ROLE_USER');
+            $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+            $this->denyAccessUnlessGranted('ROLE_HOST');
 
             $booking->setUser($this->getUser());
             $booking->setLodging($lodging);
@@ -94,6 +113,9 @@ class LodgingController extends AbstractController
 
             $manager->persist($booking);
             $manager->flush();
+
+            //send email
+            $this->sendemail($booking);
         }
 
         $bookedRanges = $dateRangeHelper->getBookedDateRangesForJS($lodging);
