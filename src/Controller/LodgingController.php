@@ -56,7 +56,7 @@ class LodgingController extends AbstractController
                 $lodging->setUpdatedAt(new \DateTime());
             }
             else{
-                $lodging->setUser($this->getUser());
+                $lodging->setOwner($this->getUser());
             }
 
             $manager->persist($lodging);
@@ -104,6 +104,5 @@ class LodgingController extends AbstractController
             'dates' => $bookedRanges
         ]);
     }
-
 
 }

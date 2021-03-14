@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -105,7 +104,7 @@ class User implements UserInterface
     private $roles = [];
 
     /**
-     * @ORM\OneToMany(targetEntity=Lodging::class, mappedBy="user")
+     * @ORM\OneToMany(targetEntity=Lodging::class, mappedBy="owner")
      */
     private $lodgings;
 
@@ -118,11 +117,17 @@ class User implements UserInterface
      */
     private $phone;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Lodging::class)
+     */
+    private $wishList;
+
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
         $this->user = new ArrayCollection();
         $this->lodgings = new ArrayCollection();
+        $this->wishList = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -368,6 +373,40 @@ class User implements UserInterface
         $this->phone = $phone;
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Lodging[]
+     */
+    public function getWishList(): Collection
+    {
+        return $this->wishList;
+    }
+
+    public function addWishList(Lodging $wishList): self
+    {
+        if (!$this->wishList->contains($wishList)) {
+            $this->wishList[] = $wishList;
+        }
+
+        return $this;
+    }
+
+    public function removeWishList(Lodging $wishList): self
+    {
+        $this->wishList->removeElement($wishList);
+
+        return $this;
+    }
+
+    public function isAlreadyInWishList(Lodging $lodging) : bool {
+
+        foreach($this->getWishList() as $aLodging) {
+            if($aLodging === $lodging) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

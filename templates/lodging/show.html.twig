@@ -11,8 +11,8 @@
     <div class="card card-custom-wide">
         <div class="card-custom-wide-img" style="background-image: url(/assets/img/lodging/baseLodgingPicture.jpeg);"></div>
         <div class="card-custom-avatar">
-            {% if lodging.user.picture %}
-                <img class="img-fluid" src="/assets/img/user/{{ lodging.user.picture }}" alt="Avatar" />
+            {% if lodging.owner.picture %}
+                <img class="img-fluid" src="/assets/img/user/{{ lodging.owner.picture }}" alt="Avatar" />
             {% else %}
                 <img class="img-fluid" src="/user/img/user.png" alt="Avatar" />
             {% endif %}
@@ -33,10 +33,10 @@
             </div>
             <div class="user-info">
                 <h4 class="card-info">Informations sur le propriétaire :</h4> <br>
-                <p class="card-text"><u>Nom:</u> {{ lodging.user.lastName }}</p>
-                <p class="card-text"><u>Prénom:</u> {{ lodging.user.firstName }}</p>
-                <p class="card-text"><u>Adresse email:</u> <a href="mailto:{{ lodging.user.email }}">{{ lodging.user.email }}</p></a>
-                <p class="card-text"><u>Téléphone:</u> {{ lodging.user.phone ? "indisponible" : lodging.user.phone }}</p>
+                <p class="card-text"><u>Nom:</u> {{ lodging.owner.lastName }}</p>
+                <p class="card-text"><u>Prénom:</u> {{ lodging.owner.firstName }}</p>
+                <p class="card-text"><u>Adresse email:</u> <a href="mailto:{{ lodging.owner.email }}">{{ lodging.owner.email }}</p></a>
+                <p class="card-text"><u>Téléphone:</u> {{ lodging.owner.phone ? "indisponible" : lodging.owner.phone }}</p>
                 <hr>
             </div>
             <div class="booking-info">

@@ -110,7 +110,7 @@ class Lodging
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="lodgings")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $user;
+    private $owner;
 
     /**
      * @ORM\Column(type="datetime")
@@ -354,14 +354,14 @@ class Lodging
         return $this;
     }
 
-    public function getUser(): ?User
+    public function getOwner(): ?User
     {
-        return $this->user;
+        return $this->owner;
     }
 
-    public function setUser(?UserInterface $user): self
+    public function setOwner(?UserInterface $owner): self
     {
-        $this->user = $user;
+        $this->owner = $owner;
 
         return $this;
     }

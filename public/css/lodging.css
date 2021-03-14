@@ -1,39 +1,149 @@
-@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
-#title{float:left; width:100%; color:#fff; margin-bottom:40px; font-size: 20px; position:relative; z-index:3; margin-top:30px}
-#title span{display:block; font-size:45px; text-transform:none; margin-bottom:20px; margin-top:81px; font-weight:700}
-#title a{color:#fff; font-weight:bold;}
 
-html{
+#title {
+    float: left;
+    width: 100%;
+    color: #fff;
+    margin-bottom: 40px;
+    font-size: 20px;
+    position: relative;
+    z-index: 3;
+    margin-top: 30px
+}
+
+#title span {
+    display: block;
+    font-size: 45px;
+    text-transform: none;
+    margin-bottom: 20px;
+    margin-top: 81px;
+    font-weight: 700
+}
+
+#title a {
+    color: #fff;
+    font-weight: bold;
+}
+
+html {
     height: 100%;
 }
-body{
-    background: #24C6DC;  /* fallback for old browsers */
-    background: -webkit-linear-gradient(to bottom, #514A9D, #24C6DC);  /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to bottom, #514A9D, #24C6DC) no-repeat; /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-}
-.head{
-    float:left;width:100%;
-}
-.search-box{width:90%; margin:0 auto 40px; box-shadow:10px 13px 0 rgba(0,0,0,0.2);}
-.listing-block{background:#fff; height:500px; padding-top:20px; overflow-y:scroll;}
-.slimScrollDiv{width:41%!important;}
-.media {background:#fff; position:relative; margin-bottom:15px; max-width: 600px; overflow: hidden}
-.media img{width:200px;margin:0; height:136px;}
-.media-body{border:1px solid #bcbcbc; border-left:0; height:136px; position: relative}
-.media .price{float:left; width:100%; font-size:30px;font-weight:600; color:#4765AB;}
-.media .price small{display:block; font-size:17px; color:#232323;}
-.media .stats{float:left; width:100%; margin-top:10px;position: absolute; left: 50%; top: 4px}
-.media .stats span{float:left; margin-right:10px; font-size:15px;}
-.media .stats span i{margin-right:7px; color:#4765AB;}
-.media .address{width:100%;font-size:14px; margin-top:77px; color:#888;}
-.media .fav-box{position:absolute; right:10px; font-size:20px; top:4px; color:#E74C3C;}
 
+body {
+    background: #24C6DC;
+    background: -webkit-linear-gradient(to bottom, #514A9D, #24C6DC);
+    background: linear-gradient(to bottom, #514A9D, #24C6DC) no-repeat;
+}
 
-.media .info i{
+.head {
+    float: left;
+    width: 100%;
+}
+
+.search-box {
+    width: 90%;
+    margin: 0 auto 40px;
+    box-shadow: 10px 13px 0 rgba(0, 0, 0, 0.2);
+}
+
+.listing-block {
+    background: #fff;
+    height: 500px;
+    padding-top: 20px;
+    overflow-y: scroll;
+}
+
+.slimScrollDiv {
+    width: 41% !important;
+}
+
+/* lodging card */
+.media {
+    background: #fff;
+    position: relative;
+    margin-bottom: 15px;
+    overflow: hidden
+}
+
+.media img {
+    width: 200px;
+    margin: 0;
+    height: 136px;
+}
+
+.media-body {
+    border: 1px solid #bcbcbc;
+    border-left: 0;
+    height: 136px;
+    position: relative
+}
+
+.media .price {
+    float: left;
+    width: 100%;
+    font-size: 30px;
+    font-weight: 600;
     color: #4765AB;
 }
 
-.map-box{background-color:#A3CCFF;}
+.media .price small {
+    display: block;
+    font-size: 17px;
+    color: #232323;
+}
+
+.media .stats {
+    float: left;
+    width: 100%;
+    margin-top: 10px;
+    position: absolute;
+    left: 50%;
+    top: 4px
+}
+
+.media .stats span {
+    float: left;
+    margin-right: 10px;
+    font-size: 15px;
+}
+
+.media .stats span i {
+    margin-right: 7px;
+    color: #4765AB;
+}
+
+.media .address {
+    width: 100%;
+    font-size: 14px;
+    margin-top: 77px;
+    color: #888;
+}
+
+.media .info i {
+    color: #4765AB;
+}
+
+.content {
+    position: relative
+}
+
+/*fav box*/
+.content .fav-box {
+    position: absolute;
+    right: 10px;
+    font-size: 20px;
+    top: 4px;
+    color: #E74C3C;
+    z-index: 10
+}
+
+.content .fav-box.grow:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 0
+}
+
+.map-box {
+    background-color: #A3CCFF;
+}
 
 a {
     text-decoration: none;
@@ -41,14 +151,21 @@ a {
     color: black;
 }
 
-a:hover{
+a:hover {
     color: black;
 }
-.grow { transition: all .2s ease-in-out; }
-.grow:hover { transform: scale(1.02); box-shadow: 1px 1px 12px #555;}
+
+.grow {
+    transition: all .2s ease-in-out;
+}
+
+.grow:hover {
+    transform: scale(1.02);
+    box-shadow: 1px 1px 12px #555;
+}
 
 /*OpenStreetMap*/
-.marker.is-active .leaflet-popup-content-wrapper{
+.marker.is-active .leaflet-popup-content-wrapper {
     background-color: #0f6674;
 }
 

@@ -2,10 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Lodging;
 use App\Form\UserType;
 use App\Repository\BookingRepository;
 use App\Repository\LodgingRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use MongoDB\Driver\Manager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
