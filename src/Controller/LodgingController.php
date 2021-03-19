@@ -105,4 +105,43 @@ class LodgingController extends AbstractController
         ]);
     }
 
+    /**
+     * Add or remove lodging from user's wishlist
+     *
+     * @Route("/{id}/wishlist", name="manageWishList")
+     */
+    public function addOrRemoveWishList(Lodging $lodging, EntityManagerInterface $manager): Response
+    {
+        $user = $this->getUser();
+
+        if(!$user){
+            return $this->JSON([
+                'code' => 403,
+                'message' => "Unauthorized"
+            ], 403);
+        }
+
+        if($user->isAlreadyInWishList($lodging)){
+            $user->removeWishList($lodging);
+
+            $manager->persist($user);
+            $manager->flush();
+
+            return $this->JSON([
+                'code' => 200,
+                'message' => "Lodging removed from WishList"
+            ], 200);
+        }
+
+        $user->addWishList($lodging);
+
+        $manager->persist($user);
+        $manager->flush();
+
+        return $this->JSON([
+            'code' => 200,
+            'message' => "Lodging added to WishList"
+        ], 200);
+
+    }
 }
