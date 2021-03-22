@@ -15,16 +15,17 @@
 </div>
 <div>
     <h2>{{ booking.lodging.name }}</h2>
-    <div class="details">Arrivée : {{ booking.beginsAt }}  <span class="departure">Départ : {{ booking.endsAt }}</span> </div>
-    <div class="details">Adresse : {{ booking.fullAddress }}</div>
-    <div class="details">Appartement:  {{ booking.lodging.lodgingType }}  - {{ booking.capacity }}	</div>
-    <div class="details">Code de réservation : {{ booking.id }}</div>
+    <div class="details">Arrivée : {{ booking.beginsAt | date('y-m-d')}}  <span class="departure">Départ : {{ booking.endsAt | date('y-m-d') }}</span> </div>
+    <div class="details">Adresse : {{ booking.lodging.fullAddress }}</div>
+    <div class="details">Appartement:  {{ booking.lodging.lodgingType }}  - {{ booking.lodging.capacity }}	</div>
+    <div class="details">Code de réservation : {{ booking.id }} </div>
     <div></div>
 </div>
 <div>
     <div class="regards">Cordialement,</div>
     <div class="regards">Equipe Resa</div>
 </div>
+
 </div>
 
 </body>

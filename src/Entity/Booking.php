@@ -20,7 +20,6 @@ class Booking
      */
     private $id;
 
-
     /**
      * @ORM\Column(type="datetime")
      */

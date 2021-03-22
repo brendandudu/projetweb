@@ -25,13 +25,8 @@ body{
 .media .stats{float:left; width:100%; margin-top:10px;position: absolute; left: 50%; top: 4px}
 .media .stats span{float:left; margin-right:10px; font-size:15px;}
 .media .stats span i{margin-right:7px; color:#4765AB;}
-.media .address{width:100%;font-size:14px; margin-top:77px; color:#888;}
+.media .address{width:100%;font-size:14px; margin-top:75px; color:#888;}
 .media .fav-box{position:absolute; right:10px; font-size:20px; top:4px; color:#E74C3C;}
-
-
-.media .info i{
-    color: #4765AB;
-}
 
 .map-box{background-color:#A3CCFF;}
 

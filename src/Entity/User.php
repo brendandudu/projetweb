@@ -20,7 +20,6 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  *          message = "l'email est déjà utilisé"
  *     )
  * @ORM\HasLifecycleCallbacks()
- * @Vich\Uploadable
  */
 class User implements UserInterface
 {
@@ -67,7 +66,208 @@ class User implements UserInterface
     private $lastName;
 
     /**
+     * @return mixed
+     */
+    public function getHeadimg()
+    {
+        return $this->headimg;
+    }
+
+    /**
+     * @param mixed $headimg
+     */
+    public function setHeadimg($headimg): void
+    {
+        $this->headimg = $headimg;
+    }
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $headimg;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $sex;
+
+    /**
+     * @return mixed
+     */
+    public function getSex()
+    {
+        return $this->sex;
+    }
+
+    /**
+     * @param mixed $sex
+     */
+    public function setSex($sex): void
+    {
+        $this->sex = $sex;
+    }
+    /**
+     * @return mixed
+     */
+    public function getBirthday()
+    {
+        return $this->birthday;
+    }
+
+    /**
+     * @param mixed $birthday
+     */
+    public function setBirthday($birthday): void
+    {
+        $this->birthday = $birthday;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @param mixed $phone
+     */
+    public function setPhone($phone): void
+    {
+        $this->phone = $phone;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCountry()
+    {
+        return $this->country;
+    }
+
+    /**
+     * @param mixed $country
+     */
+    public function setCountry($country): void
+    {
+        $this->country = $country;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city): void
+    {
+        $this->city = $city;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAvenue()
+    {
+        return $this->avenue;
+    }
+
+    /**
+     * @param mixed $avenue
+     */
+    public function setAvenue($avenue): void
+    {
+        $this->avenue = $avenue;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAppartment()
+    {
+        return $this->appartment;
+    }
+
+    /**
+     * @param mixed $appartment
+     */
+    public function setAppartment($appartment): void
+    {
+        $this->appartment = $appartment;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
+
+    /**
+     * @param mixed $code
+     */
+    public function setCode($code): void
+    {
+        $this->code = $code;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAddress()
+    {
+        return $this->address;
+    }
+
+    /**
+     * @param mixed $address
+     */
+    public function setAddress($address): void
+    {
+        $this->address = $address;
+    }
+    /**
+     * @ORM\Column(type="datetime", length=255)
+     */
+    private $birthday;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $phone;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $country;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $city;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $avenue;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $appartment;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $code;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $address;
+
+    /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File
      */
     private $picture;
 
@@ -95,9 +295,16 @@ class User implements UserInterface
     /**
      * @Vich\UploadableField(mapping="userPictures", fileNameProperty="picture")
      * @var File
-     * @Assert\File
      */
     private $pictureFile;
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue(): void
+    {
+        $this->createdAt = new \DateTime();
+    }
 
     /**
      * @ORM\Column(type="json")
@@ -109,47 +316,18 @@ class User implements UserInterface
      */
     private $lodgings;
 
-    /**
-     * @ORM\Column(type="string", length=15, nullable=true)
-     * @Assert\Regex(
-     *     pattern="^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}^",
-     *     message="Le numéro de téléphone n'est pas bon"
-     *     )
-     */
-    private $phone;
 
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
-        $this->user = new ArrayCollection();
+        $this->User = new ArrayCollection();
         $this->lodgings = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    /**
-     * @ORM\PrePersist
-     */
-    public function setCreatedAtValue(): void
-    {
-        $this->createdAt = new \DateTime();
-    }
-
-    public function setPictureFile(?File $picture = null)
-    {
-        $this->pictureFile = $picture;
-
-        if ($picture) {
-            $this->updatedAt = new \DateTime();
-        }
-    }
-
-    public function getPictureFile()
-    {
-        return $this->pictureFile;
     }
 
     public function getEmail(): ?string
@@ -356,18 +534,6 @@ class User implements UserInterface
     public function setPicture($picture): void
     {
         $this->picture = $picture;
-    }
-
-    public function getPhone(): ?string
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(?string $phone): self
-    {
-        $this->phone = $phone;
-
-        return $this;
     }
 
 }

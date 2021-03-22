@@ -29,7 +29,6 @@ class LodgingRepository extends ServiceEntityRepository
 
         if(!empty($search)) {
 
-
             $params = [
                 'start' => $search['beginsAt']['date'],
                 'end' => $search['endsAt']['date'],
@@ -37,26 +36,6 @@ class LodgingRepository extends ServiceEntityRepository
                 'stateIdCanceled' => 4,
                 'stateIdFinished' => 5
             ];
-
-            if (!empty($search['lat']) && !empty($search['lng'])) {
-
-                $qb = $qb  //permet de rechercher les hebergements à proximité de la recherche
-                ->andWhere('(
-                    3959 * acos (
-                          cos ( radians(:searchLat) )
-                          * cos( radians( l.lat ) )
-                          * cos( radians( l.lon ) - radians(:searchLng) )
-                          + sin ( radians(:searchLat) )
-                          * sin( radians( l.lat ) )
-                    )
-                ) <= :radius');
-
-                $params = array_merge($params,[
-                    'searchLat' => $search['lat'],
-                    'searchLng' => $search['lng'],
-                    'radius' => 30
-                ]);
-            }
 
             $qb = $qb
                 ->leftJoin('l.bookings', 'b')
@@ -73,6 +52,25 @@ class LodgingRepository extends ServiceEntityRepository
 
                 ->andWhere('l.capacity >= :capacity');
 
+            if (!empty($search['lat']) && !empty($search['lng'])) {
+
+                $qb = $qb  //permet de rechercher les hebergements à proximité de la recherche
+                    ->andWhere('(
+                    3959 * acos (
+                          cos ( radians(:searchLat) )
+                          * cos( radians( l.lat ) )
+                          * cos( radians( l.lon ) - radians(:searchLng) )
+                          + sin ( radians(:searchLat) )
+                          * sin( radians( l.lat ) )
+                    )
+                ) <= :radius');
+
+                    $params = array_merge($params,[
+                        'searchLat' => $search['lat'],
+                        'searchLng' => $search['lng'],
+                        'radius' => 30
+                    ]);
+            }
 
             $qb = $qb
                 ->setParameters($params);
@@ -91,5 +89,26 @@ class LodgingRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+
+
+
+    public function findAvailableLodgingsMe($user,BookingRepository $repository): ?array {
+        $ids = $repository->findBy(array("user"=>$user));//userId在Booking的Entity中需要定义
+        //dump($ids);
+
+        $qb = $this->createQueryBuilder('l');
+        $availableLodgings= $qb
+            ->where($qb->expr()->in('l.id', ':lodging'))
+            ->setParameter('lodging', $ids)
+            ->getQuery()
+            ->getResult()
+        ;
+
+        dump($availableLodgings);
+        return $availableLodgings;
+    }
+
+
 
 }

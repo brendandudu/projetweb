@@ -7,13 +7,11 @@
         <div class="media-body pl-3">
             <div class="price">
                 {{lodging.nightPrice}} €
-                <small>
-                    {{lodging.lodgingType}}
-                    <div class="info d-inline-block ml-2">
-                        <span> <i class="fa fa-arrows-alt"></i> {{ lodging.space}} m2</span>
-                        <span> <i class="fa fa-user ml-1"></i> {{lodging.capacity }}</span>
-                    </div>
-                </small>
+                <small>{{lodging.lodgingType}}</small>
+            </div>
+            <div class="stats">
+                <span><i class="fa fa-arrows-alt"></i>{{ lodging.space}} m2</span>
+                <span><i class="fa fa-user"></i>{{ lodging.capacity }} </span>
             </div>
             <div class="address">{{ lodging.fullAddress}}</div>
         </div>
