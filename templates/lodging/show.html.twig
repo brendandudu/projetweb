@@ -9,7 +9,7 @@
 {% block body %}
 
     <div class="card card-custom-wide">
-        <div class="card-custom-wide-img" style="background-image: url(/assets/img/lodging/baseLodgingPicture.jpeg);"></div>
+        <div class="card-custom-wide-img" style="background-image: url(/assets/img/lodging/{{ lodging.picture }});"></div>
         <div class="card-custom-avatar">
             {% if lodging.user.picture %}
                 <img class="img-fluid" src="/assets/img/user/{{ lodging.user.picture }}" alt="Avatar" />
