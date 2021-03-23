@@ -62,7 +62,7 @@ class LodgingFixtures extends Fixture implements DependentFixtureInterface
             $lodging->setCurrentCondition($faker->realText(25));
             $lodging->setCapacity($faker->numberBetween(1, 8));
             $lodging->setDescription($faker->realText(300));
-            $lodging->setUser($this->getReference('user_'.$faker->numberBetween(1,20)));
+            $lodging->setUser($this->getReference('user_'.$faker->numberBetween(1,10)));
 
 
             $lodging->setPicture("baseLodgingPicture.jpeg");

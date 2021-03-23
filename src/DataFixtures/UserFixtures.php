@@ -33,7 +33,7 @@ class UserFixtures extends Fixture
             }
             else {
                 if($i === 2)
-                    $email = 'user@gmail.com';
+                    $email = 'brokenstar@caramail.com';
                 else
                     $email = $faker->email;
 
@@ -43,10 +43,23 @@ class UserFixtures extends Fixture
                 $password = 'Resa2021@';
             }
 
-            $user ->setEmail($email);
-            $user ->setRoles($roles);
+            $birthday = $faker->dateTimeThisCentury($max = 'now', $timezone = null);
+            $phoneNumber = $faker->phoneNumber;
+            $country = $faker->country;
+            $address = $faker->address;
+            $postcode = $faker->postcode;
+            $city = $faker->city;
+
+            $user -> setEmail($email);
+            $user -> setRoles($roles);
             $user -> setFirstName($firstName);
             $user -> setLastName($lastName);
+            $user -> setBirthday($birthday);
+            $user -> setPhone($phoneNumber);
+            $user -> setCountry($country);
+            $user -> setAddress($address);
+            $user -> setCode($postcode);
+            $user -> setCity($city);
             $user -> setPassword($this->encoder->encodePassword($user, $password));
 
             $manager->persist($user);

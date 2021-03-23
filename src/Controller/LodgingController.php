@@ -15,6 +15,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mime\Address;
 
 /**
  * @Route("/lodging", name="lodging_")
@@ -71,28 +74,10 @@ class LodgingController extends AbstractController
         ]);
     }
 
-
-
-    public function sendemail(Booking $booking){
-        $transport = (new \Swift_SmtpTransport('smtp.163.com', 465, 'ssl'))
-            ->setUsername('emmie_shi@163.com')
-            ->setPassword('CINQCUXAHQOBIGJW')
-        ;
-        $mailer = new \Swift_Mailer($transport);
-        $message = (new \Swift_Message('test email'))
-            ->setFrom(['emmie_shi@163.com' => 'Amyshi'])
-            ->setTo(['2359405353@qq.com' => 'GerogeZ'])
-            ->setBody($this->renderView(
-                'user/email.html.twig',array('user' => $this->getUser(),array('booking'=>$booking))
-            ))
-        ;
-        $result = $mailer->send($message);
-        dump($result);
-    }
     /**
      * @Route("/{id}", name="show")
      */
-    public function show(Lodging $lodging, Request $request, DateRangeHelper $dateRangeHelper, BookingStateRepository $bookingStateRepository, EntityManagerInterface $manager): Response
+    public function show(Lodging $lodging, Request $request, DateRangeHelper $dateRangeHelper, BookingStateRepository $bookingStateRepository, EntityManagerInterface $manager, MailerInterface $mailer): Response
     {
         $booking = new Booking();
         $form = $this->createForm(BookingType::class, $booking, [
@@ -105,7 +90,7 @@ class LodgingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
 
             $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
-            $this->denyAccessUnlessGranted('ROLE_HOST');
+            $this->denyAccessUnlessGranted('ROLE_USER');
 
             $booking->setUser($this->getUser());
             $booking->setLodging($lodging);
@@ -115,7 +100,18 @@ class LodgingController extends AbstractController
             $manager->flush();
 
             //send email
-            $this->sendemail($booking);
+            $email = (new TemplatedEmail())
+                ->from(new Address('betview.conseil@gmail.com', 'Projet RESA (NE PAS RÉPONDRE)'))
+                ->to($this->getUser()->getEmail())
+                ->subject('Réservation confirmée de ' . $lodging->getName())
+                ->htmlTemplate('user/email.html.twig')
+                ->context([
+                    'user' => $this->getUser(),
+                    'booking'=> $booking
+                ])
+            ;
+
+            $mailer->send($email);
         }
 
         $bookedRanges = $dateRangeHelper->getBookedDateRangesForJS($lodging);
