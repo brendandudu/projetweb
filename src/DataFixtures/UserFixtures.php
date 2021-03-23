@@ -29,20 +29,25 @@ class UserFixtures extends Fixture
                 $roles = ['ROLE_ADMIN'];
                 $firstName = 'admin';
                 $lastName = 'admin';
-                $password = 'Admin2021@';
+            }
+            else if ($i === 2){ //Host
+                $email = 'host@gmail.com';
+                $roles = ['ROLE_HOST'];
+                $firstName = 'host';
+                $lastName = 'host';
             }
             else {
-                if($i === 2)
-                    $email = 'user@gmail.com';
+                if($i === 3) // Guest
+                    $email = 'guest@gmail.com';
                 else
                     $email = $faker->email;
 
                 $roles = ['ROLE_USER'];
                 $firstName = $faker->firstName;
                 $lastName = $faker->lastName;
-                $password = 'Resa2021@';
             }
 
+            $password = "Resa2021@";
             $user ->setEmail($email);
             $user ->setRoles($roles);
             $user -> setFirstName($firstName);
