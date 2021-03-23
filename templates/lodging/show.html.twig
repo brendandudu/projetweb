@@ -66,6 +66,41 @@
                     </div>
                 {% endif %}
             </div>
+            <hr>
+            <div class="comments">
+                <h4 class="card-info">Commentaires sur ce logement :</h4> <br>
+                <div class="container">
+                    <form class="comment-form">
+                        <div class="form-group">
+                            <label for="comment">Vous avez séjourné ici dans le passé, vous pouvez donc laisser un commentaire :</label>
+                            <textarea name="comment" class="form-control" rows="3"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-default">Commenter</button>
+                    </form>
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="card card-white post">
+                                <div class="post-heading">
+                                    <div class="float-left image">
+                                        <img src="" class="img-circle avatar" alt="user profile image">
+                                    </div>
+                                    <div class="float-left meta">
+                                        <div class="title h5">
+                                            <a href="#"><b>David Leconte : très bel hébergement</b></a>
+                                        </div>
+                                        <h6 class="text-muted time">Le 22/03/2021</h6>
+                                    </div>
+                                </div> 
+                                <div class="post-description"> 
+                                    <p>Lorem ipsum dolor sit amet</p>
+
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -76,24 +111,22 @@
 
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js"></script>
 
-
-
 <script>
     let dateRanges = {{ dates|json_encode|raw }};
 
-  const picker = new Litepicker({
-    element: document.getElementById('booking_beginsAt'),
-    elementEnd: document.getElementById('booking_endsAt'),
-    singleMode: false,
-    numberOfMonths: 2,
-    numberOfColumns:2,
-    lang: "fr-FR",
-    minDate: new Date(),
-    resetButton: true,
-    disallowLockDaysInRange: true,
-    lockDays: dateRanges,
-      minDays: 2,
-  });
+    const picker = new Litepicker({
+        element: document.getElementById('booking_beginsAt'),
+        elementEnd: document.getElementById('booking_endsAt'),
+        singleMode: false,
+        numberOfMonths: 2,
+        numberOfColumns:2,
+        lang: "fr-FR",
+        minDate: new Date(),
+        resetButton: true,
+        disallowLockDaysInRange: true,
+        lockDays: dateRanges,
+        minDays: 2,
+    });
 </script>
 
 {% endblock %}
