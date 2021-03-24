@@ -4,10 +4,14 @@ namespace App\Controller;
 
 use App\Entity\Booking;
 use App\Entity\Lodging;
+use App\Entity\Comment;
 use App\Form\BookingType;
 use App\Form\LodgingType;
+use App\Form\CommentType;
 use App\Repository\BookingStateRepository;
+use App\Repository\CommentRepository;
 use App\Repository\LodgingRepository;
+use App\Repository\BookingRepository;
 use App\Services\DateRangeHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -15,6 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @Route("/lodging", name="lodging_")
@@ -71,20 +76,28 @@ class LodgingController extends AbstractController
         ]);
     }
 
+    public function canUserRate(BookingRepository $bookingRepository, CommentRepository $commentRepository, Lodging $lodging): bool {
+        return $this->isGranted('ROLE_USER') 
+            && count($bookingRepository->findByGuestAndLodgingId($this->getUser()->getId(), $lodging->getId())) > 0
+            && count($commentRepository->findByGuestAndLodgingId($this->getUser()->getId(), $lodging->getId())) < 1;
+    }
+
     /**
      * @Route("/{id}", name="show")
      */
-    public function show(Lodging $lodging, Request $request, DateRangeHelper $dateRangeHelper, BookingStateRepository $bookingStateRepository, EntityManagerInterface $manager): Response
+    public function show(Lodging $lodging, Request $request, DateRangeHelper $dateRangeHelper, BookingRepository $bookingRepository, CommentRepository $commentRepository, BookingStateRepository $bookingStateRepository, EntityManagerInterface $manager): Response
     {
+        $canUserRate = $this->canUserRate($bookingRepository, $commentRepository, $lodging);
+
         $booking = new Booking();
-        $form = $this->createForm(BookingType::class, $booking, [
+        $formBooking = $this->createForm(BookingType::class, $booking, [
             'capacity' => $lodging->getCapacity(),
             'beginsAt' => $request->query->get('beginsAt'),
             'endsAt' => $request->query->get('endsAt'),
         ]);
-        $form->handleRequest($request);
+        $formBooking->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($formBooking->isSubmitted() && $formBooking->isValid()) {
 
             $this->denyAccessUnlessGranted('ROLE_USER');
 
@@ -96,12 +109,33 @@ class LodgingController extends AbstractController
             $manager->flush();
         }
 
+        $comment = new Comment();
+        $formComment = $this->createForm(CommentType::class, $comment);
+        $formComment->handleRequest($request);
+
+        if ($formComment->isSubmitted() && $formComment->isValid()) {
+            $this->denyAccessUnlessGranted('ROLE_USER');
+            $comment->setUser($this->getUser());
+            $comment->setLodging($lodging);
+            $comment->setDate(new \DateTime('now'));
+
+            $manager->persist($comment);
+            $manager->flush();
+
+            return $this->redirect($request->getUri());
+        }
+
         $bookedRanges = $dateRangeHelper->getBookedDateRangesForJS($lodging);
+
+        $comments = $lodging->getComments();
 
         return $this->render('lodging/show.html.twig', [
             'lodging' => $lodging,
-            'form' => $form->createView(),
-            'dates' => $bookedRanges
+            'formBooking' => $formBooking->createView(),
+            'formComment' => $formComment->createView(),
+            'dates' => $bookedRanges,
+            'comments' => $comments,
+            'canUserRate' => $canUserRate
         ]);
     }
 

@@ -40,4 +40,16 @@ class BookingRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    public function findByGuestAndLodgingId($guestId, $lodgingId)
+    {
+        return $this->createQueryBuilder('b')
+            ->innerJoin('b.lodging', 'l')
+            ->where('l.id = :lodgingId')
+            ->innerJoin('b.user', 'u')
+            ->andWhere('u.id = :userId')
+            ->setParameter('lodgingId', $lodgingId)
+            ->setParameter('userId', $guestId)
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -83,7 +83,7 @@ class LodgingRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findByOwnerId($ownerId)
+    public function findByOwnerId($ownerId): array
     {
         return $this->createQueryBuilder('l')
             ->where('l.user = :id')
@@ -91,5 +91,5 @@ class LodgingRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-
+    
 }

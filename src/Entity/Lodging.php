@@ -118,6 +118,11 @@ class Lodging
     private $createdAt;
 
     /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="lodging", orphanRemoval=true)
+     */
+    private $comments;
+
+    /**
      * @ORM\PrePersist
      */
     public function setCreatedAtValue(): void
@@ -143,6 +148,7 @@ class Lodging
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
+        $this->comments = new ArrayCollection();
     }
 
 
@@ -374,6 +380,36 @@ class Lodging
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setLodging($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getLodging() === $this) {
+                $comment->setLodging(null);
+            }
+        }
 
         return $this;
     }

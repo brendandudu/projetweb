@@ -1,3 +1,5 @@
+@import url(https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
+@import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
 body {
     background-color: #8cd7a2;
 }
@@ -89,12 +91,12 @@ body {
 
 .card-white .h5 {
     font-size: 1.5rem;
-    //font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
 }
 
 .card-white .time {
     font-size: 1.25rem;
-    //font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+    /*font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;*/
 }
 
 .post .post-heading {
@@ -124,6 +126,11 @@ body {
 .post .post-heading .meta .time {
     margin-top: 8px;
     color: #999;
+}
+
+.post .post-heading .rate {
+    font-size: 1.5rem;
+    font-style: italic;
 }
 
 .post .post-image .image {
@@ -204,4 +211,59 @@ body {
 
 .post .post-footer .comments-list .comment>.comments-list {
     margin-left: 50px;
+}
+
+.rating {
+    border: none;
+    margin-right: 49px
+}
+
+.myratings {
+    font-size: 85px;
+    color: green
+}
+
+.rating>[id^="comment_rate"] {
+    display: none
+}
+
+.rating>label:before {
+    margin: 5px;
+    font-size: 2.25em;
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f005"
+}
+
+.rating>.half:before {
+    content: "\f089";
+    position: absolute
+}
+
+.rating>label {
+    color: #ddd;
+    float: right
+}
+
+.rating>[id^="comment_rate"]:checked~label,
+.rating:not(:checked)>label:hover,
+.rating:not(:checked)>label:hover~label {
+    color: #FFD700
+}
+
+.rating>[id^="comment_rate"]:checked+label:hover,
+.rating>[id^="comment_rate"]:checked~label:hover,
+.rating>label:hover~[id^="comment_rate"]:checked~label,
+.rating>[id^="comment_rate"]:checked~label:hover~label {
+    color: #FFED85
+}
+
+.reset-option {
+    display: none
+}
+
+.reset-button {
+    margin: 6px 12px;
+    background-color: rgb(255, 255, 255);
+    text-transform: uppercase
 }
