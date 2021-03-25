@@ -76,7 +76,7 @@ class LodgingController extends AbstractController
         ]);
     }
 
-    public function canUserRate(BookingRepository $bookingRepository, CommentRepository $commentRepository, Lodging $lodging): bool {
+    private function canUserRate(BookingRepository $bookingRepository, CommentRepository $commentRepository, Lodging $lodging): bool {
         return $this->isGranted('ROLE_USER') 
             && count($bookingRepository->findByGuestAndLodgingId($this->getUser()->getId(), $lodging->getId())) > 0
             && count($commentRepository->findByGuestAndLodgingId($this->getUser()->getId(), $lodging->getId())) < 1;
@@ -107,6 +107,8 @@ class LodgingController extends AbstractController
 
             $manager->persist($booking);
             $manager->flush();
+
+            return $this->redirectToRoute('user_bookings');
         }
 
         $comment = new Comment();

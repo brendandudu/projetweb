@@ -71,44 +71,12 @@
                 <h4 class="card-info">Commentaires sur ce logement :</h4> <br>
                 <div class="container">
                     {% if canUserRate %}
-                    {{ form_start(formComment, { attr: { class: 'comment-form' }})}}
-                        <div class="form-group">
-                            <label for="comment">Vous avez séjourné ici dans le passé, vous pouvez donc laisser un commentaire :</label>
-                            {{ form_widget(formComment.comment, { attr: { class: "form-control", rows: "3" }})}}
-                            <fieldset class="rating"> 
-                            {% for key, item in formComment.rate.children %}
-                                {{ form_widget(item) }}
-                                <label class="full" for="comment_rate_{{ key }}" title="{{ 5 - key }} étoiles"></label>
-                            {% endfor %}
-                                <input type="radio" class="reset-option" name="rating" value="reset" /> 
-                            </fieldset>
-                        </div>
-                        <button type="submit" class="btn btn-default">Commenter</button>
-                    {{ form_end(formComment) }}
+                        {% include 'includes/_commentForm.html.twig' %}
                     {% endif %}
                     <div class="row">
                         <div class="col-12">
                             {% for comment in comments %}
-                            <div class="card card-white post">
-                                <div class="post-heading">
-                                    <div class="float-left image">
-                                        <img src="" class="img-circle avatar" alt="user profile image">
-                                    </div>
-                                    <div class="float-left meta">
-                                        <div class="title h5">
-                                            <a href="#"><b>{{ comment.user.firstName }}</b></a>
-                                        </div>
-                                        <h6 class="text-muted time">Le {{ comment.date|date("d/m/Y")}}</h6>
-                                    </div>
-                                    <div class="float-right rate">
-                                        <b>{{ comment.rate }}/5</b>
-                                    </div>
-                                </div> 
-                                <div class="post-description"> 
-                                    <p>{{ comment.comment }}</p>
-
-                                </div>
-                            </div>
+                                {% include 'includes/_commentCard.html.twig' %}
                             {% endfor %}
                         </div>
                     </div>
@@ -139,7 +107,18 @@
         disallowLockDaysInRange: true,
         lockDays: dateRanges,
         minDays: 2,
-    });
+            setup: (picker) => {
+                picker.on('hide', () => {
+                    console.log('ff')
+                });
+            },
+    }
+
+
+    );
+
+
+
 
     $("input[type='radio']").click(function(){
         var sim = $("input[type='radio']:checked").val();

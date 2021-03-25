@@ -49,25 +49,17 @@
                     <div class="condition">Si vous souhaitez annuler votre réservation, contactez l'hote au moins 48 heures avant votre arrivée </div>
 
                     <div class="boldtext" >Code de confirmation</div>
-                    <div class="code"></div>
+                    <div class="code">{{ booking.lodging.id }}</div>
+
+                    <a href="{{ path('lodging_show', { 'id' : booking.lodging.id, 'beginsAt' : beginsAt|default(""), 'endsAt' : endsAt|default("") })}}"><button type="submit" class="btn btn-info">Consulter l'hébergement</button></a>
 
 
-                </div>
-                <div class="bottomdiv">
-                    <img class="logos" src='{{ asset('assets/img/logo1.png') }}' ><span class="logoinline" >Obtenir un PDF pour la visa</span><span class="arrow">> </span>
-                </div>
-                <div class="bottomdiv"><span class="arrow">> </span>
-                    <img class="logos" src='{{ asset('assets/img/logo2.png') }}' ><span class="logoinline" >Imprimer le informations</span>
-                </div>
-                <div class="bottomdiv">
-                    <img class="logos" src='{{ asset('assets/img/logo3.png') }}' ><span class="logoinline" >Obtenir le recu</span><span class="arrow">> </span>
-                </div>
 
-                <div class="row justify-content-end">
+                    <div class="row justify-content-end">
                     <div class="mt-5">
                         {% if not isAlreadyFinished %}
                             {{ form_start(form) }}
-                                <button type="submit" class="btn btn-danger">Annuler</button>
+                                <button type="submit" class="btn btn-danger">Annuler la réservation</button>
                             {{ form_end(form) }}
                         {% else %}
                             <p>Cette réservation est terminée ou bien annulée</p>
