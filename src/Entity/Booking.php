@@ -41,11 +41,6 @@ class Booking
      */
     private $totalOccupiers;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\PositiveOrZero
-     */
-    private $note;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="bookings")
