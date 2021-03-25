@@ -45,8 +45,7 @@ class LodgingCrudController extends AbstractCrudController
             IntegerField::new('capacity')->setTextAlign('center'),
             AssociationField::new('lodgingType')->setLabel('Type'),
             AssociationField::new('user')->setLabel('CreatedBy'),
-            TextareaField::new('fullAddress')->setLabel('Adress'),
-            NumberField::new('postalCode')->setLabel('Postal code'),
+            TextareaField::new('fullAddress')->setLabel('Address'),
             NumberField::new('lat')->setFormTypeOptions(['scale' => 8]),
             NumberField::new('lon')->setFormTypeOptions(['scale' => 8]),
         ];
