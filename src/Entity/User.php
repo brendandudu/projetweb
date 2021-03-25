@@ -3,20 +3,21 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(
-            fields = {"email"},
+fields = {"email"},
  *          message = "l'email est déjà utilisé"
  *     )
  * @ORM\HasLifecycleCallbacks()
@@ -24,21 +25,19 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class User implements UserInterface
 {
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
-
-
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank(message="L'email ne peut pas être vide")
      * @Assert\Email()
      */
     private $email;
-
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
@@ -48,12 +47,6 @@ class User implements UserInterface
      *     message="Le mot de passe doit contenir minimum 8 caractères, dont au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial (@,#..)")
      */
     private $password;
-
-    /**
-     * @Assert\EqualTo(propertyPath="password", message="les deux mots de passe sont différents")
-     */
-    public $confirm_password;
-
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
@@ -123,10 +116,14 @@ class User implements UserInterface
      */
     private $comments;
 
+    /**
+     * @Assert\EqualTo(propertyPath="password", message="les deux mots de passe sont différents")
+     */
+    public $confirm_password;
+
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
-        $this->user = new ArrayCollection();
         $this->lodgings = new ArrayCollection();
         $this->comments = new ArrayCollection();
     }
@@ -141,21 +138,21 @@ class User implements UserInterface
      */
     public function setCreatedAtValue(): void
     {
-        $this->createdAt = new \DateTime();
-    }
-
-    public function setPictureFile(?File $picture = null)
-    {
-        $this->pictureFile = $picture;
-
-        if ($picture) {
-            $this->updatedAt = new \DateTime();
-        }
+        $this->createdAt = new DateTime();
     }
 
     public function getPictureFile()
     {
         return $this->pictureFile;
+    }
+
+    public function setPictureFile(?File $picture = null): void
+    {
+        $this->pictureFile = $picture;
+
+        if ($picture) {
+            $this->updatedAt = new DateTime();
+        }
     }
 
     public function getEmail(): ?string
@@ -177,7 +174,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -204,7 +201,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return $this->password;
     }
 
     public function setPassword(string $password): self
@@ -255,12 +252,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -277,12 +274,12 @@ class User implements UserInterface
         $this->updatedAt = $updatedAt;
     }
 
-    public function getDeletedAt(): ?\DateTimeInterface
+    public function getDeletedAt(): ?DateTimeInterface
     {
         return $this->deletedAt;
     }
 
-    public function setDeletedAt(?\DateTimeInterface $deletedAt): self
+    public function setDeletedAt(?DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
 
@@ -309,11 +306,9 @@ class User implements UserInterface
 
     public function removeBooking(Booking $booking): self
     {
-        if ($this->bookings->removeElement($booking)) {
-            // set the owning side to null (unless already changed)
-            if ($booking->getUser() === $this) {
-                $booking->setUser(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->bookings->removeElement($booking) && $booking->getUser() === $this) {
+            $booking->setUser(null);
         }
 
         return $this;
@@ -396,11 +391,9 @@ class User implements UserInterface
 
     public function removeComment(Comment $comment): self
     {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getUser() === $this) {
-                $comment->setUser(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->comments->removeElement($comment) && $comment->getUser() === $this) {
+            $comment->setUser(null);
         }
 
         return $this;

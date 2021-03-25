@@ -3,10 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\CommentRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Comment
 {
@@ -49,6 +53,14 @@ class Comment
         return $this->id;
     }
 
+    /**
+     * @ORM\PrePersist
+     */
+    public function setCreatedAtValue(): void
+    {
+        $this->date = new DateTime();
+    }
+
     public function getComment(): ?string
     {
         return $this->comment;
@@ -78,7 +90,7 @@ class Comment
         return $this->user;
     }
 
-    public function setUser(?User $user): self
+    public function setUser(?UserInterface $user): self
     {
         $this->user = $user;
 
@@ -97,12 +109,12 @@ class Comment
         return $this;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(DateTimeInterface $date): self
     {
         $this->date = $date;
 

@@ -2,7 +2,7 @@
 
 {% block title %}{{ parent() }} | Détails de ma réservation{% endblock %}
 
-{% block stylesheets  %}
+{% block stylesheets %}
     <link href="{{ asset('css/user.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/bookingDetails.css') }}" rel="stylesheet"/>
 {% endblock %}
@@ -10,70 +10,75 @@
 {% block body %}
 <div class="container">
     <div class="row justify-content-center">
-    <div class="app col-md-8 mt-5">
-        <div class="bottom">
-            <div>
-                <img  class="myreservationpic" src="/assets/img/lodging/{{ booking.lodging.picture}}" alt="Generic placeholder image">
-            </div>
-            <div >
-
-                <div class="welcome">Votre séjour chez : {{booking.lodging.name}}</div>
-
-                <div class="twoboxes">
-                    <div class="departdiv1">
-                        Arrivée
-                        <div class="date">{{ booking.beginsAt|date("m-d-Y") }}</div>
-                    </div>
-                    <div class="departdiv2">
-                        Départ
-                        <div class="date">{{ booking.endsAt|date("m-d-Y") }}</div>
-                    </div>
+        <div class="app col-md-8 mt-5">
+            <div class="bottom">
+                <div>
+                    <img class="myreservationpic" src="/assets/img/lodging/{{ booking.lodging.picture }}"
+                         alt="Generic placeholder image">
                 </div>
-                <div class="infodiv">
-                    <span class="details">Aperçu  </span>
-                    <div class="detailinfo mt-3">
-                        Hôte: {{booking.lodging.name}} <br/>
-                        Nombre d'occupant: {{ booking.totalOccupiers}} <br/>
-                        Address: {{ booking.lodging.fullAddress}}<br/>
-                        {{booking.totalPricing}} €
-                        <div class="des">
-                            {{booking.lodging.description}}
+                <div>
+
+                    <div class="welcome">Votre séjour chez : {{ booking.lodging.name }}</div>
+
+                    <div class="twoboxes">
+                        <div class="departdiv1">
+                            Arrivée
+                            <div class="date">{{ booking.beginsAt|date("m-d-Y") }}</div>
+                        </div>
+                        <div class="departdiv2">
+                            Départ
+                            <div class="date">{{ booking.endsAt|date("m-d-Y") }}</div>
                         </div>
                     </div>
-                </div>
-                <div class="box3">
-                    <span class="details">Détails de la réservation  </span>
+                    <div class="infodiv">
+                        <span class="details">Aperçu  </span>
+                        <div class="detailinfo mt-3">
+                            Hôte: {{ booking.lodging.name }} <br/>
+                            Nombre d'occupant: {{ booking.totalOccupiers }} <br/>
+                            Address: {{ booking.lodging.fullAddress }}<br/>
+                            {{ booking.totalPricing }} €
+                            <div class="des">
+                                {{ booking.lodging.description }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="box3">
+                        <span class="details">Détails de la réservation  </span>
 
 
-                    <div class="boldtext mt-3">Condition d'annulation</div>
-                    <div class="condition">Si vous souhaitez annuler votre réservation, contactez l'hote au moins 48 heures avant votre arrivée </div>
+                        <div class="boldtext mt-3">Condition d'annulation</div>
+                        <div class="condition">Si vous souhaitez annuler votre réservation, contactez l'hote au moins 48
+                            heures avant votre arrivée
+                        </div>
 
-                    <div class="boldtext" >Code de confirmation</div>
-                    <div class="code">{{ booking.lodging.id }}</div>
-
-                    <a href="{{ path('lodging_show', { 'id' : booking.lodging.id, 'beginsAt' : beginsAt|default(""), 'endsAt' : endsAt|default("") })}}"><button type="submit" class="btn btn-info">Consulter l'hébergement</button></a>
+                        <div class="boldtext">Code de confirmation</div>
+                        <div class="code">{{ booking.lodging.id }}</div>
 
 
+                        <div class="row justify-content-between mt-3 ml-1">
+                            <div class="col-md-4>
+                                <a href="{{ path('lodging_show', { 'id' : booking.lodging.id, 'beginsAt' : beginsAt|default(""), 'endsAt' : endsAt|default("") }) }}">
+                                    <button class="btn btn-info">Consulter l'hébergement</button>
+                                </a>
+                            </div>
+                            <div class="col-md-4 mb-5">
+                                {% if not isAlreadyFinished %}
+                                    {{ form_start(form) }}
+                                    <button type="submit" class="btn btn-danger">Annuler la réservation</button>
+                                    {{ form_end(form) }}
+                                {% else %}
+                                    <p>Cette réservation est terminée ou bien annulée</p>
+                                {% endif %}
+                            </div>
+                        </div>
 
-                    <div class="row justify-content-end">
-                    <div class="mt-5">
-                        {% if not isAlreadyFinished %}
-                            {{ form_start(form) }}
-                                <button type="submit" class="btn btn-danger">Annuler la réservation</button>
-                            {{ form_end(form) }}
-                        {% else %}
-                            <p>Cette réservation est terminée ou bien annulée</p>
-                        {% endif %}
+
                     </div>
                 </div>
-
-
             </div>
         </div>
     </div>
-    </div>
-</div>
 
-{% endblock %}
+    {% endblock %}
 
 

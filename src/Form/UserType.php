@@ -19,7 +19,7 @@ class UserType extends AbstractType
             ->add('lastName')
             ->add('pictureFile', VichFileType::class, array(
                 'required' => false,
-                'allow_delete' => true, // not mandatory, default is true
+                'allow_delete' => true,
             ))
             ->add('phone', TelType::class);
     }

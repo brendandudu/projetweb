@@ -155,6 +155,21 @@ a:hover {
 
 /*OpenStreetMap*/
 .marker.is-active .leaflet-popup-content-wrapper {
-    background-color: #0f6674;
+    background-color: #0abfec;
+    color: white;
 }
+
+.marker.is-active .leaflet-popup-tip {
+    background-color: #0abfec;
+}
+
+.leaflet-popup-content-wrapper{
+    text-align: center !important;
+}
+
+.leaflet-popup-content{
+    margin: 10px 13px !important;
+    font-size: 14px;
+}
+
 

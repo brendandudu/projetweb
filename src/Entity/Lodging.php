@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\LodgingRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -122,21 +124,18 @@ class Lodging
      */
     private $comments;
 
+    public function __construct()
+    {
+        $this->bookings = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+    }
+
     /**
      * @ORM\PrePersist
      */
     public function setCreatedAtValue(): void
     {
-        $this->createdAt = new \DateTime();
-    }
-
-    public function setPictureFile(?File $picture = null)
-    {
-        $this->pictureFile = $picture;
-
-        if ($picture) {
-            $this->updatedAt = new \DateTime();
-        }
+        $this->createdAt = new DateTime();
     }
 
     public function getPictureFile()
@@ -144,13 +143,14 @@ class Lodging
         return $this->pictureFile;
     }
 
-
-    public function __construct()
+    public function setPictureFile(?File $picture = null)
     {
-        $this->bookings = new ArrayCollection();
-        $this->comments = new ArrayCollection();
-    }
+        $this->pictureFile = $picture;
 
+        if ($picture) {
+            $this->updatedAt = new DateTime();
+        }
+    }
 
     public function getId(): ?int
     {
@@ -295,12 +295,12 @@ class Lodging
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -372,12 +372,12 @@ class Lodging
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 

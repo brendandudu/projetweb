@@ -18,19 +18,15 @@ class SearchLodgingType extends AbstractType
             ->add('cityName', HiddenType::class)
             ->add('lat', HiddenType::class)
             ->add('lng', HiddenType::class)
-
-            ->add('beginsAt', DateType::class,[
+            ->add('beginsAt', DateType::class, [
                 'widget' => 'single_text',
                 "html5" => false,
             ])
-
-            ->add('endsAt', DateType::class,[
+            ->add('endsAt', DateType::class, [
                 'widget' => 'single_text',
                 "html5" => false,
             ])
-
-            ->add('visitors', IntegerType::class)
-        ;
+            ->add('visitors', IntegerType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

@@ -19,7 +19,7 @@ class BookingRepository extends ServiceEntityRepository
         parent::__construct($registry, Booking::class);
     }
 
-    public function findBookedDateRanges($lodgingId) : ?array
+    public function findBookedDateRanges($lodgingId): ?array
     {
         return $this->createQueryBuilder('b')
             ->select('b.beginsAt', 'b.endsAt')

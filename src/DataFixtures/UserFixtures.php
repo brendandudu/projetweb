@@ -22,26 +22,26 @@ class UserFixtures extends Fixture
         $faker = Faker\Factory::create('fr_FR');
         $faker->addProvider(new Faker\Provider\fr_FR\PhoneNumber($faker));
 
-        for ($i = 1; $i <= 20; $i++){
+        for ($i = 1; $i <= 20; $i++) {
             $user = new User();
 
-            if($i === 1){ //Admin
+            if ($i === 1) { //Admin
                 $email = 'admin@gmail.com';
                 $roles = ['ROLE_ADMIN'];
                 $firstName = 'Admin';
                 $lastName = 'Admin';
-            }
-            else if ($i === 2){ //Host
+            } else if ($i === 2) { //Host
                 $email = 'host@gmail.com';
                 $roles = ['ROLE_HOST'];
                 $firstName = 'Host';
                 $lastName = 'Host';
-            }
-            else {
-                if($i === 3) // Guest
+            } else {
+                if ($i === 3) // Guest
+                {
                     $email = 'guest@gmail.com';
-                else
+                } else {
                     $email = $faker->email;
+                }
 
                 $roles = ['ROLE_USER'];
                 $firstName = $faker->firstName;
@@ -49,19 +49,19 @@ class UserFixtures extends Fixture
             }
 
             $password = "Resa2021@";
-            $user ->setEmail($email);
-            $user ->setRoles($roles);
-            $user -> setFirstName($firstName);
-            $user -> setLastName($lastName);
-            $user -> setPassword($this->encoder->encodePassword($user, $password));
-            $user -> setPhone($faker->mobileNumber);
+            $user->setEmail($email);
+            $user->setRoles($roles);
+            $user->setFirstName($firstName);
+            $user->setLastName($lastName);
+            $user->setPassword($this->encoder->encodePassword($user, $password));
+            $user->setPhone($faker->mobileNumber);
 
             $manager->persist($user);
 
-            $this->addReference('user_'.$i, $user);
+            $this->addReference('user_' . $i, $user);
         }
-       
+
         $manager->flush();
     }
-    
+
 }

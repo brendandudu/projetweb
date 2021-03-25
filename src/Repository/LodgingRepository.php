@@ -27,8 +27,7 @@ class LodgingRepository extends ServiceEntityRepository
     {
         $qb = $this->createQueryBuilder('l');
 
-        if(!empty($search)) {
-
+        if (!empty($search)) {
 
             $params = [
                 'start' => $search['beginsAt']['date'],
@@ -51,7 +50,7 @@ class LodgingRepository extends ServiceEntityRepository
                     )
                 ) <= :radius');
 
-                $params = array_merge($params,[
+                $params = array_merge($params, [
                     'searchLat' => $search['lat'],
                     'searchLng' => $search['lng'],
                     'radius' => 30
@@ -67,10 +66,9 @@ class LodgingRepository extends ServiceEntityRepository
                             ':start <= b.endsAt AND :end >= b.beginsAt',
                             'b.bookingState = :stateIdCanceled OR b.bookingState = :stateIdFinished'
                         ),
-                        $qb->expr()->isNull('b')                        //soit il ne l'est pas encore
+                        $qb->expr()->isNull('b')                        //soit il ne fait pas encore l'objet d'une réservation
                     )
                 )
-
                 ->andWhere('l.capacity >= :capacity');
 
 
@@ -91,5 +89,5 @@ class LodgingRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
-    
+
 }

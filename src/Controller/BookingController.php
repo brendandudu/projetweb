@@ -3,14 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Booking;
-use App\Repository\BookingRepository;
 use App\Repository\BookingStateRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\Form\Extension\Core\Type\EmailType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,7 +21,7 @@ class BookingController extends AbstractController
      */
     public function showDetails(Booking $booking, Request $request, EntityManagerInterface $manager, BookingStateRepository $bookingStateRepository): Response
     {
-        if($booking->getUser() !== $this->getUser()){
+        if ($booking->getUser() !== $this->getUser()) {
             return $this->redirectToRoute('home');
         }
 

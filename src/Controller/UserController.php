@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\UserType;
 use App\Repository\BookingRepository;
 use App\Repository\LodgingRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -37,9 +38,9 @@ class UserController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()){
+        if ($form->isSubmitted() && $form->isValid()) {
 
-            $user->setUpdatedAt(new \DateTime());
+            $user->setUpdatedAt(new DateTime());
             $manager->persist($user);
             $manager->flush();
 
@@ -62,8 +63,7 @@ class UserController extends AbstractController
 
         if ($this->isGranted('ROLE_EDITOR')) {
             $bookings = $repository->findByUserId($user->getId());
-        }
-        else {
+        } else {
             $bookings = $user->getBookings();
         }
 

@@ -18,7 +18,7 @@ class RegistrationType extends AbstractType
         $builder
             ->add('email', EmailType::class)
             ->add('roles', ChoiceType::class, [
-                'choices'  => [
+                'choices' => [
                     'Invité' => 'ROLE_USER',
                     'Hôte' => 'ROLE_HOST'
                 ],
@@ -27,8 +27,7 @@ class RegistrationType extends AbstractType
             ->add('password', PasswordType::class)
             ->add('firstName', TextType::class)
             ->add('lastName', TextType::class)
-            ->add('confirm_password', PasswordType::class)
-        ;
+            ->add('confirm_password', PasswordType::class);
     }
 
     public function configureOptions(OptionsResolver $resolver)

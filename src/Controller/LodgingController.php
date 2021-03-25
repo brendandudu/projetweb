@@ -3,23 +3,23 @@
 namespace App\Controller;
 
 use App\Entity\Booking;
-use App\Entity\Lodging;
 use App\Entity\Comment;
+use App\Entity\Lodging;
 use App\Form\BookingType;
-use App\Form\LodgingType;
 use App\Form\CommentType;
+use App\Form\LodgingType;
+use App\Repository\BookingRepository;
 use App\Repository\BookingStateRepository;
 use App\Repository\CommentRepository;
 use App\Repository\LodgingRepository;
-use App\Repository\BookingRepository;
 use App\Services\DateRangeHelper;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @Route("/lodging", name="lodging_")
@@ -58,7 +58,7 @@ class LodgingController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if($lodging->getId()){
-                $lodging->setUpdatedAt(new \DateTime());
+                $lodging->setUpdatedAt(new DateTime());
             }
             else{
                 $lodging->setUser($this->getUser());
@@ -76,11 +76,6 @@ class LodgingController extends AbstractController
         ]);
     }
 
-    private function canUserRate(BookingRepository $bookingRepository, CommentRepository $commentRepository, Lodging $lodging): bool {
-        return $this->isGranted('ROLE_USER') 
-            && count($bookingRepository->findByGuestAndLodgingId($this->getUser()->getId(), $lodging->getId())) > 0
-            && count($commentRepository->findByGuestAndLodgingId($this->getUser()->getId(), $lodging->getId())) < 1;
-    }
 
     /**
      * @Route("/{id}", name="show")
@@ -119,7 +114,6 @@ class LodgingController extends AbstractController
             $this->denyAccessUnlessGranted('ROLE_USER');
             $comment->setUser($this->getUser());
             $comment->setLodging($lodging);
-            $comment->setDate(new \DateTime('now'));
 
             $manager->persist($comment);
             $manager->flush();
@@ -139,6 +133,13 @@ class LodgingController extends AbstractController
             'comments' => $comments,
             'canUserRate' => $canUserRate
         ]);
+    }
+
+    private function canUserRate(BookingRepository $bookingRepository, CommentRepository $commentRepository, Lodging $lodging): bool
+    {
+        return $this->isGranted('ROLE_USER')
+            && count($bookingRepository->findByGuestAndLodgingId($this->getUser()->getId(), $lodging->getId())) > 0
+            && count($commentRepository->findByGuestAndLodgingId($this->getUser()->getId(), $lodging->getId())) < 1;
     }
 
 

@@ -16,7 +16,7 @@ class CommentType extends AbstractType
         $builder
             ->add('comment', TextareaType::class)
             ->add('rate', ChoiceType::class, [
-                'choices'  => [
+                'choices' => [
                     '5' => 5,
                     '4' => 4,
                     '3' => 3,
@@ -25,10 +25,7 @@ class CommentType extends AbstractType
                 ],
                 'expanded' => true,
                 'multiple' => false
-            ])
-            /*->add('user')
-            ->add('lodging')*/
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
