@@ -10,7 +10,13 @@
         {{ form_widget(formBooking.endsAt) }}
     </div>
 </div>
-<div class="row justify-content-end mt-5">
+<div class="row justify-content-end mt-5 mr-4 text-center">
+    <div>
+        <p class="h3">Prix Total</p>
+        <p id="price" class="h5"></p>
+    </div>
+</div>
+<div class="row justify-content-end mt-4">
     <div class="col-md-2 text-right pr-0">
         {{ form_widget(formBooking.totalOccupiers, {'attr': { 'class' : 'input-occupiers'}}) }} <i class="fa fa-user"></i>
     </div>

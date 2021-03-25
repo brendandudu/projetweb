@@ -44,6 +44,7 @@ class UserController extends AbstractController
             $manager->flush();
 
             $this->addFlash('success', 'Informations modifiées !');
+            return $this->redirectToRoute('user_info');
         }
 
         return $this->render('user/edit.html.twig', [

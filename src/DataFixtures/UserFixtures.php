@@ -20,6 +20,7 @@ class UserFixtures extends Fixture
     public function load(ObjectManager $manager)
     {
         $faker = Faker\Factory::create('fr_FR');
+        $faker->addProvider(new Faker\Provider\fr_FR\PhoneNumber($faker));
 
         for ($i = 1; $i <= 20; $i++){
             $user = new User();
@@ -27,14 +28,14 @@ class UserFixtures extends Fixture
             if($i === 1){ //Admin
                 $email = 'admin@gmail.com';
                 $roles = ['ROLE_ADMIN'];
-                $firstName = 'admin';
-                $lastName = 'admin';
+                $firstName = 'Admin';
+                $lastName = 'Admin';
             }
             else if ($i === 2){ //Host
                 $email = 'host@gmail.com';
                 $roles = ['ROLE_HOST'];
-                $firstName = 'host';
-                $lastName = 'host';
+                $firstName = 'Host';
+                $lastName = 'Host';
             }
             else {
                 if($i === 3) // Guest
@@ -53,6 +54,7 @@ class UserFixtures extends Fixture
             $user -> setFirstName($firstName);
             $user -> setLastName($lastName);
             $user -> setPassword($this->encoder->encodePassword($user, $password));
+            $user -> setPhone($faker->mobileNumber);
 
             $manager->persist($user);
 

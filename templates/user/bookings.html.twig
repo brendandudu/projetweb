@@ -2,197 +2,18 @@
 
 {% block title %}{{ parent() }} | Mes réservations{% endblock %}
 
-{% block stylesheets  %}
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+{% block stylesheets %}
     <link href="{{ asset('css/bookingCard.css') }}" rel="stylesheet"/>
-    <style>
-        html,body{
-            padding: 0;
-            margin: 0;
-        }
-        .top{
-            width: 100%;
-            height: 300px;
-            overflow: hidden;
-            position: relative;
-        }
-        .top .top-bg{
-            width: 100%;
-            height: 400px;
-        }
-        .data-container{
-            width: 600px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            position: absolute;
-            right: 0;
-            top : 0
-        }
-        .data-container .el-button{
-            width: 100px;
-            height: 40px;
-            border-radius: 20px;
-            border-color: #fcfdfb;
-            background: #fcfdfb;
-            display: flex;
-            align-items: center;
-            padding: 0;
-            justify-content: space-around;
-        }
-
-        .bottom {
-            background: rgb(246, 246, 246);
-            padding-top: 30px;
-            height: 1300px;
-            padding-left: 10%;
-        }
-        .left{
-            margin: 0 50px;
-            float: left;
-            width: 300px;
-            height: auto;
-            border-radius: 40px;
-            border: 1px solid rgb(216,216,216);
-            text-align: center;
-            padding: 40px 20px;
-            box-shadow: 1px 1px 5px #555;
-        }
-        .left-img-container{
-            display: inline-block;
-            width: 180px;
-            height: 180px;
-            border-radius: 100px;
-            overflow : hidden;
-        }
-        .left .left-item{
-            margin-top: 35px;
-            text-align: left;
-            font-size: 18px;
-        }
-        .left .left-line{
-            margin-top: 35px;
-            width: 300px;
-            margin-left: -20px;
-            height: 1px;
-            background: rgb(216,216,216);
-        }
-        .right{
-            overflow: hidden;
-        }
-        .right-item{
-            margin-top: 40px;
-            margin-left: 60px;
-            font-size: 20px;
-        }
-        .right-item .item-top{
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-
-        .left-img {
-            width: 180px;
-            height: 180px;
-            display: flex;
-            border-radius: 50%;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .left .isActive{
-            color: red;
-            text-decoration: underline;
-        }
-
-        .left a{
-            color: black;
-        }
-
-        .booking{
-            height:100px;
-            width:500px;
-            border:2px solid black;
-            margin-right: 15px;
-        }
-
-        .booking h1{
-            width:250px;
-            margin-top:-12px;
-            margin-left: 20px;
-            padding: 0 5px;
-            font-size: 20px;
-            background: rgb(246, 246, 246);
-        }
-
-        .right-container{
-            display: inline-block;
-            padding-right: 10px;
-        }
-
-
-        .card-custom {
-            overflow: hidden;
-            min-height: 450px;
-            border: 0;
-            box-shadow: 0 0 15px rgba(10, 10, 10, 0.3);
-            border-radius: 15px;
-        }
-
-        .card-custom-img {
-            height: 200px;
-            min-height: 200px;
-            background-repeat: no-repeat;
-            background-size: cover;
-            background-position: center;
-            border-color: inherit;
-        }
-
-        /* First border-left-width setting is a fallback */
-        .card-custom-img::after {
-            position: absolute;
-            content: '';
-            top: 161px;
-            left: 0;
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-top-width: 40px;
-            border-right-width: 0;
-            border-bottom-width: 0;
-            border-left-width: 545px;
-            border-left-width: calc(575px - 5vw);
-            border-top-color: transparent;
-            border-right-color: transparent;
-            border-bottom-color: transparent;
-            border-left-color: inherit;
-        }
-
-        .card-custom-avatar img {
-            border-radius: 50%;
-            box-shadow: 0 0 15px rgba(10, 10, 10, 0.3);
-            position: absolute;
-            top: 100px;
-            left: 1.25rem;
-            width: 100px;
-            height: 100px;
-        }
-
-    </style>
-
+    <link rel="stylesheet" href="{{ asset('css/user.css') }}">
 {% endblock %}
 
 {% block body %}
     <div id="app">
-        <div class="top">
-            <img src="http://www.38000km.com/wp-content/uploads/2016/06/road-trip-2-609x210.jpg" class="top-bg">
-        </div>
+        {% include 'includes/_userTop.html.twig' %}
         <div class="bottom">
             {% include 'includes/_leftPart.html.twig' %}
             <div class="right">
-                <h2>{{ is_granted('ROLE_HOST') ? "Les réservations de vos annonces" : "Vos réservations"}}</h2>
+                <h2>{{ is_granted('ROLE_HOST') ? "Les réservations de vos annonces" : "Vos réservations" }}</h2>
                 <div class="right-container">
 
                     {% if bookings is empty %}
@@ -200,15 +21,15 @@
                     {% else %}
 
                         <div class="card-deck">
-                        {% for booking in bookings %}
-                            {%  include 'includes/_bookingCard.html.twig' %}
-                        {% endfor %}
+                            {% for booking in bookings %}
+                                {% include 'includes/_bookingCard.html.twig' %}
+                            {% endfor %}
                         </div>
                     {% endif %}
 
 
                 </div>
-                <div style="margin-top: 80px;margin-left: 60px;font-size: 18px">
+                <div class="credit">
                     @ 2021 RESA,Inc.All rights reserved
                 </div>
             </div>

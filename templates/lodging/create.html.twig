@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ parent() }} | Nouveau hébergement{% endblock %}
+{% block title %}{{ parent() }} | Nouvel hébergement{% endblock %}
 
 {% block stylesheets %}
     <style>
@@ -38,7 +38,7 @@
     <div class="container">
 
             <fieldset>
-                <legend><h2 class="text-center"><b>Nouveau hébergement</b></h2></legend><br>
+                <legend><h2 class="text-center"><b>Nouvel hébergement</b></h2></legend><br>
 
                 {% if not form.vars.valid %}
                     <div class="alert alert-danger">
@@ -146,12 +146,11 @@
                 <div class="form-group">
                     <label class="col-md-4 control-label"></label>
                     <div class="col-md-4"><br>
-                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button type="submit" class="btn btn-warning" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspSUBMIT <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
+                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button type="submit" class="btn btn-warning" >&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbspCréer <span class="glyphicon glyphicon-send"></span>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
                     </div>
                 </div>
 
             </fieldset>
-    </div>
     </div>
 
     {{ form_end(form) }}

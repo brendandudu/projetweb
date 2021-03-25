@@ -1,28 +1,65 @@
 
-.noms{display: flex;}
-.noms-item{
+.noms {
+    display: flex;
+}
+
+.noms-item {
     margin-top: 40px;
     margin-left: 60px;
     margin-right: 200px;
     font-size: 20px;
 }
-.noms-item .item-top{
+
+.noms-item .item-top {
     font-weight: bold;
     margin-bottom: 10px;
 }
-.showarea{height: 1000px;overflow-y: auto }
-.rightbox{}
-.mybox{}
-.myreservationpicbox{
-    width:200px;
-    height:100px;
+
+.showarea {
+    height: 1000px;
+    overflow-y: auto
+}
+
+.myreservationpicbox {
+    width: 200px;
+    height: 100px;
     margin-left: 10px;
     margin-top: 10px;
     margin-bottom: 10px;
 }
-.myreservationpic{width:100%;max-height:500px;}
 
-.onebox{width:80%;display: flex;margin-bottom: 25px;border: #707273 solid 1px; border-radius: 8px;background: #FFFFFF}
-.rightinfo{margin-left:20px;width:100%;margin-top: 10px;}
-.infodetails{float:right;cursor:pointer;height:30px;margin-right: 20px;margin-bottom: 5px;background: #0abfec;border: #707273 solid 1px; border-radius: 5px;}
-.address{font-weight: bold;font-size: 10pt;}
+.myreservationpic {
+    width: 100%;
+    max-height: 500px;
+}
+
+.onebox {
+    width: 80%;
+    display: flex;
+    margin-bottom: 25px;
+    border: #707273 solid 1px;
+    border-radius: 8px;
+    background: #FFFFFF
+}
+
+.rightinfo {
+    margin-left: 20px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.infodetails {
+    float: right;
+    cursor: pointer;
+    height: 30px;
+    margin-right: 20px;
+    margin-bottom: 5px;
+    background: #0abfec;
+    border: #707273 solid 1px;
+    border-radius: 5px;
+}
+
+.address {
+    font-weight: bold;
+    font-size: 10pt;
+}

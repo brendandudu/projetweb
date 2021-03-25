@@ -93,6 +93,19 @@
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js"></script>
 
 <script>
+    function dateDiff(date1, date2){
+        date1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+        date2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
+        var tmp = date2 - date1;
+
+        return Math.floor((tmp / (1000*60*60*24))); //days
+    }
+
+    function calculeTotalPrice(picker, price){
+        let totalPrice = dateDiff(picker.getStartDate(), picker.getEndDate()) * price;
+        document.getElementById('price').innerHTML = totalPrice.toString()+" €";
+    }
+
     let dateRanges = {{ dates|json_encode|raw }};
 
     const picker = new Litepicker({
@@ -107,19 +120,19 @@
         disallowLockDaysInRange: true,
         lockDays: dateRanges,
         minDays: 2,
+
             setup: (picker) => {
                 picker.on('hide', () => {
-                    console.log('ff')
+                    calculeTotalPrice(picker, {{ lodging.nightPrice }});
+                });
+                picker.on('show', () => {
+                    calculeTotalPrice(picker, {{ lodging.nightPrice }});
                 });
             },
-    }
+    });
 
 
-    );
-
-
-
-
+    /* COMMENT */
     $("input[type='radio']").click(function(){
         var sim = $("input[type='radio']:checked").val();
         //alert(sim);

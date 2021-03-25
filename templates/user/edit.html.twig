@@ -1,176 +1,14 @@
 {% extends 'base.html.twig' %}
 {% block title %}{{ parent() }} | Modifier{% endblock %}
 {% block stylesheets  %}
-  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
-  <style>
-    html,
-    body {
-      padding: 0;
-      margin: 0;
-    }
+  <link rel="stylesheet" href="{{ asset('css/user.css') }}">
 
-    .top {
-      width: 100%;
-      background: red;
-      height: 300px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .top .top-bg {
-      width: 100%;
-      height: 400px;
-    }
-
-    .data-container {
-      width: 600px;
-      height: 80px;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-      position: absolute;
-      right: 0;
-      top: 0
-    }
-
-    .data-container .el-button {
-      width: 100px;
-      height: 40px;
-      border-radius: 20px;
-      border-color: #fcfdfb;
-      background: #fcfdfb;
-      display: flex;
-      align-items: center;
-      padding: 0;
-      justify-content: space-around;
-    }
-
-    .bottom {
-      background: rgb(246, 246, 246);
-      padding-top: 30px;
-      height: 1300px;
-      padding-left: 10%;
-    }
-
-    .left {
-      margin: 0 50px;
-      float: left;
-      width: 300px;
-      height: auto;
-      border-radius: 40px;
-      border: 1px solid rgb(216, 216, 216);
-      text-align: center;
-      padding: 40px 20px;
-    }
-
-    .left-img-container {
-      display: inline-block;
-      width: 180px;
-      height: 180px;
-      border-radius: 100px;
-      overflow: hidden;
-    }
-
-    .left .left-item {
-      margin-top: 35px;
-      text-align: left;
-    }
-
-    .left .left-line {
-      margin-top: 35px;
-      width: 300px;
-      margin-left: -20px;
-      height: 1px;
-      background: rgb(216, 216, 216);
-    }
-
-    .right {
-      overflow: hidden;
-    }
-
-    .right-item {
-      margin-top: 20px;
-      margin-left: 60px;
-      font-size: 20px;
-      overflow: hidden;
-    }
-
-    .right-item .item-top {
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-
-    .right-item .el-input {
-      width: 300px;
-
-    }
-
-    .el-input__inner {
-      border-color: #cccccc;
-    }
-
-    .right-item .line-throw {
-      float: left;
-      margin-right: 40px;
-    }
-
-    .numberSelect {
-      display: inline-block;
-      height: 40px;
-      line-height: 30px;
-      color: #aaaaaa;
-      margin-right: 5px;
-      position: absolute;
-      left: 7px;
-      z-index: 999;
-      border-right: 1px solid #cccccc;
-      padding: 5px;
-    }
-
-    .numberSelect-container .el-input__inner {
-      padding-left: 72px;
-    }
-
-    .btn-container {
-      width: 50%;
-      margin-top: 150px;
-      display: flex;
-      align-items: center;
-      justify-content: space-around;
-    }
-
-    .left-img {
-      width: 180px;
-      height: 180px;
-      display: flex;
-      border-radius: 50%;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-
-    .left .isActive{
-      color: red;
-      text-decoration: underline;
-    }
-
-    .left a{
-      color: black;
-    }
-
-    .vich-image img{
-      width: 150px;
-      height: 150px;
-    }
-  </style>
 {% endblock %}
 
 {% block body %}
 
 <div id="app">
-  <div class="top">
-    <img src="{{ asset('user/img/topbanner.jpg') }}" class="top-bg">
-  </div>
+  {% include 'includes/_userTop.html.twig' %}
   <div class="bottom">
     {% include 'includes/_leftPart.html.twig' %}
     <div class="right">
@@ -189,37 +27,6 @@
             {{ form_widget(form.firstName) }}
           </div>
         </div>
-        <!--<div class="right-item">
-          <div class="item-top">sexe</div>
-          <el-select v-model="sexe" placeholder="please">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
-          </el-select>
-        </div>
-        <div class="right-item">
-          <div class="item-top">date</div>
-          <div class="line-throw">
-            <div class="item-top" style="font-weight: normal">Jour</div>
-            <el-select v-model="dateJour" placeholder="please">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </div>
-          <div class="line-throw">
-            <div class="item-top" style="font-weight: normal">Mois</div>
-            <el-select v-model="dateMois" placeholder="please">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </div>
-          <div class="line-throw">
-            <div class="item-top" style="font-weight: normal">Annee</div>
-            <el-select v-model="dateAnnee" placeholder="please">
-              <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-              </el-option>
-            </el-select>
-          </div>
-        </div>-->
         <div class="right-item">
           <div class="item-top">Email</div>
           {{ form_widget(form.email) }}
@@ -232,59 +39,15 @@
           <div class="item-top">Téléphone</div>
           {{ form_widget(form.phone) }}
         </div>
-        <!--<div class="right-item">
-          <div class="item-top">numberSelect</div>
-          <el-select v-model="numberSelect" placeholder="please">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
-          </el-select>
-          <div style="margin-top: 15px;position: relative" class="numberSelect-container">
-            <span class="numberSelect">+33</span>
-            <el-input v-model="numberValue" placeholder="please"></el-input>
-          </div>
-        </div>
-
-        <div class="right-item">
-          <div class="item-top">Adress</div>
-          <div class="item-top" style="font-weight: normal">Pay</div>
-          <el-select v-model="AdressePay" placeholder="please">
-            <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
-            </el-option>
-          </el-select>
-        </div>
-        <div class="right-item">
-          <div class="item-top" style="font-weight: normal">Adr</div>
-          <el-input v-model="AdresseAdr" placeholder="please"></el-input>
-        </div>
-        <div class="right-item">
-          <div class="item-top" style="font-weight: normal">Com</div>
-          <el-input v-model="AdresseCom" placeholder="please"></el-input>
-        </div>
-        <div class="right-item">
-          <div class="line-throw">
-            <div class="item-top" style="font-weight: normal">Code</div>
-            <el-input v-model="AdresseCode" placeholder="please"></el-input>
-          </div>
-          <div class="line-throw">
-            <div class="item-top" style="font-weight: normal">Ville</div>
-            <el-input v-model="AdresseCode" placeholder="please"></el-input>
-          </div>
-        </div>
-      </div>-->
-        {% for message in app.flashes('success') %}
-          <div class="alert alert-success mt-5">
-            {{ message }}
-          </div>
-        {% endfor %}
 
         <div class="btn-container">
-          <a href="{{ path("user_info") }}" style="color: red;text-decoration: underline;cursor: pointer;">Annuler</a>
-          <button type="submit" style="box-shadow: 8px 8px 12px #aaa;">Modifier</button>
+          <a href="{{ path("user_info") }}" class="btn btn-danger btn-profil">Annuler </a>
+          <button type="submit"  class="btn btn-info btn-profil">Modifier</button>
         </div>
 
       {{ form_end(form) }}
 
-      <div style="margin-top: 80px;margin-left: 60px;font-size: 18px">
+      <div class="credit">
         @ 2021 RESA,Inc.All rights reserved
       </div>
     </div>

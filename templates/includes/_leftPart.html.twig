@@ -1,19 +1,17 @@
 <div class="left">
     <div class="left-img-container">
         {% if user.picture %}
-            <img src="/assets/img/user/{{ user.picture }}" class="left-img" alt="Avatar" >
+            <img src="/assets/img/user/{{ user.picture }}" class="left-img" alt="Avatar">
         {% else %}
-            <img src="/user/img/head.jpg" class="left-img" alt="Avatar" >
+            <img src="{{ asset('user/img/head.jpg') }}" class="left-img" alt="Avatar">
         {% endif %}
-        <div style="float: left;margin-left:100px;">
-            <img src="./img/logo.png" style="height: 25px;width: 25px">
-        </div>
     </div>
-    <div class="left-item" style="text-align: center;margin-top: 20px;text-decoration: underline">
-        {{ user.firstName }}
+    <div class="left-item text-center mt-1">
+        <u>{{ user.firstName }}</u>
     </div>
-    <div class="left-item" style="margin-top: 45px">
-        <a class="{{ setActive("user_info") }}{{ setActive("user_edit") }}" href="{{ path('user_info') }}">Infos personnelles</a>
+    <div class="left-item mt-5">
+        <a class="{{ setActive("user_info") }}{{ setActive("user_edit") }}" href="{{ path('user_info') }}">Infos
+            personnelles</a>
     </div>
     <div class="left-item">
         <a>Connexion et sécurité</a>
@@ -21,19 +19,18 @@
     <div class="left-item">
         <a>Paiements et versements</a>
     </div>
-    <div class="left-line">
-    </div>
+    <hr class="mt-5 mr-0">
 
     {% if not is_granted('ROLE_ADMIN') %}
         {% if is_granted('ROLE_HOST') %}
-            <div class="left-item" style="font-weight: bold">
+            <div class="left-item font-weight-bold" >
                 <a class="{{ setActive("user_lodgings") }}" href="{{ path('user_lodgings') }}">Mes annonces</a>
             </div>
         {% endif %}
-        <div class="left-item" style="font-weight: bold">
+        <div class="left-item font-weight-bold">
             <a class="{{ setActive("user_bookings") }}" href="{{ path('user_bookings') }}">Mes réservations</a>
         </div>
-        <div class="left-item" style="font-weight: bold">
+        <div class="left-item font-weight-bold">
             <a>Wishlist</a>
         </div>
     {% endif %}

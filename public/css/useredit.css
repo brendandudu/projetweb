@@ -1,19 +1,52 @@
 
-.noms{display: flex;}
-.noms-item{
+.noms {
+    display: flex;
+}
+
+.noms-item {
     margin-top: 40px;
     margin-left: 60px;
     margin-right: 10px;
     font-size: 20px;
 }
-.noms-item .item-top{
+
+.noms-item .item-top {
     font-weight: bold;
     margin-bottom: 10px;
 }
-.normalinput{height: 28px;}
-.longinput{height: 28px;width:450px;}
-.saveinfo{
-    cursor:pointer;height:30px;margin-right: 20px;margin-bottom: 5px;background: #0abfec;border: #707273 solid 1px; border-radius: 5px;
+
+.normalinput {
+    height: 28px;
 }
-.cancel{cursor:pointer;height:30px;margin-right: 20px;margin-bottom: 5px;background: #00E676;border: #707273 solid 1px; border-radius: 5px;}
-.opbuttons{display: flex;float: right;margin-right: 50px;margin-top: 20px;}
+
+.longinput {
+    height: 28px;
+    width: 450px;
+}
+
+.saveinfo {
+    cursor: pointer;
+    height: 30px;
+    margin-right: 20px;
+    margin-bottom: 5px;
+    background: #0abfec;
+    border: #707273 solid 1px;
+    border-radius: 5px;
+}
+
+.cancel {
+    cursor: pointer;
+    height: 30px;
+    margin-right: 20px;
+    margin-bottom: 5px;
+    background: #00E676;
+    border: #707273 solid 1px;
+    border-radius: 5px;
+}
+
+.opbuttons {
+    display: flex;
+    float: right;
+    margin-right: 50px;
+    margin-top: 20px;
+}
