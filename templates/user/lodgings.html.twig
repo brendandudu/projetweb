@@ -2,163 +2,41 @@
 
 {% block title %}{{ parent() }} | Mes réservations{% endblock %}
 
-{% block stylesheets  %}
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+{% block stylesheets %}
     <link rel="stylesheet" href="{{ asset('css/lodging.css') }}">
-    <style>
-        html,body{
-            padding: 0;
-            margin: 0;
-        }
-        .top{
-            width: 100%;
-            height: 300px;
-            overflow: hidden;
-            position: relative;
-        }
-        .top .top-bg{
-            width: 100%;
-            height: 400px;
-        }
-        .data-container{
-            width: 600px;
-            height: 80px;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            position: absolute;
-            right: 0;
-            top : 0
-        }
-        .data-container .el-button{
-            width: 100px;
-            height: 40px;
-            border-radius: 20px;
-            border-color: #fcfdfb;
-            background: #fcfdfb;
-            display: flex;
-            align-items: center;
-            padding: 0;
-            justify-content: space-around;
-        }
-
-        .bottom {
-            background: rgb(246, 246, 246);
-            padding-top: 30px;
-            height: 1300px;
-            padding-left: 10%;
-        }
-        .left{
-            margin: 0 50px;
-            float: left;
-            width: 300px;
-            height: auto;
-            border-radius: 40px;
-            border: 1px solid rgb(216,216,216);
-            text-align: center;
-            padding: 40px 20px;
-        }
-        .left-img-container{
-            display: inline-block;
-            width: 180px;
-            height: 180px;
-            border-radius: 100px;
-            overflow : hidden;
-        }
-        .left .left-item{
-            margin-top: 35px;
-            text-align: left;
-            font-size: 18px;
-        }
-        .left .left-line{
-            margin-top: 35px;
-            width: 300px;
-            margin-left: -20px;
-            height: 1px;
-            background: rgb(216,216,216);
-        }
-        .right{
-            overflow: hidden;
-        }
-        .right-item{
-            margin-top: 40px;
-            margin-left: 60px;
-            font-size: 20px;
-        }
-        .right-item .item-top{
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-
-        .left-img {
-            width: 180px;
-            height: 180px;
-            display: flex;
-            border-radius: 50%;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-        }
-
-        .left .isActive{
-            color: red;
-            text-decoration: underline;
-        }
-
-        .left a{
-            color: black;
-        }
-
-        .booking{
-            height:100px;
-            width:500px;
-            border:2px solid black;
-            margin-right: 15px;
-        }
-
-        .booking h1{
-            width:250px;
-            margin-top:-12px;
-            margin-left: 20px;
-            padding: 0 5px;
-            font-size: 20px;
-            background: rgb(246, 246, 246);
-        }
-
-        .right-container{
-            display: inline-block;
-            padding-right: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/user.css') }}">
 {% endblock %}
 
 {% block body %}
     <div id="app">
-        <div class="top">
-            <img src="http://www.38000km.com/wp-content/uploads/2016/06/road-trip-2-609x210.jpg" class="top-bg">
-        </div>
+        {% include 'includes/_userTop.html.twig' %}
         <div class="bottom">
             {% include 'includes/_leftPart.html.twig' %}
             <div class="right">
                 <h2 id="titre">Vos annonces</h2>
-                <a href="{{ path('lodging_new') }}"><i class="fa fa-plus mt-3" style="float: right; margin-right: 70px; font-size: 35px; color: #2588be"></i></a>
+                <a href="{{ path('lodging_new') }}">
+                    <i class="fa fa-plus mt-3" id="btn_new"></i>
+                </a>
                 <div class="right-container">
 
                     {% if lodgings is empty %}
-                        <div class="mt-4">Vous n'avez pas encore défini d'annonces, mais il n'est pas trop tard ! Cliquer sur le bouton juste à droite :</div>
+                        <div class="mt-4">Vous n'avez pas encore défini d'annonce, mais il n'est pas trop tard ! Cliquez
+                            sur le bouton juste à droite :
+                        </div>
                     {% endif %}
 
 
-                    {% for lodging in lodgings %}
-                        <div class="right-item">
-                            {% include 'includes/_lodgingCard.html.twig' %}
-                        </div>
-                    {% endfor %}
+                    <div id="scroll">
+                        {% for lodging in lodgings %}
+                            <div class="right-item">
+                                {% include 'includes/_lodgingCard.html.twig' %}
+                            </div>
+                        {% endfor %}
+                    </div>
 
 
                 </div>
-                <div style="margin-top: 80px;margin-left: 60px;font-size: 18px">
+                <div class="credit">
                     @ 2021 RESA,Inc.All rights reserved
                 </div>
             </div>

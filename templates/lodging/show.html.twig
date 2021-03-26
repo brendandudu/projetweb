@@ -9,7 +9,7 @@
 {% block body %}
 
     <div class="card card-custom-wide">
-        <div class="card-custom-wide-img" style="background-image: url(/assets/img/lodging/baseLodgingPicture.jpeg);"></div>
+        <div class="card-custom-wide-img" style="background-image: url(/assets/img/lodging/{{ lodging.picture }});"></div>
         <div class="card-custom-avatar">
             {% if lodging.owner.picture %}
                 <img class="img-fluid" src="/assets/img/user/{{ lodging.owner.picture }}" alt="Avatar" />
@@ -54,10 +54,10 @@
                         </div>
                     {% endif %}
                 </div>
-                {% if not form.vars.valid %}
+                {% if not formBooking.vars.valid %}
                     <div class="alert alert-danger">
                         <ul>
-                            {% for child in form.children %}
+                            {% for child in formBooking.children %}
                                 {% for error in child.vars.errors %}
                                     <li>{{ error.message }}</li>
                                 {% endfor %}
@@ -65,6 +65,22 @@
                         </ul>
                     </div>
                 {% endif %}
+            </div>
+            <hr>
+            <div class="comments">
+                <h4 class="card-info">Commentaires sur ce logement :</h4> <br>
+                <div class="container">
+                    {% if canUserRate %}
+                        {% include 'includes/_commentForm.html.twig' %}
+                    {% endif %}
+                    <div class="row">
+                        <div class="col-12">
+                            {% for comment in comments %}
+                                {% include 'includes/_commentCard.html.twig' %}
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -76,24 +92,58 @@
 
 <script src="https://cdn.jsdelivr.net/npm/litepicker/dist/bundle.js"></script>
 
-
-
 <script>
+    function dateDiff(date1, date2){
+        date1 = new Date(date1.getFullYear(), date1.getMonth(), date1.getDate());
+        date2 = new Date(date2.getFullYear(), date2.getMonth(), date2.getDate());
+        var tmp = date2 - date1;
+
+        return Math.floor((tmp / (1000*60*60*24))); //days
+    }
+
+    function calculeTotalPrice(picker, price){
+        let totalPrice = dateDiff(picker.getStartDate(), picker.getEndDate()) * price;
+        document.getElementById('price').innerHTML = totalPrice.toString()+" €";
+    }
+
     let dateRanges = {{ dates|json_encode|raw }};
 
-  const picker = new Litepicker({
-    element: document.getElementById('booking_beginsAt'),
-    elementEnd: document.getElementById('booking_endsAt'),
-    singleMode: false,
-    numberOfMonths: 2,
-    numberOfColumns:2,
-    lang: "fr-FR",
-    minDate: new Date(),
-    resetButton: true,
-    disallowLockDaysInRange: true,
-    lockDays: dateRanges,
-      minDays: 2,
-  });
+    const picker = new Litepicker({
+        element: document.getElementById('booking_beginsAt'),
+        elementEnd: document.getElementById('booking_endsAt'),
+        singleMode: false,
+        numberOfMonths: 2,
+        numberOfColumns:2,
+        lang: "fr-FR",
+        minDate: new Date(),
+        resetButton: true,
+        disallowLockDaysInRange: true,
+        lockDays: dateRanges,
+        minDays: 2,
+
+            setup: (picker) => {
+                picker.on('hide', () => {
+                    calculeTotalPrice(picker, {{ lodging.nightPrice }});
+                });
+                picker.on('show', () => {
+                    calculeTotalPrice(picker, {{ lodging.nightPrice }});
+                });
+            },
+    });
+
+
+    /* COMMENT */
+    $("input[type='radio']").click(function(){
+        var sim = $("input[type='radio']:checked").val();
+        //alert(sim);
+        if (sim<3) { 
+            $('.myratings').css('color','red'); 
+            $(".myratings").text(sim); 
+        }
+        else{ 
+            $('.myratings').css('color','green'); $(".myratings").text(sim); 
+        }
+    }); 
 </script>
 
 {% endblock %}

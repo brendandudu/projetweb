@@ -5,7 +5,8 @@ namespace App\Services;
 use App\Entity\Lodging;
 use App\Repository\BookingRepository;
 
-class DateRangeHelper{
+class DateRangeHelper
+{
 
     /**
      * @var BookingRepository
@@ -20,19 +21,21 @@ class DateRangeHelper{
     /**
      * Cette méthode retourne les plages de date réservés pour un hébergements et les convertie en string pour LitePicker.js
      */
-    public function getBookedDateRangesForJS(Lodging $lodging) : array{
+    public function getBookedDateRangesForJS(Lodging $lodging): array
+    {
         $bookedRanges = $this->bookingRepository->findBookedDateRanges($lodging->getId());
 
-        return  $this->convertToString($bookedRanges);
+        return $this->convertToString($bookedRanges);
     }
 
-    public function convertToString(array $dateRanges) : array{
+    public function convertToString(array $dateRanges): array
+    {
         $bookedRanges = [];
 
-        foreach ($dateRanges as $book){
+        foreach ($dateRanges as $book) {
 
             $range = [];
-            foreach ($book as $date){
+            foreach ($book as $date) {
                 $range[] = $date->format('Y-m-d');
             }
             $bookedRanges[] = $range;

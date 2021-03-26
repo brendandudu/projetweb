@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Votre liste d'envie{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/lodging.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/user.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div id="app">
+        {% include 'includes/_userTop.html.twig' %}
+        <div class="bottom">
+            {% include 'includes/_leftPart.html.twig' %}
+            <div class="right">
+                <h2 id="titre">Votre liste d'envie <i class="fas fa-heart"></i></h2>
+
+                <div class="right-container">
+
+                    {% if lodgings is empty %}
+                        <div class="mt-4">
+                            Votre wishlist est vide, cliquez sur le coeur pour enregistrer un hébergement
+                        </div>
+                    {% endif %}
+
+
+                    <div id="scroll">
+                        {% for lodging in lodgings %}
+                            <div class="right-item mt-2">
+                                {% include 'includes/_lodgingCard.html.twig' %}
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
+                </div>
+                <div class="credit">
+                    @ 2021 RESA,Inc.All rights reserved
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="{{ asset('js/favBox.js') }}"></script>
+{% endblock %}
+
+

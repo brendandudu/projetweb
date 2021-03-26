@@ -1,0 +1,14 @@
+{{ form_start(formComment, { attr: { class: 'comment-form' }})}}
+<div class="form-group">
+    <label for="comment">Vous avez séjourné ici dans le passé, vous pouvez donc laisser un commentaire :</label>
+    {{ form_widget(formComment.comment, { attr: { class: "form-control", rows: "3" }})}}
+    <fieldset class="rating">
+        {% for key, item in formComment.rate.children %}
+            {{ form_widget(item) }}
+            <label class="full" for="comment_rate_{{ key }}" title="{{ 5 - key }} étoiles"></label>
+        {% endfor %}
+        <input type="radio" class="reset-option" name="rating" value="reset" />
+    </fieldset>
+</div>
+<button type="submit" class="btn btn-default">Commenter</button>
+{{ form_end(formComment) }}

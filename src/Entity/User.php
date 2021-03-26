@@ -3,19 +3,21 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(
-            fields = {"email"},
+fields = {"email"},
  *          message = "l'email est déjà utilisé"
  *     )
  * @ORM\HasLifecycleCallbacks()
@@ -23,21 +25,23 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 class User implements UserInterface
 {
+
+    /**
+     * @Assert\EqualTo(propertyPath="password", message="les deux mots de passe sont différents")
+     */
+    public $confirm_password;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
     private $id;
-
-
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\NotBlank(message="L'email ne peut pas être vide")
      * @Assert\Email()
      */
     private $email;
-
     /**
      * @var string The hashed password
      * @ORM\Column(type="string")
@@ -47,87 +51,80 @@ class User implements UserInterface
      *     message="Le mot de passe doit contenir minimum 8 caractères, dont au moins une lettre majuscule, une lettre minuscule, un chiffre et un caractère spécial (@,#..)")
      */
     private $password;
-
-    /**
-     * @Assert\EqualTo(propertyPath="password", message="les deux mots de passe sont différents")
-     */
-    public $confirm_password;
-
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      */
     private $firstName;
-
     /**
      * @ORM\Column(type="string", length=255)
      * @Assert\NotBlank
      */
     private $lastName;
-
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $picture;
-
     /**
      * @ORM\Column(type="datetime")
      */
     private $createdAt;
-
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     private $updatedAt;
-
     /**
      * @ORM\Column(type="datetime", nullable=true)
      * @Assert\GreaterThan(propertyPath="createdAt")
      */
     private $deletedAt;
-
     /**
      * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="user")
      */
     private $bookings;
-
     /**
      * @Vich\UploadableField(mapping="userPictures", fileNameProperty="picture")
      * @var File
      * @Assert\File
      */
     private $pictureFile;
-
     /**
      * @ORM\Column(type="json")
      */
     private $roles = [];
-
     /**
      * @ORM\OneToMany(targetEntity=Lodging::class, mappedBy="owner")
      */
     private $lodgings;
-
     /**
-     * @ORM\Column(type="string", length=15, nullable=true)
+     * @ORM\Column(type="string", length=25, nullable=true)
      * @Assert\Regex(
      *     pattern="^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}^",
      *     message="Le numéro de téléphone n'est pas bon"
      *     )
      */
     private $phone;
-
     /**
      * @ORM\ManyToMany(targetEntity=Lodging::class)
      */
     private $wishList;
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
+     */
+    private $comments;
+    /**
+     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="user")
+     */
+    private $notifications;
+
 
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
-        $this->user = new ArrayCollection();
         $this->lodgings = new ArrayCollection();
         $this->wishList = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -140,21 +137,21 @@ class User implements UserInterface
      */
     public function setCreatedAtValue(): void
     {
-        $this->createdAt = new \DateTime();
-    }
-
-    public function setPictureFile(?File $picture = null)
-    {
-        $this->pictureFile = $picture;
-
-        if ($picture) {
-            $this->updatedAt = new \DateTime();
-        }
+        $this->createdAt = new DateTime();
     }
 
     public function getPictureFile()
     {
         return $this->pictureFile;
+    }
+
+    public function setPictureFile(?File $picture = null): void
+    {
+        $this->pictureFile = $picture;
+
+        if ($picture) {
+            $this->updatedAt = new DateTime();
+        }
     }
 
     public function getEmail(): ?string
@@ -176,7 +173,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
 
     /**
@@ -203,7 +200,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return $this->password;
     }
 
     public function setPassword(string $password): self
@@ -219,6 +216,7 @@ class User implements UserInterface
     public function getSalt()
     {
         // not needed when using the "bcrypt" algorithm in security.yaml
+        return null;
     }
 
     /**
@@ -254,12 +252,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
 
@@ -276,12 +274,12 @@ class User implements UserInterface
         $this->updatedAt = $updatedAt;
     }
 
-    public function getDeletedAt(): ?\DateTimeInterface
+    public function getDeletedAt(): ?DateTimeInterface
     {
         return $this->deletedAt;
     }
 
-    public function setDeletedAt(?\DateTimeInterface $deletedAt): self
+    public function setDeletedAt(?DateTimeInterface $deletedAt): self
     {
         $this->deletedAt = $deletedAt;
 
@@ -308,11 +306,9 @@ class User implements UserInterface
 
     public function removeBooking(Booking $booking): self
     {
-        if ($this->bookings->removeElement($booking)) {
-            // set the owning side to null (unless already changed)
-            if ($booking->getUser() === $this) {
-                $booking->setUser(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->bookings->removeElement($booking) && $booking->getUser() === $this) {
+            $booking->setUser(null);
         }
 
         return $this;
@@ -335,7 +331,7 @@ class User implements UserInterface
     {
         if (!$this->lodgings->contains($lodging)) {
             $this->lodgings[] = $lodging;
-            $lodging->setUser($this);
+            $lodging->setOwner($this);
         }
 
         return $this;
@@ -343,11 +339,9 @@ class User implements UserInterface
 
     public function removeLodging(Lodging $lodging): self
     {
-        if ($this->lodgings->removeElement($lodging)) {
-            // set the owning side to null (unless already changed)
-            if ($lodging->getUser() === $this) {
-                $lodging->setUser(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->lodgings->removeElement($lodging) && $lodging->getOwner() === $this) {
+            $lodging->setOwner(null);
         }
 
         return $this;
@@ -375,18 +369,28 @@ class User implements UserInterface
         return $this;
     }
 
-    /**
-     * @return Collection|Lodging[]
-     */
-    public function getWishList(): Collection
-    {
-        return $this->wishList;
-    }
-
     public function addWishList(Lodging $wishList): self
     {
         if (!$this->wishList->contains($wishList)) {
             $this->wishList[] = $wishList;
+        }
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setUser($this);
+
         }
 
         return $this;
@@ -399,14 +403,74 @@ class User implements UserInterface
         return $this;
     }
 
-    public function isAlreadyInWishList(Lodging $lodging) : bool {
+    public function removeComment(Comment $comment): self
+    {
+        // set the owning side to null (unless already changed)
+        if ($this->comments->removeElement($comment) && $comment->getUser() === $this) {
+            $comment->setUser(null);
+        }
 
-        foreach($this->getWishList() as $aLodging) {
-            if($aLodging === $lodging) {
+        return $this;
+    }
+
+    public function isAlreadyInWishList(Lodging $lodging): bool
+    {
+
+        foreach ($this->getWishList() as $aLodging) {
+            if ($aLodging === $lodging) {
                 return true;
             }
         }
         return false;
+    }
+
+    /**
+     * @return Collection|Lodging[]
+     */
+    public function getWishList(): Collection
+    {
+        return $this->wishList;
+    }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getUser() === $this) {
+                $notification->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getNotificationsNotSeen(): ?array
+    {
+        $notifs = array();
+        foreach ($this->notifications as $notif) {
+            if (!$notif->getSeen()) {
+                $notifs[] = $notif;
+            }
+        }
+        return $notifs;
     }
 
 }

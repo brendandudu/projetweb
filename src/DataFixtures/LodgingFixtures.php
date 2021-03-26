@@ -6,7 +6,7 @@ use App\Entity\Lodging;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-Use Faker;
+use Faker;
 
 class LodgingFixtures extends Fixture implements DependentFixtureInterface
 {
@@ -20,31 +20,28 @@ class LodgingFixtures extends Fixture implements DependentFixtureInterface
         for ($i = 1; $i <= 20; $i++) {
             $lodging = new Lodging();
 
-            if($i <= 5){ //Brest
+            if ($i <= 5) { //Brest
                 $lodging->setLat($faker->latitude(48.382359, 48.389359));
                 $lodging->setLon($faker->longitude(-4.465491, -4.48491));
 
                 $postalCode = '29200';
                 $cityName = "Brest";
                 $regionName = "Bretagne";
-            }
-            elseif ($i <= 10){ //Paris
+            } elseif ($i <= 10) { //Paris
                 $lodging->setLat($faker->latitude(48.840233, 48.891895));
                 $lodging->setLon($faker->longitude(2.304609, 2.357188));
 
                 $postalCode = $faker->numberBetween(75000, 75020); //arrondissement pas forcement cohérent avec lat et lon (juste dans les fixtures)
                 $cityName = "Paris";
                 $regionName = "Ile-de-France";
-            }
-            elseif($i <= 15){ //Marseille
+            } elseif ($i <= 15) { //Marseille
                 $lodging->setLat($faker->latitude(43.270741, 43.293684));
                 $lodging->setLon($faker->longitude(5.357497, 5.397497));
 
                 $postalCode = '13000';
                 $cityName = "Marseille";
                 $regionName = "Provence-Alpes-Côte d'Azur";
-            }
-            else{ //Bordeaux
+            } else { //Bordeaux
                 $lodging->setLat($faker->latitude(44.830342, 44.840342));
                 $lodging->setLon($faker->longitude(-0.559277, -0.599277));
 
@@ -53,23 +50,22 @@ class LodgingFixtures extends Fixture implements DependentFixtureInterface
                 $regionName = "Nouvelle-Aquitaine";
             }
 
-            $lodging->setFullAddress($faker->streetAddress.",".$cityName.",".$regionName.",".$postalCode.", France");
+            $this->addReference('lodging_' . $i, $lodging);
+            $lodging->setFullAddress($faker->streetAddress . "," . $cityName . "," . $regionName . "," . $postalCode . ", France");
             $lodging->setName($faker->realText(20));
             $lodging->setLodgingType($this->getReference('type_' . $faker->numberBetween(1, 5)));
             $lodging->setNightPrice($faker->numberBetween(45, 120));
             $lodging->setSpace($faker->numberBetween(10, 30));
             $lodging->setInternetAvailable($faker->numberBetween(0, 1));
-            $lodging->setCurrentCondition($faker->realText(25));
             $lodging->setCapacity($faker->numberBetween(1, 8));
             $lodging->setDescription($faker->realText(300));
-            $lodging->setOwner($this->getReference('user_'.$faker->numberBetween(1,20)));
 
+            $lodging->setOwner($this->getReference('user_'.$faker->numberBetween(1,20)));
 
             $lodging->setPicture("baseLodgingPicture.jpeg");
 
             $manager->persist($lodging);
 
-            $this->addReference('lodging_'.$i, $lodging);
         }
 
         $manager->flush();
@@ -77,7 +73,7 @@ class LodgingFixtures extends Fixture implements DependentFixtureInterface
 
     public function getDependencies()
     {
-        return[
+        return [
             LodgingTypeFixtures::class
         ];
     }

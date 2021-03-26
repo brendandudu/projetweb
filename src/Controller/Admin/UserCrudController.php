@@ -3,7 +3,6 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
-use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
@@ -27,9 +26,12 @@ class UserCrudController extends AbstractCrudController
             EmailField::new('email'),
             TextField::new('firstName'),
             TextField::new('lastName'),
+            TextField::new('phone'),
+            TextField::new('password')->onlyOnForms(),
             DateField::new('createdAt')->onlyOnIndex(),
             DateTimeField::new('deletedAt')->onlyOnIndex(),
-            ChoiceField::new('roles')->setChoices(['ADMIN' => 'ROLE_ADMIN', 'USER' => 'ROLE_USER'])->allowMultipleChoices()
+            ChoiceField::new('roles')->setChoices(['ADMIN' => 'ROLE_ADMIN', 'USER' => 'ROLE_USER'])->allowMultipleChoices(),
+
         ];
     }
 

@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\BookingRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -39,11 +41,6 @@ class Booking
      */
     private $totalOccupiers;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\PositiveOrZero
-     */
-    private $note;
 
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="bookings")
@@ -84,7 +81,7 @@ class Booking
      */
     public function setBookedAtValue(): void
     {
-        $this->bookedAt = new \DateTime();
+        $this->bookedAt = new DateTime();
     }
 
     /**
@@ -97,37 +94,48 @@ class Booking
         $this->totalPricing = $total;
     }
 
+    public function getLodging(): ?Lodging
+    {
+        return $this->lodging;
+    }
+
+    public function setLodging(?Lodging $id_lodging): self
+    {
+        $this->lodging = $id_lodging;
+
+        return $this;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
     }
 
-
-    public function getBeginsAt(): ?\DateTimeInterface
+    public function getBeginsAt(): ?DateTimeInterface
     {
         return $this->beginsAt;
     }
 
-    public function setBeginsAt(\DateTimeInterface $beginsAt): self
+    public function setBeginsAt(DateTimeInterface $beginsAt): self
     {
         $this->beginsAt = $beginsAt;
 
         return $this;
     }
 
-    public function getEndsAt(): ?\DateTimeInterface
+    public function getEndsAt(): ?DateTimeInterface
     {
         return $this->endsAt;
     }
 
-    public function setEndsAt(\DateTimeInterface $endsAt): self
+    public function setEndsAt(DateTimeInterface $endsAt): self
     {
         $this->endsAt = $endsAt;
 
         return $this;
     }
 
-    public function getBookedAt(): ?\DateTimeInterface
+    public function getBookedAt(): ?DateTimeInterface
     {
         return $this->bookedAt;
     }
@@ -181,18 +189,6 @@ class Booking
     public function setUser(?UserInterface $idUser): self
     {
         $this->user = $idUser;
-
-        return $this;
-    }
-
-    public function getLodging(): ?Lodging
-    {
-        return $this->lodging;
-    }
-
-    public function setLodging(?Lodging $id_lodging): self
-    {
-        $this->lodging = $id_lodging;
 
         return $this;
     }

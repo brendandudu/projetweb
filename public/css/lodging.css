@@ -1,4 +1,26 @@
 
+
+#title {
+    float: left;
+    width: 100%;
+    color: #fff;
+    margin-bottom: 40px;
+    font-size: 20px;
+    position: relative;
+    z-index: 3;
+    margin-top: 30px
+}
+
+#title span {
+    display: block;
+    font-size: 45px;
+    text-transform: none;
+    margin-bottom: 20px;
+    margin-top: 81px;
+    font-weight: 700
+}
+
+
 #title {
     float: left;
     width: 100%;
@@ -56,7 +78,9 @@ body {
     width: 41% !important;
 }
 
+
 /* lodging card */
+
 .media {
     background: #fff;
     position: relative;
@@ -128,6 +152,17 @@ body {
 
 /*fav box*/
 .content .fav-box {
+    color: #4765AB;
+}
+
+.media .address {
+    width: 100%;
+    font-size: 14px;
+    margin-top: 77px;
+    color: #888;
+}
+
+.content .fav-box {
     position: absolute;
     right: 10px;
     font-size: 20px;
@@ -139,6 +174,11 @@ body {
 .content .fav-box.grow:hover {
     transform: scale(1.2);
     box-shadow: 0 0 0
+}
+
+
+.media .info i {
+    color: #4765AB;
 }
 
 .map-box {
@@ -166,6 +206,22 @@ a:hover {
 
 /*OpenStreetMap*/
 .marker.is-active .leaflet-popup-content-wrapper {
-    background-color: #0f6674;
+
+    background-color: #0abfec;
+    color: white;
 }
+
+.marker.is-active .leaflet-popup-tip {
+    background-color: #0abfec;
+}
+
+.leaflet-popup-content-wrapper{
+    text-align: center !important;
+}
+
+.leaflet-popup-content{
+    margin: 10px 13px !important;
+    font-size: 14px;
+}
+
 

@@ -3,12 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\LodgingRepository;
+use DateTime;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
@@ -118,20 +120,22 @@ class Lodging
     private $createdAt;
 
     /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="lodging", orphanRemoval=true)
+     */
+    private $comments;
+
+    public function __construct()
+    {
+        $this->bookings = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+    }
+
+    /**
      * @ORM\PrePersist
      */
     public function setCreatedAtValue(): void
     {
-        $this->createdAt = new \DateTime();
-    }
-
-    public function setPictureFile(?File $picture = null)
-    {
-        $this->pictureFile = $picture;
-
-        if ($picture) {
-            $this->updatedAt = new \DateTime();
-        }
+        $this->createdAt = new DateTime();
     }
 
     public function getPictureFile()
@@ -139,12 +143,14 @@ class Lodging
         return $this->pictureFile;
     }
 
-
-    public function __construct()
+    public function setPictureFile(?File $picture = null)
     {
-        $this->bookings = new ArrayCollection();
-    }
+        $this->pictureFile = $picture;
 
+        if ($picture) {
+            $this->updatedAt = new DateTime();
+        }
+    }
 
     public function getId(): ?int
     {
@@ -211,17 +217,6 @@ class Lodging
         return $this;
     }
 
-    public function getCurrentCondition(): ?string
-    {
-        return $this->currentCondition;
-    }
-
-    public function setCurrentCondition(string $currentCondition): self
-    {
-        $this->currentCondition = $currentCondition;
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {
@@ -289,12 +284,12 @@ class Lodging
         return $this;
     }
 
-    public function getUpdatedAt(): ?\DateTimeInterface
+    public function getUpdatedAt(): ?DateTimeInterface
     {
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    public function setUpdatedAt(?DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
 
@@ -366,14 +361,44 @@ class Lodging
         return $this;
     }
 
-    public function getCreatedAt(): ?\DateTimeInterface
+    public function getCreatedAt(): ?DateTimeInterface
     {
         return $this->createdAt;
     }
 
-    public function setCreatedAt(\DateTimeInterface $createdAt): self
+    public function setCreatedAt(DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setLodging($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getLodging() === $this) {
+                $comment->setLodging(null);
+            }
+        }
 
         return $this;
     }

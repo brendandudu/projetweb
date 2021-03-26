@@ -1,0 +1,24 @@
+<div class="card card-white post">
+    <div class="post-heading">
+        <div class="float-left image">
+            {% if lodging.owner.picture %}
+                <img class="img-circle avatar" src="/assets/img/user/{{ lodging.owner.picture }}" alt="user profile image" />
+            {% else %}
+                <img class="img-circle avatar" src="/user/img/user.png" alt="user profile image" />
+            {% endif %}
+        </div>
+        <div class="float-left meta">
+            <div class="title h5">
+                <a href="#"><b>{{ comment.user.firstName }}</b></a>
+            </div>
+            <h6 class="text-muted time">Le {{ comment.date|date("d/m/Y")}}</h6>
+        </div>
+        <div class="float-right rate">
+            <b>{{ comment.rate }}/5</b>
+        </div>
+    </div>
+    <div class="post-description">
+        <p>{{ comment.comment }}</p>
+
+    </div>
+</div>

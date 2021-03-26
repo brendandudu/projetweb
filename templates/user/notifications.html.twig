@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ parent() }} | Mes notifications{% endblock %}
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/lodging.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/user.css') }}">
+{% endblock %}
+
+{% block body %}
+    <div id="app">
+        {% include 'includes/_userTop.html.twig' %}
+        <div class="bottom">
+            {% include 'includes/_leftPart.html.twig' %}
+            <div class="right">
+                <h2 id="titre">Vos annonces</h2>
+                <a href="{{ path('lodging_new') }}">
+                    <i class="fa fa-plus mt-3" id="btn_new"></i>
+                </a>
+                <div class="right-container">
+
+                    {% if notifications is empty %}
+                        <div class="mt-4">
+                            Vous n'avez pas encore de notifications
+                        </div>
+                    {% endif %}
+
+
+                    <div id="scroll">
+                        {% for notification in notifications %}
+                            <div class="right-item mt-3">
+                                <div class="alert {{ not notification.seen ? 'alert-danger' : 'alert-info' }}">
+                                    <strong>{{ notification.createdAt|date('d/m/Y') }}</strong> {{ notification.description }}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+
+                </div>
+                <div class="credit">
+                    @ 2021 RESA,Inc.All rights reserved
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+{% endblock %}
+
+

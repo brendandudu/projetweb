@@ -1,6 +1,5 @@
 body{
-    background-repeat: no-repeat;
-    background:url(https://i.ytimg.com/vi/4kfXjatgeEU/maxresdefault.jpg);
+    background: url(https://i.ytimg.com/vi/4kfXjatgeEU/maxresdefault.jpg) no-repeat;
     background-size: cover;
     height: 100%;
 }
@@ -26,8 +25,7 @@ body{
     color: white;
     width: 100px;
     height: 100px;
-    margin: auto;
-    margin-bottom: 30px;
+    margin: auto auto 30px;
     line-height: 100px;
 }
 
@@ -44,10 +42,9 @@ body{
     font-weight: bold;
     background-color: #2588be;
     width: 170px;
-    margin: 0 auto;
     border: none;
     color: white;
-    margin-top: 45px;
+    margin: 45px auto 0;
 }
 
 .registration-form .social-media{

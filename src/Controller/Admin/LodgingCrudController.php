@@ -11,10 +11,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\MoneyField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\NumberField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextareaField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 
@@ -28,8 +26,7 @@ class LodgingCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return $filters
-            ->add('lodgingType')
-            ;
+            ->add('lodgingType');
     }
 
 
@@ -38,7 +35,7 @@ class LodgingCrudController extends AbstractCrudController
         $imageFile = TextareaField::new('pictureFile')->setFormType(VichImageType::class);
         $image = ImageField::new('picture')->setBasePath('/assets/img/lodging')->setLabel('Image');
 
-        $fields= [
+        $fields = [
             IdField::new('id')->hideOnForm(),
             TextField::new('name'),
             TextareaField::new('description'),
@@ -48,16 +45,17 @@ class LodgingCrudController extends AbstractCrudController
             IntegerField::new('capacity')->setTextAlign('center'),
             AssociationField::new('lodgingType')->setLabel('Type'),
             AssociationField::new('user')->setLabel('CreatedBy'),
-            TextareaField::new('fullAddress')->setLabel('Adress'),
-            NumberField::new('postalCode')->setLabel('Postal code'),
+            TextareaField::new('fullAddress')->setLabel('Address'),
             NumberField::new('lat')->setFormTypeOptions(['scale' => 8]),
             NumberField::new('lon')->setFormTypeOptions(['scale' => 8]),
         ];
 
-        if($pageName == Crud::PAGE_INDEX || $pageName == Crud::PAGE_DETAIL)
+        if ($pageName === Crud::PAGE_INDEX || $pageName === Crud::PAGE_DETAIL) {
             $fields[] = $image;
-        else
+        }
+        else {
             $fields[] = $imageFile;
+        }
 
         return $fields;
     }

@@ -19,14 +19,14 @@ class BookingStateFixtures extends Fixture
         ];
 
 
-        foreach ($state as $key => $value){
-            $bookingState= new BookingState();
+        foreach ($state as $key => $value) {
+            $bookingState = new BookingState();
             $bookingState->setId($key);
             $bookingState->setTypeName($value);
 
             $manager->persist($bookingState);
 
-            $this->addReference('state_'.$key, $bookingState);
+            $this->addReference('state_' . $key, $bookingState);
         }
 
         $manager->flush();

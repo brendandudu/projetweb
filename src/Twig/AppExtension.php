@@ -22,9 +22,12 @@ class AppExtension extends AbstractExtension
         ];
     }
 
-    public function setActiveIfRouteEquals(String $route): string
+    /**
+     * Retourne "isActive" si la route courante égale celle passée en paramètre (utile pour surligner les liens)
+     */
+    public function setActiveIfRouteEquals(string $route): string
     {
-        if($this->request->get('_route') === $route){
+        if ($this->request->get('_route') === $route) {
             return "isActive";
         }
 

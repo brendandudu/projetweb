@@ -21,14 +21,14 @@ class LodgingTypeFixtures extends Fixture
         ];
 
 
-        foreach ($types as $key => $value){
+        foreach ($types as $key => $value) {
             $lodgingType = new LodgingType();
             $lodgingType->setId($key);
             $lodgingType->setTypeName($value);
 
             $manager->persist($lodgingType);
 
-            $this->addReference('type_'.$key, $lodgingType);
+            $this->addReference('type_' . $key, $lodgingType);
         }
 
         $manager->flush();
