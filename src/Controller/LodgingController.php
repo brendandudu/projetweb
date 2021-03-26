@@ -13,6 +13,7 @@ use App\Repository\BookingStateRepository;
 use App\Repository\CommentRepository;
 use App\Repository\LodgingRepository;
 use App\Services\DateRangeHelper;
+use App\Services\NotificationHelper;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -49,7 +50,7 @@ class LodgingController extends AbstractController
      */
     public function form(Lodging $lodging = null, Request $request, EntityManagerInterface $manager): Response
     {
-        if(!$lodging){
+        if (!$lodging) {
             $lodging = new Lodging();
         }
 
@@ -57,10 +58,9 @@ class LodgingController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            if($lodging->getId()){
+            if ($lodging->getId()) {
                 $lodging->setUpdatedAt(new DateTime());
-            }
-            else{
+            } else {
                 $lodging->setUser($this->getUser());
             }
 
@@ -80,10 +80,10 @@ class LodgingController extends AbstractController
     /**
      * @Route("/{id}", name="show")
      */
-    public function show(Lodging $lodging, Request $request, DateRangeHelper $dateRangeHelper, BookingRepository $bookingRepository, CommentRepository $commentRepository, BookingStateRepository $bookingStateRepository, EntityManagerInterface $manager): Response
+    public function show(Lodging $lodging, Request $request, DateRangeHelper $dateRangeHelper, BookingRepository $bookingRepository, CommentRepository $commentRepository, BookingStateRepository $bookingStateRepository, EntityManagerInterface $manager, NotificationHelper $notif): Response
     {
-        $canUserRate = $this->canUserRate($bookingRepository, $commentRepository, $lodging);
 
+        ## BOOKING PART ##
         $booking = new Booking();
         $formBooking = $this->createForm(BookingType::class, $booking, [
             'capacity' => $lodging->getCapacity(),
@@ -96,24 +96,29 @@ class LodgingController extends AbstractController
 
             $this->denyAccessUnlessGranted('ROLE_USER');
 
-            $booking->setUser($this->getUser());
-            $booking->setLodging($lodging);
-            $booking->setBookingState($bookingStateRepository->find(1));
+            $booking
+                ->setUser($this->getUser())
+                ->setLodging($lodging)
+                ->setBookingState($bookingStateRepository->find(1));
 
             $manager->persist($booking);
             $manager->flush();
 
+            $notif->sendNotification($this->getUser(), $lodging, $manager);
+
             return $this->redirectToRoute('user_bookings');
         }
 
+        ## COMMENT PART ##
         $comment = new Comment();
         $formComment = $this->createForm(CommentType::class, $comment);
         $formComment->handleRequest($request);
 
         if ($formComment->isSubmitted() && $formComment->isValid()) {
             $this->denyAccessUnlessGranted('ROLE_USER');
-            $comment->setUser($this->getUser());
-            $comment->setLodging($lodging);
+            $comment
+                ->setUser($this->getUser())
+                ->setLodging($lodging);
 
             $manager->persist($comment);
             $manager->flush();
@@ -123,17 +128,16 @@ class LodgingController extends AbstractController
 
         $bookedRanges = $dateRangeHelper->getBookedDateRangesForJS($lodging);
 
-        $comments = $lodging->getComments();
-
         return $this->render('lodging/show.html.twig', [
             'lodging' => $lodging,
             'formBooking' => $formBooking->createView(),
             'formComment' => $formComment->createView(),
             'dates' => $bookedRanges,
-            'comments' => $comments,
-            'canUserRate' => $canUserRate
+            'comments' => $lodging->getComments(),
+            'canUserRate' => $this->canUserRate($bookingRepository, $commentRepository, $lodging)
         ]);
     }
+
 
     private function canUserRate(BookingRepository $bookingRepository, CommentRepository $commentRepository, Lodging $lodging): bool
     {

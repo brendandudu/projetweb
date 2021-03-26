@@ -103,7 +103,7 @@ class User implements UserInterface
     private $lodgings;
 
     /**
-     * @ORM\Column(type="string", length=15, nullable=true)
+     * @ORM\Column(type="string", length=25, nullable=true)
      * @Assert\Regex(
      *     pattern="^(?:(?:\+|00)33|0)\s*[1-9](?:[\s.-]*\d{2}){4}^",
      *     message="Le numéro de téléphone n'est pas bon"
@@ -121,11 +121,17 @@ class User implements UserInterface
      */
     public $confirm_password;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="user")
+     */
+    private $notifications;
+
     public function __construct()
     {
         $this->bookings = new ArrayCollection();
         $this->lodgings = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->notifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -339,11 +345,9 @@ class User implements UserInterface
 
     public function removeLodging(Lodging $lodging): self
     {
-        if ($this->lodgings->removeElement($lodging)) {
-            // set the owning side to null (unless already changed)
-            if ($lodging->getUser() === $this) {
-                $lodging->setUser(null);
-            }
+        // set the owning side to null (unless already changed)
+        if ($this->lodgings->removeElement($lodging) && $lodging->getUser() === $this) {
+            $lodging->setUser(null);
         }
 
         return $this;
@@ -397,6 +401,47 @@ class User implements UserInterface
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection|Notification[]
+     */
+    public function getNotifications(): Collection
+    {
+        return $this->notifications;
+    }
+
+    public function addNotification(Notification $notification): self
+    {
+        if (!$this->notifications->contains($notification)) {
+            $this->notifications[] = $notification;
+            $notification->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNotification(Notification $notification): self
+    {
+        if ($this->notifications->removeElement($notification)) {
+            // set the owning side to null (unless already changed)
+            if ($notification->getUser() === $this) {
+                $notification->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getNotificationsNotSeen(): ?array
+    {
+        $notifs = array();
+        foreach($this->notifications as $notif){
+            if (!$notif->getSeen()){
+                $notifs[] = $notif;
+            }
+        }
+        return $notifs;
     }
 
 }

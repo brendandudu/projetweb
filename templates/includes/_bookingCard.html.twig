@@ -1,13 +1,13 @@
-<a href="{{ path('booking_details', { id : booking.id }) }}" target="_blank">
-    <div class="column col-md-4 mt-3">
+ <div class="column col-md-4 mt-4">
         <!-- Post-->
+     <a href="{{ path('booking_details', { id : booking.id }) }}" target="_blank">
         <div class="post-module">
             <!-- Thumbnail-->
             <div class="thumbnail">
                 <div class="date">
                     <div class="day">{{ booking.beginsAt|date('d') }}</div>
                     <div class="month">{{ booking.beginsAt|date('M') }}</div>
-                </div><img src="/assets/img/lodging/{{ booking.lodging.picture }}"/>
+                </div><img src="/assets/img/lodging/{{ booking.lodging.picture }}" alt="ldoging picture"/>
             </div>
             <!-- Post Content-->
             <div class="post-content">
@@ -17,5 +17,5 @@
                 <div class="post-meta"><span class="timestamp"><i class="far fa-clock"></i> Il y a {{ date('now').diff(date(booking.bookedAt)).days }} jours</span></div>
             </div>
         </div>
+     </a>
     </div>
-</a>

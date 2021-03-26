@@ -50,13 +50,13 @@ class LodgingFixtures extends Fixture implements DependentFixtureInterface
                 $regionName = "Nouvelle-Aquitaine";
             }
 
+            $this->addReference('lodging_' . $i, $lodging);
             $lodging->setFullAddress($faker->streetAddress . "," . $cityName . "," . $regionName . "," . $postalCode . ", France");
             $lodging->setName($faker->realText(20));
             $lodging->setLodgingType($this->getReference('type_' . $faker->numberBetween(1, 5)));
             $lodging->setNightPrice($faker->numberBetween(45, 120));
             $lodging->setSpace($faker->numberBetween(10, 30));
             $lodging->setInternetAvailable($faker->numberBetween(0, 1));
-            $lodging->setCurrentCondition($faker->realText(25));
             $lodging->setCapacity($faker->numberBetween(1, 8));
             $lodging->setDescription($faker->realText(300));
             $lodging->setUser($this->getReference('user_' . $faker->numberBetween(1, 20)));
@@ -66,7 +66,6 @@ class LodgingFixtures extends Fixture implements DependentFixtureInterface
 
             $manager->persist($lodging);
 
-            $this->addReference('lodging_' . $i, $lodging);
         }
 
         $manager->flush();

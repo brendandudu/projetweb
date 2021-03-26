@@ -20,7 +20,10 @@
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <a class="dropdown-item" href="{{ path('admin') }}">Back Office</a>
                                 {% else %}
-                                    <a class="dropdown-item" href="#">Notifications</a>
+                                <a class="dropdown-item" href="{{ path('user_notif') }}">Notifications
+                                        <small style="{{ app.user.getNotificationsNotSeen|length > 0 ? 'color: red' : '' }}">
+                                            (<i class="fas fa-bell">{{ app.user.getNotificationsNotSeen|length }}</i>)
+                                        </small></a>
                                 {% endif %}
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="{{ path('app_logout') }}">Deconnexion <i

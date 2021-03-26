@@ -1,13 +1,13 @@
 <div class="left">
     <div class="left-img-container">
-        {% if user.picture %}
+        {% if app.user.picture %}
             <img src="/assets/img/user/{{ user.picture }}" class="left-img" alt="Avatar">
         {% else %}
             <img src="{{ asset('user/img/head.jpg') }}" class="left-img" alt="Avatar">
         {% endif %}
     </div>
     <div class="left-item text-center mt-2">
-        <u>{{ user.firstName }}</u>
+        <u>{{ app.user.firstName }}</u>
     </div>
     <div class="left-item mt-5">
         <a class="{{ setActive("user_info") }}{{ setActive("user_edit") }}" href="{{ path('user_info') }}">Infos
@@ -17,7 +17,7 @@
         <a>Connexion et sécurité</a>
     </div>
     <div class="left-item">
-        <a>Paiements et versements</a>
+        <a class="{{ setActive("user_notif") }}" href="{{ path('user_notif') }}">Notifications</a>
     </div>
     <hr class="mt-5 mr-0">
 

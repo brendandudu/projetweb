@@ -217,17 +217,6 @@ class Lodging
         return $this;
     }
 
-    public function getCurrentCondition(): ?string
-    {
-        return $this->currentCondition;
-    }
-
-    public function setCurrentCondition(string $currentCondition): self
-    {
-        $this->currentCondition = $currentCondition;
-
-        return $this;
-    }
 
     public function getDescription(): ?string
     {

@@ -55,9 +55,9 @@
                         <div class="code">{{ booking.lodging.id }}</div>
 
 
-                        <div class="row justify-content-between mt-3 ml-1">
-                            <div class="col-md-4>
-                                <a href="{{ path('lodging_show', { 'id' : booking.lodging.id, 'beginsAt' : beginsAt|default(""), 'endsAt' : endsAt|default("") }) }}">
+                        <div class="row justify-content-between mt-3">
+                            <div class="col-md-4">
+                                <a href="{{ path('lodging_show', { 'id' : booking.lodging.id, 'beginsAt' : beginsAt|default(""), 'endsAt' : endsAt|default("") }) }} ">
                                     <button class="btn btn-info">Consulter l'hébergement</button>
                                 </a>
                             </div>

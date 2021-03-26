@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\UserType;
 use App\Repository\BookingRepository;
 use App\Repository\LodgingRepository;
+use App\Repository\NotificationRepository;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -61,7 +62,7 @@ class UserController extends AbstractController
     {
         $user = $this->getUser();
 
-        if ($this->isGranted('ROLE_EDITOR')) {
+        if ($this->isGranted('ROLE_HOST')) {
             $bookings = $repository->findByUserId($user->getId());
         } else {
             $bookings = $user->getBookings();
@@ -77,14 +78,30 @@ class UserController extends AbstractController
      * @Route("/lodgings", name="lodgings")
      * @IsGranted("ROLE_HOST")
      */
-    public function showLodgings(LodgingRepository $repository): Response
+    public function showLodgings(): Response
     {
         $user = $this->getUser();
 
-        $lodgings = $repository->findByOwnerId($user->getId());
+        $lodgings = $user->getLodgings();
 
         return $this->render('user/lodgings.html.twig', [
             'lodgings' => $lodgings,
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * @Route("/notifications", name="notif")
+     */
+    public function showNotifications(NotificationRepository $repository): Response
+    {
+        $user = $this->getUser();
+
+        $notifications = $user->getNotifications();
+        $repository->setNotificationsSeen($user->getId());
+
+        return $this->render('user/notifications.html.twig', [
+            'notifications' => $notifications,
             'user' => $user
         ]);
     }
