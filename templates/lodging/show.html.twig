@@ -35,8 +35,8 @@
                 <h4 class="card-info">Informations sur le propriétaire :</h4> <br>
                 <p class="card-text"><u>Nom:</u> {{ lodging.owner.lastName }}</p>
                 <p class="card-text"><u>Prénom:</u> {{ lodging.owner.firstName }}</p>
-                <p class="card-text"><u>Adresse email:</u> <a href="mailto:{{ lodging.owner.email }}">{{ lodging.owner.email }}</p></a>
-                <p class="card-text"><u>Téléphone:</u> {{ lodging.owner.phone ? "indisponible" : lodging.owner.phone }}</p>
+                <p class="card-text"><u>Adresse email:</u> <a href="mailto:{{ lodging.owner.email }}">{{ lodging.owner.email }}</a></p>
+                <p class="card-text"><u>Téléphone:</u> {{ lodging.owner.phone ? lodging.owner.phone : "indisponible" }}</p>
                 <hr>
             </div>
             <div class="booking-info">
