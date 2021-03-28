@@ -17,7 +17,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @UniqueEntity(
-fields = {"email"},
+ *          fields = {"email"},
  *          message = "l'email est déjà utilisé"
  *     )
  * @ORM\HasLifecycleCallbacks()
@@ -215,7 +215,6 @@ class User implements UserInterface
      */
     public function getSalt()
     {
-        // not needed when using the "bcrypt" algorithm in security.yaml
         return null;
     }
 
@@ -224,8 +223,7 @@ class User implements UserInterface
      */
     public function eraseCredentials()
     {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
+
     }
 
     public function getFirstName(): ?string

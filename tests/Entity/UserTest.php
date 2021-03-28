@@ -7,11 +7,12 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
 class UserTest extends KernelTestCase
 {
-
     public function getEntity(): User
     {
         return (new User())
-            ->setPassword('Test2021@')
+            ->setPassword('Resa2021@')
+            ->setFirstName('test')
+            ->setLastName('test')
             ->setEmail('test@gmail.com');
     }
 
@@ -52,6 +53,6 @@ class UserTest extends KernelTestCase
     }
 
     public function testAlreadyUsedEmail(){
-        $this->assertHasErrors($this->getEntity()->setEmail('user@gmail.com'), 1);
+        $this->assertHasErrors($this->getEntity()->setEmail('guest@gmail.com'), 1);
     }
 }

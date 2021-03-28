@@ -52,7 +52,12 @@ class LodgingFixtures extends Fixture implements DependentFixtureInterface
 
             $this->addReference('lodging_' . $i, $lodging);
             $lodging->setFullAddress($faker->streetAddress . "," . $cityName . "," . $regionName . "," . $postalCode . ", France");
-            $lodging->setName($faker->realText(20));
+
+            if($i === 1)
+                $lodging->setName('test'); //pour les tests
+            else
+                $lodging->setName($faker->realText(20));
+
             $lodging->setLodgingType($this->getReference('type_' . $faker->numberBetween(1, 5)));
             $lodging->setNightPrice($faker->numberBetween(45, 120));
             $lodging->setSpace($faker->numberBetween(10, 30));

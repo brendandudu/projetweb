@@ -12,13 +12,9 @@ class BookingTest extends KernelTestCase
     {
         return (new Booking())
             ->setBeginsAt(new \DateTime('2050/11/20'))
-            ->setEndsAt(new \DateTime('2050/11/25'));
+            ->setEndsAt(new \DateTime('2050/11/25'))
+            ->setTotalOccupiers(3);
     }
-
-    /*private function testInvalidAlreadyBookedBooking(): void
-    {
-
-    }*/
 
     public function assertHasErrors(Booking $booking, int $count = 0)
     {
@@ -26,5 +22,13 @@ class BookingTest extends KernelTestCase
 
         $error = self::$container->get('validator')->validate($booking);
         $this->assertCount($count, $error);
+    }
+
+    public function testNegativeOccupierValue(){
+        $this->assertHasErrors($this->getEntity()->setTotalOccupiers(-2), 1);
+    }
+
+    public function testNegativePriceValue(){
+        $this->assertHasErrors($this->getEntity()->setTotalPricing(-2), 1);
     }
 }
