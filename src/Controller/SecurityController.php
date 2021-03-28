@@ -30,7 +30,7 @@ class SecurityController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $hash = $encoder->encodePassword($user, $user->getPassword());
             $user->setPassword($hash);
-            $this->addFlash('success', 'Bienvenue ' . $form->get('firstName')->getData() . ', merci de vérifier votre email :');
+            $this->addFlash('success', 'Bienvenue ' . $form->get('firstName')->getData() . ', vous pouvez maintenant vous connecter :');
 
             $manager->persist($user);
             $manager->flush();

@@ -34,7 +34,7 @@ class BookingRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('b')
             ->join('b.lodging', 'l')
-            ->where('l.user = :id')
+            ->where('l.owner = :id')
             ->setParameter('id', $ownerId)
             ->getQuery()
             ->getResult();

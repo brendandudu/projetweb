@@ -24,7 +24,7 @@ class LodgingType extends AbstractType
             ->add('description')
             ->add('nightPrice', MoneyType::class)
             ->add('pictureFile', VichFileType::class, array(
-                'require' => false
+                'required' => false,
             ))
             ->add('lat', HiddenType::class)
             ->add('lon', HiddenType::class)

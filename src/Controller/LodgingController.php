@@ -62,7 +62,7 @@ class LodgingController extends AbstractController
             if ($lodging->getId()) {
                 $lodging->setUpdatedAt(new DateTime());
             } else {
-                $lodging->setUser($this->getUser());
+                $lodging->setOwner($this->getUser());
 
             }
 
@@ -106,7 +106,8 @@ class LodgingController extends AbstractController
             $manager->persist($booking);
             $manager->flush();
 
-            $notif->sendNotification($this->getUser(), $lodging, $manager);
+            $notif->sendNotificationForBuyer($this->getUser(), $lodging, $manager);
+            $notif->sendNotificationForOwner($this->getUser(), $lodging, $manager);
 
             return $this->redirectToRoute('user_bookings');
         }

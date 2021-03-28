@@ -14,13 +14,13 @@ class NotificationHelper
 {
 
     /**
-     * Envoie une notification et un sms à l'utilisateur après une réservation effectuée
+     * Envoie une notification à l'utilisateur après une réservation effectuée
      */
-    public function sendNotification(UserInterface $user, Lodging $lodging, EntityManagerInterface $manager): void
+    public function sendNotificationForBuyer(UserInterface $user, Lodging $lodging, EntityManagerInterface $manager): void
     {
         $notification = new Notification();
 
-        $description = 'Votre réservation de : ' . $lodging->getName() . 'est confirmée';
+        $description = "Votre réservation de : " . $lodging->getName() ."est confirmée";
 
         $notification
             ->setUser($user)
@@ -28,7 +28,22 @@ class NotificationHelper
 
         $manager->persist($notification);
         $manager->flush();
+    }
 
+    /**
+     * Envoie une notification au détenteur du logement après une réservation
+     */
+    public function sendNotificationForOwner(UserInterface $user, Lodging $lodging, EntityManagerInterface $manager): void
+    {
+        $notification = new Notification();
 
+        $description = $user->getFirstName().''. $user->getLastName().' à réservé votre annonce : ' . $lodging->getName();
+
+        $notification
+            ->setUser($lodging->getOwner())
+            ->setDescription($description);
+
+        $manager->persist($notification);
+        $manager->flush();
     }
 }
