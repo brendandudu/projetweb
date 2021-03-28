@@ -19,7 +19,7 @@ Email: admin@gmail.com
 Password : Resa2021@
 
 Invité
-Email: user@gmail.com
+Email: guest@gmail.com
 Password : Resa2021@
 
 Hôte
@@ -33,7 +33,7 @@ Url :
 
 # Outil de gestion de projet 
 
-Url : 
+Url : https://github.com/brendandudu/projetweb/projects
 
 
 # Conseils d'utilisations
@@ -62,7 +62,7 @@ Créer la base de donnée pour les tests : $ php bin/console doctrine:database:c
 
 Puis créer la structure des tables :  php bin/console doctrine:schema:update --env=test --force
 
-Avant de lancer les tests pensez à charger les fxtures pour la base de test : $ php bin/console doctrine:fixtures:load --env=dev
+Avant de lancer les tests pensez à charger les fxtures pour la base de test : $ php bin/console doctrine:fixtures:load --env=test
 
 Lancer les tests : $ php bin/phpunit
 
