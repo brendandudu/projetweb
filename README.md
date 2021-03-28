@@ -4,13 +4,15 @@ Bonjour et bienvenue sur notre projet RESA !
 
 RESA.fr c'est quoi ? un site de réservation d'hébergements de particulier à particulier, tout comme AirBnb, mais en mieux ! Venez profiter d'un large choix de location disponible partout en France : Châlet, bungalow, mobil-home.. Découvrez de nouvelles opportunités ;-)
 
-Fonctionnalités principales : - Se connecter / S'inscrire
-                              - Chercher un hébergement par lieu, date de disponibilité et nombre d'invité
-                              - Consulter un hébergement
-                              - Réserver un hébergement
-                              - Enregistrer un hébergement dans sa wishlist
-                              - Accéder à toutes sortes d'information concernant son profil (infos personnelles, réservations effectuées, liste d'envie..).
-                              - Back office pour administrer le site
+Fonctionnalités principales : 
+
+- Se connecter / S'inscrire
+- Chercher un hébergement par lieu, date de disponibilité et nombre d'invité
+- Consulter un hébergement
+- Réserver un hébergement
+- Enregistrer un hébergement dans sa wishlist
+- Accéder à toutes sortes d'information concernant son profil (infos personnelles, réservations effectuées, liste d'envie..)
+- Back office pour administrer le site
 
 # Comptes
 
