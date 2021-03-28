@@ -2,34 +2,59 @@
 
 Bonjour et bienvenue sur notre projet RESA !
 
-RESA c'est quoi ? un site de réservation d'hebergements : Chalet, bungalow, mobil-home dans toute la france.
+RESA.fr c'est quoi ? un site de réservation d'hébergements de particulier à particulier, tout comme AirBnb, mais en mieux ! Venez profiter d'un large choix de location disponible partout en France : Châlet, bungalow, mobil-home.. Découvrez de nouvelles opportunités ;-)
 
-Fonction principal : - Se connecter / S'inscrire(avec mail de confirmation)
-                     - Chercher un hébergement par ville et date (client)
-                     - Ajouter un hébergement (admin)
-                     - Réserver un hébergement(avec mail de confirmation)
-                     - Consulter les réservation 
+Fonctionnalités principales : - Se connecter / S'inscrire
+                              - Chercher un hébergement par lieu, date de disponibilité et nombre d'invité
+                              - Consulter un hébergement
+                              - Réserver un hébergement
+                              - Enregistrer un hébergement dans sa wishlist
+                              - Accéder à toutes sortes d'information concernant son profil (infos personnelles, réservations effectuées, liste d'envie..).
+                              - Back office pour administrer le site
 
-# BUNDLES
+# Comptes
 
-Charger les composants avec composer : $ composer install
+Admin
+Email: admin@gmail.com
+Password : Resa2021@
 
-# BDD
+Invité
+Email: user@gmail.com
+Password : Resa2021@
 
-Créer la base de donnée : $ php bin/console doctrine:database:create
+Hôte
+Email: host@gmail.com
+Password : Resa2021@
 
-Charger la base de donnée : $ php bin/console doctrine:migrations:migrate
+# Export BDD
+
+Url :
+
+
+# Outil de gestion de projet 
+
+Url : 
+
+
+# Conseils d'utilisations
+
+Pour rechercher un hébergement : essayez de chercher à Brest, Paris, Marseille ou bien encore Bordeaux.
+
+Le changement d'image de profil génère pour l'instant une erreur mais sinon fonctionne quand même.
+
 
 # FIXTURES
 
+Le site dispose d'un jeu de données.
+
 Pour charger les fixtures : $ php bin/console doctrine:fixtures:load
+
 
 # BACK-OFFICE :
 
+(Disponible que pour les comptes admin)
 URL : 127.0.0.1:8000/admin
 
-Email admin : admin@gmail.com
-Password : Admin2021@
 
 # Tests
 
