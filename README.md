@@ -14,6 +14,8 @@ Fonctionnalités principales :
 - Accéder à toutes sortes d'information concernant son profil (infos personnelles, réservations effectuées, liste d'envie..)
 - Back office pour administrer le site
 
+Lien du site : http://resa-miage.alwaysdata.net
+
 # Comptes
 
 Admin
